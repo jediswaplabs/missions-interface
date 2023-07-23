@@ -7,10 +7,36 @@ const safePostCssParser = require('postcss-safe-parser');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 const isEnvProduction = (process.env.NODE_ENV === 'production');
 const isEnvDevelopment = (process.env.NODE_ENV === 'development');
 const generateSourceMap = (isEnvDevelopment || process.env.GENERATE_SOURCE_MAPS);
+const plugins = [
+  new CopyWebpackPlugin({
+    patterns: [
+      { from: 'public/favicon', to: 'favicon' },
+      { from: 'public/images', to: 'images' },
+    ],
+  }),
+  new HtmlWebPackPlugin({
+    template: './public/index.html',
+  }),
+  new webpack.ProvidePlugin({}),
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    'process.env.NODE_MOCK_BE': JSON.stringify(process.env.NODE_MOCK_BE),
+  }),
+  new RetryChunkLoadPlugin({ // NOTE: for more info on the options, see: https://github.com/mattlewis92/webpack-retry-chunk-load-plugin
+    maxRetries: 4,
+  }),
+  new MiniCssExtractPlugin({
+  }),
+];
+
+if (isEnvDevelopment) {
+  plugins.push(new ReactRefreshWebpackPlugin());
+}
 
 const webpackConfig = {
   mode: (isEnvProduction) ? 'production' : 'development',
@@ -19,6 +45,7 @@ const webpackConfig = {
 
   entry: `${path.resolve(__dirname)}/src/index.jsx`,
   devServer: {
+    hot: true,
     open: true,
     historyApiFallback: true,
   },
@@ -110,6 +137,7 @@ const webpackConfig = {
         exclude: /@babel(?:\/|\\{1,2})runtime|core-js/,
         options: {
           sourceType: 'unambiguous',
+          plugins: [isEnvDevelopment && require.resolve('react-refresh/babel')].filter(Boolean),
         },
       },
 
@@ -245,46 +273,7 @@ const webpackConfig = {
       },
     ],
   },
-  plugins: [
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: 'public/favicon', to: 'favicon' },
-        { from: 'public/images', to: 'images' },
-      ],
-    }),
-    new HtmlWebPackPlugin({
-      template: './public/index.html',
-    }),
-    new webpack.ProvidePlugin({}),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-      'process.env.NODE_MOCK_BE': JSON.stringify(process.env.NODE_MOCK_BE),
-    }),
-    new RetryChunkLoadPlugin({ // NOTE: for more info on the options, see: https://github.com/mattlewis92/webpack-retry-chunk-load-plugin
-      maxRetries: 4,
-    }),
-    // new WebpackManifestPlugin({
-    // 	fileName: 'asset-manifest.json',
-    // 	publicPath: `${path.resolve(__dirname)}/build/react/`,
-    // 	generate: (seed, files, entrypoints) => {
-    // 		const manifestFiles = files.reduce((manifest, file) => {
-    // 			manifest[file.name] = file.path; // eslint-disable-line no-param-reassign
-    // 			return manifest;
-    // 		}, seed);
-    // 		const entrypointFiles = entrypoints.main.filter((fileName) => !fileName.endsWith('.map'));
-    // 		return {
-    // 			files: manifestFiles,
-    // 			entrypoints: entrypointFiles,
-    // 		};
-    // 	},
-    // }),
-    new MiniCssExtractPlugin({
-      // filename: (pathData) => ((pathData.chunk.name === 'main')
-      // 	? `static/css/[name].${process.env.npm_package_version}.chunk.css`
-      // 	: `static/css/paymentcomponent.${process.env.npm_package_version}.css`),
-      // chunkFilename: () => `static/css/[name].${process.env.npm_package_version}.chunk.css`,
-    }),
-  ],
+  plugins,
   resolve: {
     fallback: {
       util: require.resolve('util'),
