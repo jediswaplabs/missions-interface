@@ -15,6 +15,7 @@ import GlobalStyle, { ApplicationContainer } from './index.styles';
 import MainPage from './pages/MainPage/MainPage';
 import PersonalProfilePage from './pages/PersonalProfilePage/PersonalProfilePage';
 import { isStarknetAddress } from './common/addressHelper';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
 
 const StarknetProviderNetwork = createStarknetReactRoot(NetworkContextName);
 
@@ -39,6 +40,9 @@ const App = () => (
               <Switch>
                 <Route path="/home">
                   <MainPage />
+                </Route>
+                <Route path="/profile">
+                  <ProfilePage />
                 </Route>
 
                 <Route exacts
