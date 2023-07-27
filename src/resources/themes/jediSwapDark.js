@@ -2,7 +2,7 @@ import { createTheme } from '@material-ui/core/styles';
 
 const jediSwapDark = createTheme({
   typography: {
-    fontFamily: '"Avenir LT Std", "Helvetica Neue", Arial, sans-serif',
+    fontFamily: '"DM Sans", "Helvetica Neue", Arial, sans-serif',
     htmlFontSize: 14,
     fontSize: 14,
     fontWeightLight: 300,
