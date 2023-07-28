@@ -18,7 +18,8 @@ const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar 
 
       <MainLayoutBodyContainer marginBottom={{ xs: 1, md: 2 }} px={{ xs: 2, md: 4 }}>
         <Web3ReactManager>
-          <Grid container rowSpacing={3} direction={{ xs: 'column', md: 'row' }}>
+        {bodyContent}
+          {/* <Grid container rowSpacing={3} direction={{ xs: 'column', md: 'row' }}>
             {!disableSidebar && (
               <Grid item pr={{ md: 4 }} sx={{ width: { xs: '100%', md: '340px' } }}>
                 {sidebarContent}
@@ -27,7 +28,7 @@ const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar 
             <Grid item xs sx={{ width: '100%' }}>
               {bodyContent}
             </Grid>
-          </Grid>
+          </Grid> */}
         </Web3ReactManager>
       </MainLayoutBodyContainer>
 

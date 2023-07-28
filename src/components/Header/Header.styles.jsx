@@ -18,6 +18,7 @@ const ActiveLink = styled(Link)`
   }
 `;
 const HeaderContainer = styled(Box)`
+  margin-bottom: 50px;
 `;
 
 const HeaderInnerContainer = styled.div`
