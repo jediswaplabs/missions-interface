@@ -23,6 +23,7 @@ const CircleLeft = styled.div`
   filter: blur(284.8772277832031px);
   position: absolute;
   left: 0;
+  z-index: -1;
 `;
 
 const CircleRight = styled.div`
@@ -33,6 +34,7 @@ const CircleRight = styled.div`
   filter: blur(243.37158203125px);
   position: absolute;
   right: 200px;
+  z-index: -1;
 `;
 
 const MainLayoutFooterContainer = styled(Box)`
