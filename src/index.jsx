@@ -16,6 +16,8 @@ import MainPage from './pages/MainPage/MainPage';
 import PersonalProfilePage from './pages/PersonalProfilePage/PersonalProfilePage';
 import { isStarknetAddress } from './common/addressHelper';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
+import QuestPage from './pages/QuestPage/QuestPage';
+
 
 const StarknetProviderNetwork = createStarknetReactRoot(NetworkContextName);
 
@@ -45,16 +47,9 @@ const App = () => (
                   <ProfilePage />
                 </Route>
 
-                <Route exacts
-                  strict
-                  path="/account/:accountAddress"
-                  render={({ match }) => {
-                    if (isStarknetAddress(match.params.accountAddress.toLowerCase())) {
-                      return (<PersonalProfilePage account={match.params.accountAddress.toLowerCase()} />);
-                    }
-                    return <Redirect to="/home" />;
-                  }}
-                />
+                <Route path="/quest/:id">
+                  <QuestPage />
+                </Route>
 
                 <Redirect to="/home" />
               </Switch>

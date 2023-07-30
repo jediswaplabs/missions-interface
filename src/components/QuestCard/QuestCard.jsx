@@ -56,7 +56,9 @@ const QuestCard = ({ questType, title, description, duration, nftAmount, campaig
 
           </div>
 
-        {duration && <GradientButton size="large">Check Eliglibility</GradientButton>}
+        <Link  to="/quest/3">
+          {duration && <GradientButton size="large">Check Eliglibility</GradientButton>}
+        </Link>
 
       </div>
       {campaignImg && <div>
