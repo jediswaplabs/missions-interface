@@ -5,7 +5,7 @@ import { useStarknetReact } from '@web3-starknet-react/core';
 import { useEagerConnect, useInactiveListener } from '../../hooks';
 import Page from '../../components/Page/Page';
 import Header from '../../components/Header/Header';
-import { MainLayoutContainer, MainLayoutHeaderContainer, MainLayoutBodyContainer, MainLayoutFooterContainer, HeaderLine } from './MainLayout.styles';
+import { MainLayoutContainer, MainLayoutHeaderContainer, MainLayoutBodyContainer, MainLayoutFooterContainer, HeaderLine, CircleLeft, CircleRight } from './MainLayout.styles';
 import { NetworkContextName } from '../../common/contansts';
 
 const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar = false }) => (
@@ -16,9 +16,11 @@ const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar 
         <Header />
       </MainLayoutHeaderContainer>
 
-      <MainLayoutBodyContainer marginBottom={{ xs: 1, md: 2 }} px={{ xs: 2, md: 4 }}>
+      <MainLayoutBodyContainer marginBottom={{ xs: 1, md: 2 }} px={{ xs: 2, md: 4 }} position="relative">
+      <CircleLeft />
+      <CircleRight />
         <Web3ReactManager>
-        {bodyContent}
+          {bodyContent}
           {/* <Grid container rowSpacing={3} direction={{ xs: 'column', md: 'row' }}>
             {!disableSidebar && (
               <Grid item pr={{ md: 4 }} sx={{ width: { xs: '100%', md: '340px' } }}>
