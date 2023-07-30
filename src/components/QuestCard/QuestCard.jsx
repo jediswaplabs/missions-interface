@@ -9,13 +9,16 @@ import Box from '@mui/material/Box';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 
-import { QuestBox, QuestCardBtn, QuestCardTitle, QuestCardType, QuestCardDescription, QuestCardCalend } from './QuestCard.styles';
+import { QuestBox, QuestCardBtn, QuestCardTitle, QuestCardType, QuestCardDescription, QuestCardCalend, QuestCardNftNum, LaunchSoon } from './QuestCard.styles';
 import GradientButton from '../GradientButton/GradientButton';
 import calend from '../../resources/images/calend.png';
 import medal from '../../resources/images/medal.png';
 
 const QuestCard = ({ questType, title, description, duration, nftAmount, campaignImg }) => {
-
+  const styles = {};
+  if (questType === 'FEATURED CONTEST') {
+    styles.maxWidth = '430px';
+  }
   return (
     <QuestBox>
       <div>
@@ -23,7 +26,7 @@ const QuestCard = ({ questType, title, description, duration, nftAmount, campaig
         <QuestCardTitle>
           {title}
         </QuestCardTitle>
-        <QuestCardDescription>
+        <QuestCardDescription style={styles}>
           {description}
         </QuestCardDescription>
         <div style={{display: 'flex'}}>
@@ -33,31 +36,31 @@ const QuestCard = ({ questType, title, description, duration, nftAmount, campaig
               <img src={calend} />
             </div>
             <div style={{ marginRight: '20px' }}>
-              <div style={{ marginBottom: '5px' }}>
+              <div style={{ marginBottom: '5px' }} className="duration_title">
                 CONTEST DURATION
               </div>
-              <div>
+              <div className="duration_text">
                 {duration}
               </div>
             </div>
           </QuestCardCalend>
         }
-        {!duration && <div>Launching Soon!</div>}
+        {!duration && <LaunchSoon>Launching Soon!</LaunchSoon>}
         {nftAmount &&
           <div style={{display: 'flex'}}>
             <div>
               <img src={medal} style={{ position: 'relative', top: '-5px' }} />
             </div>
-            <div>
-              <div>NFTs</div>
-              <div>{nftAmount}</div>
-            </div>
+            <QuestCardNftNum>
+              <div className="title">NFTs</div>
+              <div className="value">{nftAmount}</div>
+            </QuestCardNftNum>
           </div>}
 
           </div>
 
         <Link  to="/quest/3">
-          {duration && <GradientButton size="large">Check Eliglibility</GradientButton>}
+          {duration && <QuestCardBtn>Check Eliglibility</QuestCardBtn>}
         </Link>
 
       </div>

@@ -58,9 +58,8 @@ const MainPage = () => {
         <Grid item xs={10} md={7}>
         <QuestCard
           questType="UPCOMING CONTEST"
-          title="Rise of the first LPs"
-          description="This is our first-ever liquidity contest.
-            With this initiative, we want to recognise and reward the most loyal liquidity providers of JediSwap with some special NFTs."
+          title="Return of the LPs"
+          description="This is our third upcoming liquidity contest in series. Watch this space for more info. We will keep you updated"
         />
         </Grid>
       </Grid>

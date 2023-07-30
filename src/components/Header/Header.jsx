@@ -92,8 +92,8 @@ const Header = () => {
                   <ActiveLink to={`/profile`}>
                     <Typography variant="body1" color="white">My Profile</Typography>
                   </ActiveLink> :
-                  <Link to={`/profile`}>
-                    <Typography variant="body1" color="white">My Profile</Typography>
+                  <Link to={`/profile`} >
+                    <Typography variant="body1" color="white" style={{fontSize: '16px'}}>My Profile</Typography>
                   </Link>
               }
               {/* {chainId && NETWORK_LABELS[chainId] && (
@@ -147,10 +147,10 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   const { connectedAddress, connector, error } = useActiveStarknetReact();
   if (connectedAddress) {
     return (
-      <Web3StatusConnected onClick={onWalletModalToggle}>
+      <Web3StatusConnected onClick={onWalletModalToggle} >
         <Stack direction="row" alignItems="center" gap={1}>
           {connector && <StatusIcon connector={connector} />}
-          <Typography variant="body1" color="text.primary">{getShortenAddress(connectedAddress)}</Typography>
+          <Typography variant="body1" color="text.primary" style={{fontSize: '16px', fontFamily: 'Avenir LT Std', fontWeight: '600'}}>{getShortenAddress(connectedAddress)}</Typography>
         </Stack>
       </Web3StatusConnected>
     );

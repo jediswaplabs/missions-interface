@@ -10,13 +10,13 @@ import { Box } from '@material-ui/core';
 
 import MainLayout from '../../layouts/MainLayout/MainLayout';
 import nft from '../../resources/images/L1P1-min.png';
-import { RoundedRect } from './ProfilePage.styles';
+import { RoundedRect, ProfileHeading } from './ProfilePage.styles';
 
 const ProfilePage = () => {
   const imgs = [nft, nft, nft, nft, nft, nft];
   const bodyContent = (
     <>
-      <Typography variant="h4" color="text.primary">Claimed quests</Typography>
+      <ProfileHeading>Claimed quests</ProfileHeading>
 
       <Stack
         direction={{ xs: 'column', sm: 'row' }}

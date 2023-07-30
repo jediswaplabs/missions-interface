@@ -13,7 +13,17 @@ const RoundedRect = styled(Box)`
   // flex-basis: 25%;
   margin: 10px;
 `;
+const ProfileHeading = styled.div`
+  color: #FFF;
+  font-feature-settings: 'salt' on, 'clig' off, 'liga' off;
+  font-family: DM Sans;
+  font-size: 34px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 41.5px; /* 122.059% */
+`;
 
 export {
   RoundedRect,
+  ProfileHeading
 };

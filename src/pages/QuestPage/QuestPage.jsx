@@ -12,6 +12,7 @@ import backIcon from '../../resources/icons/back.svg';
 import { Link } from 'react-router-dom';
 import MintCard from '../../components/MintCard/MintCard';
 import nft from '../../resources/images/L1P1-min.png';
+import { AllQuests } from './QuestPage.styles';
 
 const QuestPage = () => {
   let { id } = useParams();
@@ -22,14 +23,14 @@ const QuestPage = () => {
         <div style={{marginRight: '10px'}}>
           <SvgIcon component={backIcon} />
         </div>
-        <div style={{display: 'flex', alignItems: 'center'}}>
+        <AllQuests>
           All quests
-        </div>
+        </AllQuests>
       </Link>
       <MintCard 
         title="Rise of the first LPs"
-        description="This is our first-ever liquidity contest.
-        With this initiative, we want to recognise and reward the most loyal liquidity providers of JediSwap with some special NFTs."
+        description="Based on your ranking in LP contest,
+        you’re eligible for NFT - L1P1"
         address="0x00ccc18Ccd99b3Bb86bf0349ba0aa6BcD7cdF70a502a0D7CB9820C9922C5B744"
         nftImg={nft}
       />
