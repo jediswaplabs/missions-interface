@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { composeStories } from '@storybook/testing-react';
 
-import * as stories from './Guild.stories';
+import * as stories from './ActivitiesList.stories';
 
 const { Default } = composeStories(stories);
 

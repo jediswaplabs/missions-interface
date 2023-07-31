@@ -75,6 +75,13 @@ const jediSwapDark = createTheme({
       fontSize: '0.875rem',
       lineHeight: 1.5,
     },
+    body3: {
+      fontFamily: '"Avenir LT Std","Helvetica Neue",Arial,sans-serif',
+      fontWeight: 400,
+      fontSize: '3rem',
+      color: 'red',
+      lineHeight: 1.5,
+    },
     button: {
       fontWeight: 500,
       fontSize: '1rem',

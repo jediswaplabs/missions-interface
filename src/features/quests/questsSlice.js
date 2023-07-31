@@ -3,10 +3,10 @@ import { createSlice } from '@reduxjs/toolkit';
 export const initialState = {};
 export const reducers = {};
 
-export const profileSlice = createSlice({
-  name: 'profile',
+export const questsSlice = createSlice({
+  name: 'quests',
   initialState,
   reducers,
 });
 
-export default profileSlice.reducer;
+export default questsSlice.reducer;

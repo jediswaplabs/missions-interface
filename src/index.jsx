@@ -18,7 +18,6 @@ import { isStarknetAddress } from './common/addressHelper';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import QuestPage from './pages/QuestPage/QuestPage';
 
-
 const StarknetProviderNetwork = createStarknetReactRoot(NetworkContextName);
 
 if (module?.hot) {

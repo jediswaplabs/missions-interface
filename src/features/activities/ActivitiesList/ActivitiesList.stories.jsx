@@ -1,12 +1,10 @@
 import React from 'react';
 import { graphql } from 'msw';
-import { within, userEvent, findByText, getByText, getAllByRole, findAllByRole, waitFor, waitForElementToBeRemoved } from '@storybook/testing-library';
+import { within, userEvent, waitFor, waitForElementToBeRemoved } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
 import ActivitiesList, { MAX_VISIBLE_ITEMS_AMOUNT } from './ActivitiesList';
-import { defaultListItems,
-  fewListItems,
-  emptyItems } from './ActivitiesList.testData';
+import { defaultListItems, fewListItems, emptyItems } from './ActivitiesList.testData';
 import { zeroAddress } from '../../../common/contansts';
 import { renderWithProviders } from '../../../common/testsHelper';
 import { activitiesList as activitiesListNames } from '../../../../public/locales/en/translation.json';

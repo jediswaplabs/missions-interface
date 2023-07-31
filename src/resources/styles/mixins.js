@@ -5,7 +5,7 @@ import { getLinearGradientProperty } from './functions';
 
 export const widgetBoxMixin = ({ borderRadius = '8px' }) => css`
   background: ${boxBackground1};
-  box-shadow: ${boxBoxShadow1};
+  border: 1px solid rgba(160, 160, 160, 0.40);
   border-radius: ${borderRadius};
   overflow: hidden;
 `;
