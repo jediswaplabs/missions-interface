@@ -1,11 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import Stack from '@mui/material/Stack';
+import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
-import { Tab } from '@mui/material';
+import { Box, Tab } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import { Container } from '@material-ui/core';
 
 import { MainpageContainer, MainpageContainerHeader, JediSwapTabs } from './MainPage.styles';
 import { eventsLookup, guildNamesLookup, guildTypesLookup } from '../../common/contansts';
@@ -13,6 +15,9 @@ import MainLayout from '../../layouts/MainLayout/MainLayout';
 import LeaderboardTable from '../../features/guilds/Leaderboard/Leaderboard';
 import { useActiveStarknetReact } from '../../hooks';
 import { EventEmitter } from '../../common/eventEmitter';
+import InfoCard from '../../components/InfoCard/InfoCard';
+import QuestCard from '../../components/QuestCard/QuestCard';
+import campaign from '../../resources/icons/campaign.svg';
 
 /*
 TODO перенести табы в отдельный компонент
@@ -34,35 +39,31 @@ const MainPage = () => {
   }, []);
 
   const bodyContent = (
-    <MainpageContainer>
-      <Stack spacing={3.5}>
-        <MainpageContainerHeader>
-          <Grid container alignItems={{ sm: 'center' }} direction={{ xs: 'column', sm: 'row' }}>
-            <Grid item xs>
-              <Typography variant="h5" color="text.primary">{t('mainPage.header')}</Typography>
-            </Grid>
-            <Grid item>
-              {!connectedAddress && <Link href="#" underline="none" variant="body1" onClick={handleConnectWalletModal}>{t('mainPage.connectWalletToSee')}</Link>}
-              {connectedAddress && (
-                <RouterLink to={`/account/${connectedAddress}`}>
-                  <Typography variant="body1" color="primary">{t('mainPage.seePersonalProfile')}</Typography>
-                </RouterLink>
-              )}
-            </Grid>
-          </Grid>
-        </MainpageContainerHeader>
-        <JediSwapTabs
-          value={activeGuildId}
-          onChange={handleActiveGuildIdChange}
-          variant="scrollable"
-          scrollButtons="auto"
-          allowScrollButtonsMobile
-        >
-          {guildIds.map((id) => (<Tab value={id} label={guildNamesLookup[id]} key={id} />))}
-        </JediSwapTabs>
-        <LeaderboardTable guildId={activeGuildId} guildName="" title={t('leaderboard.fullTitle', { guildName: guildNamesLookup[activeGuildId] })} />
-      </Stack>
-    </MainpageContainer>
+    <Container>
+      <Grid container justifyContent="center" spacing={3}>
+        <Grid item xs={10}>
+          <QuestCard
+            questType="FEATURED CONTEST"
+            title="Rise of the first LPs"
+            description="This is our first-ever liquidity contest.
+            With this initiative, we want to recognise and reward the most loyal liquidity providers of JediSwap with some special NFTs."
+            duration="Apr 17, 2023 - Jul 25, 2023"
+            nftAmount={5}
+            campaignImg={campaign}
+          />
+        </Grid>
+        <Grid item xs={10} md={4}>
+          <InfoCard />
+        </Grid>
+        <Grid item xs={10} md={6}>
+        <QuestCard
+          questType="UPCOMING CONTEST"
+          title="Return of the LPs"
+          description="This is our third upcoming liquidity contest in series. Watch this space for more info. We will keep you updated"
+        />
+        </Grid>
+      </Grid>
+    </Container>
 
   );
 

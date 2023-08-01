@@ -1,8 +1,24 @@
 import styled, { css } from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
+import { Link } from 'react-router-dom';
 
+const ActiveLink = styled(Link)`
+  p {
+    font-family: 'Avenir LT Std';
+    font-style: normal;
+    font-weight: 750;
+    font-size: 16px;
+    line-height: 100%; 
+    text-align: center;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), linear-gradient(180deg, #FFFFFF 0%, rgba(255, 255, 255, 0) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text; text-fill-color: transparent;
+    text-shadow: 0px 0px 18.9113px rgba(49, 255, 156, 0.7), 0px 0px 73.2115px rgba(49, 255, 156, 0.5);
+  }
+`;
 const HeaderContainer = styled(Box)`
+  margin-bottom: 50px;
 `;
 
 const HeaderInnerContainer = styled.div`
@@ -57,6 +73,7 @@ const Web3StatusConnect = styled.div`
 `;
 
 export {
+  ActiveLink,
   HeaderContainer,
   HeaderInnerContainer,
   HeaderLogo,
