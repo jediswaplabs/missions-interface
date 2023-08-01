@@ -22,8 +22,17 @@ const ProfileHeading = styled.div`
   font-weight: 700;
   line-height: 41.5px; /* 122.059% */
 `;
-
+const ProfileText = styled.div`
+  color: #F2F2F2;
+  text-align: center;
+  font-family: DM Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 26px; /* 162.5% */
+`;
 export {
   RoundedRect,
-  ProfileHeading
+  ProfileHeading,
+  ProfileText
 };
