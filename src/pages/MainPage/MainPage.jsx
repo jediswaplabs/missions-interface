@@ -17,7 +17,7 @@ import { useActiveStarknetReact } from '../../hooks';
 import { EventEmitter } from '../../common/eventEmitter';
 import InfoCard from '../../components/InfoCard/InfoCard';
 import QuestCard from '../../components/QuestCard/QuestCard';
-import campaign from '../../resources/images/campaign.png';
+import campaign from '../../resources/icons/campaign.svg';
 
 /*
 TODO перенести табы в отдельный компонент
@@ -52,10 +52,10 @@ const MainPage = () => {
             campaignImg={campaign}
           />
         </Grid>
-        <Grid item xs={10} md={3}>
+        <Grid item xs={10} md={4}>
           <InfoCard />
         </Grid>
-        <Grid item xs={10} md={7}>
+        <Grid item xs={10} md={6}>
         <QuestCard
           questType="UPCOMING CONTEST"
           title="Return of the LPs"

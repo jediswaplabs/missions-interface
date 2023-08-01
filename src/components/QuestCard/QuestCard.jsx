@@ -65,7 +65,7 @@ const QuestCard = ({ questType, title, description, duration, nftAmount, campaig
 
       </div>
       {campaignImg && <div>
-        <img src={campaignImg} alt="alt" />
+        <SvgIcon component={campaignImg} inheritViewBox style={{ width: 'unset', height: 'unset'}} />
       </div>}
     </QuestBox>
 

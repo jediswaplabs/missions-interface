@@ -9,14 +9,14 @@ import Box from '@mui/material/Box';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import { InfoLabel, InfoBox } from './InfoCard.styles';
-import icon from '../../resources/images/infoicon.png';
+import icon from '../../resources/icons/infoicon.svg';
 
 const InfoCard = () => {
 
   return (
     <InfoBox>
       <Box style={{textAlign: 'end', paddingRight: '10px', paddingTop: '10px'}}>
-        <img src={icon} />
+        <SvgIcon component={icon} inheritViewBox style={{ width: 'unset', height: 'unset'}} />
       </Box>
       <InfoLabel>
         Your one stop space for all JediSwap quests.

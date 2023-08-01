@@ -6,13 +6,14 @@ const QuestBox = styled(Box)`
   border: 1px solid rgba(160, 160, 160, 0.40);
   background: rgba(255, 255, 255, 0.05);
   // max-width: 1090px;
-  // height: 321px;
+  height: 100%;
   display: flex;
   // flex-direction: column;
-  // justify-content: space-between;
-  padding-left: 30px;
-  padding-bottom: 30px;
-  // margin: 30px;
+  justify-content: space-between;
+  padding-left: 60px;
+  padding-bottom: 60px;
+  padding-right: 30px;
+  padding-top: 30px;
 `;
 
 const QuestCardCalend = styled.div`
@@ -93,6 +94,7 @@ const LaunchSoon = styled.div`
   font-style: normal;
   font-weight: 750;
   line-height: 20px; /* 100% */
+  margin-top: 20px;
 `;
 const QuestCardBtn = styled.button`
   width: 314.125px;
