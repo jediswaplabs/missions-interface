@@ -35,7 +35,7 @@ const AccountOverview = TemplateWithComponent.bind({})(WalletAccountOverview);
 AccountOverview.args = {
   storyTitle: 'AccountOverview',
   connectedWallet: supportedWallets.ArgentX,
-  connectedAddress: zeroAddress,
+  address: zeroAddress,
   onWalletDisconnect: () => {},
 };
 AccountOverview.decorators = [
