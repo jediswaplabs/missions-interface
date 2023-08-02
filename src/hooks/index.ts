@@ -1,7 +1,7 @@
 import { useStarknetReact as useStarknetReactCore } from "@web3-starknet-react/core";
-import { isMobile } from "react-device-detect";
+// import { isMobile } from "react-device-detect";
 import { useEffect, useState, useMemo , useRef} from "react";
-import { ArgentXConnector } from "@web3-starknet-react/argentx-connector";
+// import { ArgentXConnector } from "@web3-starknet-react/argentx-connector";
 
 import { NetworkContextName } from "../common/contansts";
 import { argentX, braavosWallet } from "../common/connectors";
@@ -22,7 +22,7 @@ export const useAccountDetails = () => {
   }, [account])
 }
 
-// No longer required since we are now using starkrnet-react library
+// No longer required since we are now using starkrnet-react
 // export function useEagerConnect() {
 //   const { active } = useStarknetReactCore(); // specifically using useStarknetReactCore because of what this hook does
 //   const [tried, setTried] = useState(false);
@@ -43,27 +43,27 @@ export const useAccountDetails = () => {
 //     }
 //   }, [connector]);
 
-//   // useEffect(() => {
-//   //   setTimeout(() => {
-//   //     if (!connector) { return; }
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     if (!connector) { return; }
 
-//   //     connector.isAuthorized().then((isAuthorized) => {
-//   //       if (isAuthorized && connector) {
-//   //         activate(connector, undefined, true).catch(() => {
-//   //           setTried(true);
-//   //         });
-//   //       } else if (isMobile && window.starknet && connector) {
-//   //         activate(connector, undefined, true).catch(() => {
-//   //           setTried(true);
-//   //         });
-//   //       } else {
-//   //         setTried(true);
-//   //       }
-//   //     });
-//   //   }, 100);
-//   // }, [activate, connector]); // intentionally only running on mount (make sure it's only mounted once :))
+  //     connector.isAuthorized().then((isAuthorized) => {
+  //       if (isAuthorized && connector) {
+  //         activate(connector, undefined, true).catch(() => {
+  //           setTried(true);
+  //         });
+  //       } else if (isMobile && window.starknet && connector) {
+  //         activate(connector, undefined, true).catch(() => {
+  //           setTried(true);
+  //         });
+  //       } else {
+  //         setTried(true);
+  //       }
+  //     });
+  //   }, 100);
+  // }, [activate, connector]); // intentionally only running on mount (make sure it's only mounted once :))
 
-//   // if the connection worked, wait until we get confirmation of that to flip the flag
+//    if the connection worked, wait until we get confirmation of that to flip the flag
 //   useEffect(() => {
 //     if (active) {
 //       setTried(true);
