@@ -8,8 +8,8 @@ import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
-import { QuestBox, QuestCardTitle, QuestCardType, QuestCardDescription, QuestCardAddress, QuestCardBtn } from '../QuestCard/QuestCard.styles';
-import { MintCardStatus } from './MintCard.styels';
+import { QuestCardTitle, QuestCardType, QuestCardDescription, QuestCardAddress, QuestCardBtn } from '../QuestCard/QuestCard.styles';
+import { MintCardStatus, MintCardClaimed, MintBox } from './MintCard.styles';
 import { getShortenAddress } from '../../common/addressHelper';
 import GradientButton from '../GradientButton/GradientButton';
 import claimed from '../../resources/icons/claimed.svg';
@@ -27,7 +27,7 @@ const statuses = {
 
 const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim }) => {
 
-  return (<QuestBox style={{ width: '700px', height: 'unset', padding: '30px', marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
+  return (<MintBox>
     <div>
       <QuestCardTitle>
         {title}
@@ -64,12 +64,12 @@ const MintCard = ({ title, description, address, nftImg, status, onCheck, onClai
         </MintCardStatus>
       }
       {status === statuses.claimed &&
-        <QuestBox style={{ width: '314px', height: 'unset', padding: '10px', display: 'flex', justifyContent: 'center', alignContent: 'center', fontSize: '20px', fontWeight: 750 }}>
+        <MintCardClaimed>
           <div style={{ marginRight: '5px' }}>
             <SvgIcon component={claimedMark} inheritViewBox style={{ width: 'unset', height: 'unset'}} />
           </div>
           NFT Claimed!
-        </QuestBox>
+        </MintCardClaimed>
       }
     </div>
     <div style={{ position: 'relative' }}>
@@ -83,7 +83,7 @@ const MintCard = ({ title, description, address, nftImg, status, onCheck, onClai
         <img src={nftImg} />
       }
     </div>
-  </QuestBox>)
+  </MintBox>)
 }
 
 export {
