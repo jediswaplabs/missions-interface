@@ -43,6 +43,7 @@ const MainPage = () => {
       <Grid container justifyContent="center" spacing={3}>
         <Grid item xs={10}>
           <QuestCard
+            questId={1}
             questType="FEATURED CONTEST"
             title="Rise of the first LPs"
             description="This is our first-ever liquidity contest.

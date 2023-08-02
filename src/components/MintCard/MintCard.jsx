@@ -9,13 +9,23 @@ import Box from '@mui/material/Box';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
 import { QuestBox, QuestCardTitle, QuestCardType, QuestCardDescription, QuestCardAddress, QuestCardBtn } from '../QuestCard/QuestCard.styles';
+import { MintCardStatus } from './MintCard.styels';
 import { getShortenAddress } from '../../common/addressHelper';
 import GradientButton from '../GradientButton/GradientButton';
 import claimed from '../../resources/icons/claimed.svg';
-import claimed_mark from '../../resources/icons/claimed_mark.svg';
+import claimedMark from '../../resources/icons/claimed_mark.svg';
+import noneligibleImg from '../../resources/icons/noneligible.svg';
 
-const MintCard = ({ title, description, address, nftImg }) => {
-  const [isClaimed, setIsClaimed] = useState(false);
+const statuses = {
+  beforeCheck: 'beforeCheck',
+  checking: 'checking', 
+  eligible: 'eligible',
+  noneligible: 'noneligible',
+  claiming: 'claiming',
+  claimed: 'claimed'
+};
+
+const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim }) => {
 
   return (<QuestBox style={{ width: '700px', height: 'unset', padding: '30px', marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
     <div>
@@ -28,27 +38,55 @@ const MintCard = ({ title, description, address, nftImg }) => {
       <QuestCardDescription style={{ maxWidth: '314px' }}>
         {description}
       </QuestCardDescription>
-      {!isClaimed &&
-        <QuestCardBtn onClick={() => setIsClaimed(!isClaimed)}>
+      {status === statuses.beforeCheck &&
+        <QuestCardBtn onClick={onCheck}>
+          Check Eligibility
+        </QuestCardBtn>
+      }
+      {status === statuses.checking &&
+        <MintCardStatus>
+          Checking...
+        </MintCardStatus>
+      }
+      {status === statuses.noneligible &&
+        <MintCardStatus>
+          Not Eligible
+        </MintCardStatus>
+      }
+      {status === statuses.eligible &&
+        <QuestCardBtn onClick={onClaim}>
           Claim NFT
         </QuestCardBtn>
       }
-      {isClaimed &&
-        <QuestBox style={{ width: '314px', height: 'unset', padding: '6px', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+      {status === statuses.claiming &&
+        <MintCardStatus>
+          Claiming...
+        </MintCardStatus>
+      }
+      {status === statuses.claimed &&
+        <QuestBox style={{ width: '314px', height: 'unset', padding: '10px', display: 'flex', justifyContent: 'center', alignContent: 'center', fontSize: '20px', fontWeight: 750 }}>
           <div style={{ marginRight: '5px' }}>
-            <SvgIcon component={claimed_mark} inheritViewBox style={{ width: 'unset', height: 'unset'}} />
+            <SvgIcon component={claimedMark} inheritViewBox style={{ width: 'unset', height: 'unset'}} />
           </div>
           NFT Claimed!
         </QuestBox>
       }
     </div>
     <div style={{ position: 'relative' }}>
-      {isClaimed &&
+      {status === statuses.claimed  &&
         <SvgIcon component={claimed} inheritViewBox style={{ width: 'unset', height: 'unset', position: 'absolute', bottom: '30px', left: '-40px' }} />
       }
-      <img src={nftImg} />
+      {status === statuses.noneligible &&
+        <SvgIcon component={noneligibleImg} inheritViewBox style={{ width: 'unset', height: '240px'}} />
+      }
+      {status !== statuses.noneligible &&
+        <img src={nftImg} />
+      }
     </div>
   </QuestBox>)
 }
 
+export {
+  statuses
+};
 export default MintCard;

@@ -14,7 +14,7 @@ import GradientButton from '../GradientButton/GradientButton';
 import calend from '../../resources/images/calend.png';
 import medal from '../../resources/images/medal.png';
 
-const QuestCard = ({ questType, title, description, duration, nftAmount, campaignImg }) => {
+const QuestCard = ({ questId, questType, title, description, duration, nftAmount, campaignImg, status }) => {
   const styles = {};
   if (questType === 'FEATURED CONTEST') {
     styles.maxWidth = '430px';
@@ -59,8 +59,8 @@ const QuestCard = ({ questType, title, description, duration, nftAmount, campaig
 
           </div>
 
-        <Link  to="/quest/3">
-          {duration && <QuestCardBtn>Check Eliglibility</QuestCardBtn>}
+        <Link  to={`/quest/${questId}`}>
+          {duration && <QuestCardBtn>Enter</QuestCardBtn>}
         </Link>
 
       </div>
