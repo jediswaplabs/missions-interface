@@ -1,20 +1,8 @@
-import React, { useCallback, useState } from 'react';
-import Stack from '@mui/material/Stack';
-import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
-import Link from '@mui/material/Link';
-import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
-import { Box, Tab } from '@mui/material';
+import React from 'react';
 import Grid from '@mui/material/Grid';
 import { Container } from '@material-ui/core';
 
-import { MainpageContainer, MainpageContainerHeader, JediSwapTabs } from './MainPage.styles';
-import { eventsLookup, guildNamesLookup, guildTypesLookup } from '../../common/contansts';
 import MainLayout from '../../layouts/MainLayout/MainLayout';
-import LeaderboardTable from '../../features/guilds/Leaderboard/Leaderboard';
-import { useActiveStarknetReact } from '../../hooks';
-import { EventEmitter } from '../../common/eventEmitter';
 import InfoCard from '../../components/InfoCard/InfoCard';
 import QuestCard from '../../components/QuestCard/QuestCard';
 import campaign from '../../resources/icons/campaign.svg';
@@ -26,18 +14,6 @@ TODO хук для starknet.id
  */
 
 const MainPage = () => {
-  const { t } = useTranslation();
-  const { connectedAddress } = useActiveStarknetReact();
-  const guildIds = Object.keys(guildNamesLookup);
-  const [activeGuildId, setActiveGuildId] = useState(guildTypesLookup.all);
-  const handleActiveGuildIdChange = useCallback((event, value) => {
-    setActiveGuildId(value);
-  }, [setActiveGuildId]);
-
-  const handleConnectWalletModal = useCallback(() => {
-    EventEmitter.dispatch(eventsLookup.openWalletModal);
-  }, []);
-
   const bodyContent = (
     <Container>
       <Grid container justifyContent="center" spacing={3}>
@@ -56,11 +32,11 @@ const MainPage = () => {
           <InfoCard />
         </Grid>
         <Grid item xs={10} md={6}>
-        <QuestCard
-          questType="UPCOMING CONTEST"
-          title="Return of the LPs"
-          description="This is our third upcoming liquidity contest in series. Watch this space for more info. We will keep you updated"
-        />
+          <QuestCard
+            questType="UPCOMING CONTEST"
+            title="Return of the LPs"
+            description="This is our third upcoming liquidity contest in series. Watch this space for more info. We will keep you updated"
+          />
         </Grid>
       </Grid>
     </Container>
