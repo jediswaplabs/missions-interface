@@ -1,17 +1,17 @@
 import React, { useCallback, useState } from 'react';
-import { UnsupportedChainIdError, useStarknetReact } from '@web3-starknet-react/core';
+import { UnsupportedChainIdError } from '@web3-starknet-react/core';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SvgIcon } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
-import { HeaderContainer, HeaderLogo, HeaderWallet, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink } from './Header.styles';
-import { useActiveStarknetReact } from '../../hooks';
-import { eventsLookup, NETWORK_LABELS } from '../../common/contansts';
-import { argentX, braavosWallet } from '../../common/connectors';
+import { HeaderContainer, HeaderLogo, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink } from './Header.styles';
+import { useAccountDetails } from '../../hooks/index.ts';
+import { eventsLookup } from '../../common/contansts';
+import { argentX, braavosWallet } from '../../common/connectors/index.ts';
 import { getShortenAddress } from '../../common/addressHelper';
 import { EventEmitter } from '../../common/eventEmitter';
 import logo from '../../resources/icons/logo.svg';
@@ -19,12 +19,10 @@ import argentXIcon from '../../resources/icons/argentx.svg';
 import braavosIcon from '../../resources/icons/braavos.svg';
 import GradientButton from '../GradientButton/GradientButton';
 import WalletModal from '../../features/wallet/WalletModal/WalletModal';
-import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
 
 const noop = () => { };
 
 const Header = () => {
-  const { chainId } = useStarknetReact();
   const location = useLocation();
 
   return (
@@ -58,22 +56,26 @@ const Header = () => {
             {/* <HeaderWallet> */}
             <Stack direction="row" alignItems="center" gap={2}>
               {
-                location.pathname === '/home' ?
-                  <ActiveLink to={`/home`}>
+                location.pathname === '/home' ? (
+                  <ActiveLink to="/home">
                     <Typography variant="body1" color="white">Quests</Typography>
-                  </ActiveLink> :
-                  <Link to={`/home`}>
+                  </ActiveLink>
+                ) : (
+                  <Link to="/home">
                     <Typography variant="body1" color="white">Quests</Typography>
                   </Link>
+                )
               }
               {
-                location.pathname === '/profile' ?
-                  <ActiveLink to={`/profile`}>
+                location.pathname === '/profile' ? (
+                  <ActiveLink to="/profile">
                     <Typography variant="body1" color="white">My Profile</Typography>
-                  </ActiveLink> :
-                  <Link to={`/profile`} >
+                  </ActiveLink>
+                ) : (
+                  <Link to="/profile">
                     <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>My Profile</Typography>
                   </Link>
+                )
               }
               {/* {chainId && NETWORK_LABELS[chainId] && (
                   <Typography variant="body1" color="text.primary">Starknet-{NETWORK_LABELS[chainId]}</Typography>
@@ -123,13 +125,14 @@ const Web3Status = () => {
 
 const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   const { t } = useTranslation();
-  const { connectedAddress, connector, error } = useActiveStarknetReact();
-  if (connectedAddress) {
+  const { error } = useAccountDetails();
+  const { address, connector } = useAccountDetails();
+  if (address) {
     return (
-      <Web3StatusConnected onClick={onWalletModalToggle} >
+      <Web3StatusConnected onClick={onWalletModalToggle}>
         <Stack direction="row" alignItems="center" gap={1}>
           {connector && <StatusIcon connector={connector} />}
-          <Typography variant="body1" color="text.primary" style={{ fontSize: '16px', fontFamily: 'Avenir LT Std', fontWeight: '600' }}>{getShortenAddress(connectedAddress)}</Typography>
+          <Typography variant="body1" color="text.primary" style={{ fontSize: '16px', fontFamily: 'Avenir LT Std', fontWeight: '600' }}>{getShortenAddress(address)}</Typography>
         </Stack>
       </Web3StatusConnected>
     );
