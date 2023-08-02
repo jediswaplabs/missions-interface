@@ -13,7 +13,6 @@ import { jediSwapDarkTheme } from './resources/themes';
 import setupStore from './app/store';
 import GlobalStyle, { ApplicationContainer } from './index.styles';
 import MainPage from './pages/MainPage/MainPage';
-import PersonalProfilePage from './pages/PersonalProfilePage/PersonalProfilePage';
 import { isStarknetAddress } from './common/addressHelper';
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import QuestPage from './pages/QuestPage/QuestPage';
