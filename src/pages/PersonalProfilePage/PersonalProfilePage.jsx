@@ -10,13 +10,13 @@ import GuildsList from '../../features/guilds/GuildsList/GuildsList';
 import LeaderboardTable from '../../features/guilds/Leaderboard/Leaderboard';
 import NftCarousel from '../../features/nft/NftCarousel/NftCarousel';
 import { ProfileContainer, ProfileContainerHeader, ProfileContainerContent } from './PersonalProfilePage.styles';
-import { useActiveStarknetReact } from '../../hooks';
+import { useAccountDetails } from '../../hooks/index.ts';
 import { areEqualAddresses } from '../../common/addressHelper';
 
 const PersonalProfilePage = ({ account }) => {
   const { t } = useTranslation();
   const [activeGuildData, setActiveGuildData] = useState({});
-  const { connectedAddress } = useActiveStarknetReact();
+  const { address } = useAccountDetails();
   const handleActiveGuildSelect = (payload) => {
     setActiveGuildData(payload);
   };
@@ -27,7 +27,7 @@ const PersonalProfilePage = ({ account }) => {
 
   const sidebarContent = (
     <Stack gap={4}>
-      <ProfileCard account={account} readOnly={!areEqualAddresses(connectedAddress, account)} />
+      <ProfileCard account={account} readOnly={!areEqualAddresses(address, account)} />
       <ActivitiesList account={account} />
     </Stack>
   );
