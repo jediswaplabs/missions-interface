@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 
-import { HeaderContainer, HeaderLogo, HeaderWallet, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink } from './Header.styles';
+import { HeaderContainer, HeaderLogo, HeaderWallet, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink, HeaderSelectionBar } from './Header.styles';
 import { useActiveStarknetReact } from '../../hooks';
 import { eventsLookup, NETWORK_LABELS } from '../../common/contansts';
 import { argentX, braavosWallet } from '../../common/connectors';
@@ -57,20 +57,22 @@ const Header = () => {
           >
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
-            <Stack direction="row" alignItems="center" gap={2}>
+            <Stack direction="row" alignItems="flex-start" gap={5}>
               {
                 location.pathname === '/home' ?
                   <ActiveLink to={`/home`}>
                     <Typography variant="body1" color="white">Quests</Typography>
+                    <HeaderSelectionBar/>
                   </ActiveLink> :
                   <Link to={`/home`}>
-                    <Typography variant="body1" color="white">Quests</Typography>
+                    <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>Quests</Typography>
                   </Link>
               }
               {
                 location.pathname === '/profile' ?
                   <ActiveLink to={`/profile`}>
                     <Typography variant="body1" color="white">My Profile</Typography>
+                    <HeaderSelectionBar/>
                   </ActiveLink> :
                   <Link to={`/profile`} >
                     <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>My Profile</Typography>

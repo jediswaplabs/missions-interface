@@ -4,7 +4,9 @@ import Box from '@mui/material/Box';
 import { Link } from 'react-router-dom';
 
 const ActiveLink = styled(Link)`
+  margin-top: 3px;
   p {
+    margin-bottom: 5px;
     font-family: 'Avenir LT Std';
     font-style: normal;
     font-weight: 750;
@@ -73,6 +75,13 @@ const Web3StatusConnect = styled.div`
 
 `;
 
+const HeaderSelectionBar = styled.div`
+  width: 66px;
+  height: 2px;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.80) 0%, rgba(255, 255, 255, 0.80) 100%), linear-gradient(180deg, #FFF 0%, rgba(255, 255, 255, 0.00) 100%);
+  box-shadow: 0px 0px 7.321150302886963px 0px rgba(49, 255, 156, 0.50) inset, 0px 0px 73.21151733398438px 0px rgba(49, 255, 156, 0.50), 0px 0px 18.911256790161133px 0px rgba(49, 255, 156, 0.70);
+`;
+
 export {
   ActiveLink,
   HeaderContainer,
@@ -83,4 +92,5 @@ export {
   Web3StatusConnected,
   Web3StatusError,
   Web3StatusConnect,
+  HeaderSelectionBar
 };
