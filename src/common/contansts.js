@@ -1,4 +1,4 @@
-import { argentX, braavosWallet } from './connectors';
+import { argentX, braavosWallet } from './connectors/index.ts';
 import argentXIcon from '../resources/icons/argentx.svg';
 import braavosIcon from '../resources/icons/braavos.svg';
 
