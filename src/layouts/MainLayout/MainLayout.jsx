@@ -1,37 +1,26 @@
-import React, { useState } from 'react';
-import Grid from '@mui/material/Grid';
-import { useStarknetReact } from '@web3-starknet-react/core';
+import React from 'react';
+// import { useStarknetReact } from '@web3-starknet-react/core';
 
-import { useEagerConnect, useInactiveListener } from '../../hooks';
+// import { useEagerConnect, useInactiveListener } from '../../hooks/index.ts';
 import Page from '../../components/Page/Page';
 import Header from '../../components/Header/Header';
 import { MainLayoutContainer, MainLayoutHeaderContainer, MainLayoutBodyContainer, MainLayoutFooterContainer, HeaderLine, CircleLeft, CircleRight } from './MainLayout.styles';
-import { NetworkContextName } from '../../common/contansts';
+// import { NetworkContextName } from '../../common/contansts';
 
 const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar = false }) => (
   <Page>
-    <HeaderLine></HeaderLine>
+    <HeaderLine />
     <MainLayoutContainer>
       <MainLayoutHeaderContainer marginBottom={{ xs: 1, md: 2 }} px={{ xs: 2, md: 4 }}>
         <Header />
       </MainLayoutHeaderContainer>
 
       <MainLayoutBodyContainer marginBottom={{ xs: 1, md: 2 }} px={{ xs: 2, md: 4 }} position="relative">
-      <CircleLeft />
-      <CircleRight />
-        <Web3ReactManager>
-          {bodyContent}
-          {/* <Grid container rowSpacing={3} direction={{ xs: 'column', md: 'row' }}>
-            {!disableSidebar && (
-              <Grid item pr={{ md: 4 }} sx={{ width: { xs: '100%', md: '340px' } }}>
-                {sidebarContent}
-              </Grid>
-            )}
-            <Grid item xs sx={{ width: '100%' }}>
-              {bodyContent}
-            </Grid>
-          </Grid> */}
-        </Web3ReactManager>
+        <CircleLeft />
+        <CircleRight />
+        {/* <Web3ReactManager> */}
+        {bodyContent}
+        {/* </Web3ReactManager> */}
       </MainLayoutBodyContainer>
 
       <MainLayoutFooterContainer px={{ xs: 2, md: 4 }} />
@@ -39,24 +28,24 @@ const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar 
   </Page>
 );
 
-const Web3ReactManager = ({ children }) => {
-  const { active } = useStarknetReact();
-  const { error: networkError } = useStarknetReact(NetworkContextName);
+// const Web3ReactManager = ({ children }) => {
+//   const { active } = useStarknetReact();
+//   const { error: networkError } = useStarknetReact(NetworkContextName);
 
-  // try to eagerly connect to an injected provider, if it exists and has granted access already
-  const triedEager = useEagerConnect();
+//    try to eagerly connect to an injected provider, if it exists and has granted access already
+//   const triedEager = useEagerConnect();
 
-  // when there's no account connected, react to logins (broadly speaking) on the injected provider, if it exists
-  useInactiveListener(!triedEager);
+//    when there's no account connected, react to logins (broadly speaking) on the injected provider, if it exists
+//   useInactiveListener(!triedEager);
 
-  // if the account context isn't active, and there's an error on the network context, it's an irrecoverable error
-  if (!active && networkError) {
-    return (
-      <div>Unknown error</div>
-    );
-  }
+//    if the account context isn't active, and there's an error on the network context, it's an irrecoverable error
+//   if (!active && networkError) {
+//     return (
+//       <div>Unknown error</div>
+//     );
+//   }
 
-  return children;
-};
+//   return children;
+// };
 
 export default MainLayout;
