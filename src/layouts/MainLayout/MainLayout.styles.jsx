@@ -70,5 +70,5 @@ export {
   MainLayoutFooterContainer,
   HeaderLine,
   CircleLeft,
-  CircleRight
+  CircleRight,
 };
