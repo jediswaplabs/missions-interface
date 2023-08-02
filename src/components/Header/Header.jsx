@@ -20,6 +20,7 @@ import braavosIcon from '../../resources/icons/braavos.svg';
 import GradientButton from '../GradientButton/GradientButton';
 import WalletModal from '../../features/wallet/WalletModal/WalletModal';
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher';
+import ProfilePopout from '../ProfilePopout/ProfilePopout';
 
 const noop = () => { };
 
@@ -73,6 +74,7 @@ const Header = () => {
                   </ActiveLink> :
                   <Link to={`/profile`} >
                     <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>My Profile</Typography>
+                    <ProfilePopout />
                   </Link>
               }
               {/* {chainId && NETWORK_LABELS[chainId] && (

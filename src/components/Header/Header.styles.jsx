@@ -19,6 +19,7 @@ const ActiveLink = styled(Link)`
 `;
 const HeaderContainer = styled(Box)`
   margin-bottom: 50px;
+  position: relative;
 `;
 
 const HeaderInnerContainer = styled.div`
