@@ -15,14 +15,15 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { NoStarknetProviderError as NoArgentXProviderError } from '@web3-starknet-react/argentx-connector';
 import { NoStarknetProviderError as NoBraavosProviderError } from '@web3-starknet-react/braavos-connector';
 import { useTranslation } from 'react-i18next';
+import { useConnectors } from '@starknet-react/core';
 
 import JediModal from '../../../components/JediModal/JediModal';
 import { getStarkscanLink } from '../../../common/explorerHelper';
 import { getShortenAddress } from '../../../common/addressHelper';
-import { argentX, braavosWallet } from '../../../common/connectors';
+import { argentX, braavosWallet } from '../../../common/connectors/index.ts';
 import { SUPPORTED_WALLETS } from '../../../common/contansts';
-import { usePrevious } from '../../../hooks';
-import { ModalContainer, ModalInner, WalletConnectorContainer } from './WalletModal.styles';
+import { useAccountDetails, usePrevious } from '../../../hooks/index.ts';
+import { ModalInner, WalletConnectorContainer } from './WalletModal.styles';
 
 const preventDefault = (event) => event.preventDefault();
 const noop = () => {};
@@ -38,12 +39,14 @@ const WalletModal = ({ children, ...props }) => {
   const { t, i18n } = useTranslation();
   const [modalTitle, setModalTitle] = useState();
 
-  const { active, connectedAddress, account, connector, activate, error, chainId } = useStarknetReact();
+  const { active, error } = useStarknetReact();
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT);
+  const { address, account, chainId, connector } = useAccountDetails();
   const [pendingWallet, setPendingWallet] = useState();
   const [pendingError, setPendingError] = useState();
   const activePrevious = usePrevious(active);
   const connectorPrevious = usePrevious(connector);
+  const { connect, disconnect } = useConnectors();
 
   useEffect(() => {
     if (((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
@@ -56,15 +59,17 @@ const WalletModal = ({ children, ...props }) => {
     return option?.[0] ?? {};
   };
 
+  // eslint-disable-next-line require-await
   const tryActivation = async (walletConnector) => {
     if (!walletConnector) {
       return;
     }
     setPendingWallet(connector); // set wallet for pending view
     setWalletView(WALLET_VIEWS.PENDING);
-
     try {
-      await activate(walletConnector, (e) => console.error('Error activating connector', walletConnector, e), true);
+      // await activate(walletConnector, (e) => console.error('Error activating connector', walletConnector, e), true);
+      connect(walletConnector);
+
       if (walletConnector === argentX) {
         localStorage?.setItem('auto-injected-wallet', 'argentx');
       } else if (walletConnector === braavosWallet) {
@@ -74,7 +79,8 @@ const WalletModal = ({ children, ...props }) => {
       }
     } catch (e) {
       if (e instanceof UnsupportedChainIdError) {
-        await activate(walletConnector); // a little janky...can't use setError because the connector isn't set
+        // await activate(walletConnector); // a little janky...can't use setError because the connector isn't set
+        connect(walletConnector);
       } else {
         console.error(e);
         setPendingError(e);
@@ -123,7 +129,7 @@ const WalletModal = ({ children, ...props }) => {
     if (account && walletView === WALLET_VIEWS.ACCOUNT) {
       return (
         <>
-          <WalletAccountOverview connectedWallet={getConnectedWalletOptions()} account={account} chainId={chainId} connectedAddress={connectedAddress} onWalletDisconnect={() => { connector?.deactivate(); }} />
+          <WalletAccountOverview connectedWallet={getConnectedWalletOptions()} account={account} chainId={chainId} address={address} onWalletDisconnect={() => { disconnect(); }} />
         </>
       );
     }
@@ -191,7 +197,7 @@ const WalletConnectOptionsView = ({ onClick = noop, wallets = {} }) => (
   </Stack>
 );
 
-const WalletAccountOverview = ({ connectedWallet, chainId, connectedAddress, onWalletDisconnect = noop() }) => {
+const WalletAccountOverview = ({ connectedWallet, chainId, address, onWalletDisconnect = noop() }) => {
   const { t } = useTranslation();
   const [isAddressCopied, setIsAddressCopied] = useState(false);
   useEffect(() => {
@@ -216,13 +222,13 @@ const WalletAccountOverview = ({ connectedWallet, chainId, connectedAddress, onW
             <SvgIcon component={connectedWallet.icon} />
           </Grid>
           <Grid item>
-            <Typography variant="body1" component="span">{getShortenAddress(connectedAddress)}</Typography>
+            <Typography variant="body1" component="span" color="text.primary">{getShortenAddress(address)}</Typography>
           </Grid>
         </Grid>
       </Box>
 
       <Stack gap={1} flexDirection="row" alignItems="flex-start">
-        {connectedAddress && (
+        {address && (
           <Grid container direction="row" alignItems="center" gap={0.5} width="auto" wrap="nowrap">
             <Grid item>
               <ContentCopyIcon color="primary" fontSize="small" />
@@ -231,7 +237,7 @@ const WalletAccountOverview = ({ connectedWallet, chainId, connectedAddress, onW
               {isAddressCopied ? (
                 <Typography variant="body2" component="span" color="grey.400">{t('walletModal.copied')}</Typography>
               ) : (
-                <CopyToClipboard text={connectedAddress} onCopy={() => setIsAddressCopied(true)}>
+                <CopyToClipboard text={address} onCopy={() => setIsAddressCopied(true)}>
                   <Link component="button" underline="none" variant="body2" color="grey.400" onClick={preventDefault}>{t('walletModal.copyAddress')}</Link>
                 </CopyToClipboard>
               )}
@@ -244,7 +250,7 @@ const WalletAccountOverview = ({ connectedWallet, chainId, connectedAddress, onW
             <OpenInNewIcon color="primary" fontSize="small" />
           </Grid>
           <Grid item>
-            <Link component="a" underline="none" variant="body2" color="grey.400" target="_blank" rel="noopener noreferrer" href={getStarkscanLink(chainId, connectedAddress, 'contract')}>{t('walletModal.viewOnStarkscan')}</Link>
+            <Link component="a" underline="none" variant="body2" color="grey.400" target="_blank" rel="noopener noreferrer" href={getStarkscanLink(chainId, address, 'contract')}>{t('walletModal.viewOnStarkscan')}</Link>
           </Grid>
         </Grid>
       </Stack>
