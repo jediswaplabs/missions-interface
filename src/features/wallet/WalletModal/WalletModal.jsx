@@ -15,6 +15,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTranslation } from 'react-i18next';
 import { useConnectors } from '@starknet-react/core';
 import { getStarknet } from 'get-starknet-core';
+import { StarknetChainId } from 'starknet/dist/constants';
 
 import JediModal from '../../../components/JediModal/JediModal';
 import { getStarkscanLink } from '../../../common/explorerHelper';
@@ -22,6 +23,7 @@ import { getShortenAddress } from '../../../common/addressHelper';
 import { SUPPORTED_WALLETS } from '../../../common/contansts';
 import { useAccountDetails, usePrevious } from '../../../hooks/index.ts';
 import { ModalInner, WalletConnectorContainer } from './WalletModal.styles';
+import { isProductionChainId, isProductionEnvironment, isTestnetChainId, isTestnetEnvironment } from '../../../common/connectors/index.ts';
 
 const preventDefault = (event) => event.preventDefault();
 const noop = () => {};
@@ -41,10 +43,11 @@ const WalletModal = ({ children, ...props }) => {
   const { getAvailableWallets } = getStarknet();
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT);
-  const { address, account, chainId, connector } = useAccountDetails();
+  const { address, account, chainId, connector, status } = useAccountDetails();
   const [pendingWallet, setPendingWallet] = useState();
   const [pendingError, setPendingError] = useState();
   const [availableWallets, setAvailableWallets] = useState([]);
+  const [chainError, setChainError] = useState(false);
   const activePrevious = usePrevious(active);
   const connectorPrevious = usePrevious(connector);
   const { connect, disconnect } = useConnectors();
@@ -69,6 +72,19 @@ const WalletModal = ({ children, ...props }) => {
 
     getWallets();
   }, []);
+
+  useEffect(() => {
+    if (status === 'connected' && chainId) {
+      if (
+        (isProductionEnvironment() && isTestnetChainId(chainId))
+        || (isTestnetEnvironment() && isProductionChainId(chainId))
+        || !Object.values(StarknetChainId).includes(chainId)
+      ) {
+        setChainError(true);
+        disconnect();
+      }
+    }
+  }, [status]);
 
   // eslint-disable-next-line require-await
   const tryActivation = (walletConnector) => {
@@ -103,8 +119,8 @@ const WalletModal = ({ children, ...props }) => {
   };
 
   useEffect(() => {
-    if (error) {
-      setModalTitle(error instanceof UnsupportedChainIdError ? t('walletModal.errors.wrongNetwork') : t('walletModal.errors.connectingError'));
+    if (error || chainError) {
+      setModalTitle(error instanceof UnsupportedChainIdError || chainError ? t('walletModal.errors.wrongNetwork') : t('walletModal.errors.connectingError'));
       return;
     }
 
@@ -128,10 +144,10 @@ const WalletModal = ({ children, ...props }) => {
   };
 
   const getContent = () => {
-    if (error) {
+    if (error || chainError) {
       return (
         <>
-          {error instanceof UnsupportedChainIdError ? (
+          {error instanceof UnsupportedChainIdError || chainError ? (
             <Typography variant="body2" color="text.primary">{t('walletModal.errors.connectAppropriateNetwork')}</Typography>
           ) : (
             <Typography variant="body2" component="span" color="text.primary">{t('walletModal.errors.tryRefresh')}</Typography>
