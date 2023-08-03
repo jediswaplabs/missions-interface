@@ -12,15 +12,13 @@ import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Link from '@mui/material/Link';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-import { NoStarknetProviderError as NoArgentXProviderError } from '@web3-starknet-react/argentx-connector';
-import { NoStarknetProviderError as NoBraavosProviderError } from '@web3-starknet-react/braavos-connector';
 import { useTranslation } from 'react-i18next';
 import { useConnectors } from '@starknet-react/core';
+import { getStarknet } from 'get-starknet-core';
 
 import JediModal from '../../../components/JediModal/JediModal';
 import { getStarkscanLink } from '../../../common/explorerHelper';
 import { getShortenAddress } from '../../../common/addressHelper';
-import { argentX, braavosWallet } from '../../../common/connectors/index.ts';
 import { SUPPORTED_WALLETS } from '../../../common/contansts';
 import { useAccountDetails, usePrevious } from '../../../hooks/index.ts';
 import { ModalInner, WalletConnectorContainer } from './WalletModal.styles';
@@ -40,10 +38,13 @@ const WalletModal = ({ children, ...props }) => {
   const [modalTitle, setModalTitle] = useState();
 
   const { active, error } = useStarknetReact();
+  const { getAvailableWallets } = getStarknet();
+
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT);
   const { address, account, chainId, connector } = useAccountDetails();
   const [pendingWallet, setPendingWallet] = useState();
   const [pendingError, setPendingError] = useState();
+  const [availableWallets, setAvailableWallets] = useState([]);
   const activePrevious = usePrevious(active);
   const connectorPrevious = usePrevious(connector);
   const { connect, disconnect } = useConnectors();
@@ -55,36 +56,49 @@ const WalletModal = ({ children, ...props }) => {
   }, [setWalletView, active, error, connector, activePrevious, connectorPrevious]);
 
   const getConnectedWalletOptions = () => {
-    const option = Object.values(SUPPORTED_WALLETS).filter((w) => w.connector === connector);
+    const option = Object.values(SUPPORTED_WALLETS).filter((w) => w.connector.options.id === connector.options.id);
     return option?.[0] ?? {};
   };
 
+  useEffect(() => {
+    // check all available wallets from browser
+    const getWallets = async () => {
+      const availableWalletsInBrowser = await getAvailableWallets();
+      setAvailableWallets(availableWalletsInBrowser);
+    };
+
+    getWallets();
+  }, []);
+
   // eslint-disable-next-line require-await
-  const tryActivation = async (walletConnector) => {
+  const tryActivation = (walletConnector) => {
     if (!walletConnector) {
       return;
     }
-    setPendingWallet(connector); // set wallet for pending view
+    const checkIfWalletExists = availableWallets.find((wallet) => wallet.id === walletConnector.options.id);
+    setPendingWallet(walletConnector); // set wallet for pending view
     setWalletView(WALLET_VIEWS.PENDING);
-    try {
-      // await activate(walletConnector, (e) => console.error('Error activating connector', walletConnector, e), true);
-      connect(walletConnector);
-
-      if (walletConnector === argentX) {
-        localStorage?.setItem('auto-injected-wallet', 'argentx');
-      } else if (walletConnector === braavosWallet) {
-        localStorage?.setItem('auto-injected-wallet', 'braavos');
-      } else {
-        localStorage?.removeItem('auto-injected-wallet');
-      }
-    } catch (e) {
-      if (e instanceof UnsupportedChainIdError) {
-        // await activate(walletConnector); // a little janky...can't use setError because the connector isn't set
+    if (checkIfWalletExists) {
+      setPendingWallet(walletConnector); // set wallet for pending view
+      setWalletView(WALLET_VIEWS.PENDING);
+      try {
         connect(walletConnector);
-      } else {
-        console.error(e);
-        setPendingError(e);
+        if (walletConnector.options.id === 'argentX') {
+          localStorage.setItem('auto-injected-wallet', 'argentX');
+        } else if (walletConnector.options.id === 'braavos') {
+          localStorage.setItem('auto-injected-wallet', 'braavos');
+        } else {
+          localStorage.removeItem('auto-injected-wallet');
+        }
+        setWalletView(WALLET_VIEWS.ACCOUNT);
+      } catch (e) {
+        // Store the error in a variable
+        const errorValue = e;
+        setPendingError(errorValue);
       }
+    } else {
+      setWalletView(WALLET_VIEWS.PENDING);
+      setPendingError(walletConnector.options.id);
     }
   };
 
@@ -102,7 +116,7 @@ const WalletModal = ({ children, ...props }) => {
     setModalTitle(t('walletModal.titleConnect'));
   }, [walletView, error, account, i18n.language]);
 
-  const handleOnOptionClick = useCallback(async (option) => {
+  const handleOnOptionClick = (option) => {
     if (option.connector === connector) {
       setWalletView(WALLET_VIEWS.ACCOUNT);
       return;
@@ -110,8 +124,8 @@ const WalletModal = ({ children, ...props }) => {
     if (option.href) {
       return;
     }
-    await tryActivation(option.connector);
-  }, [connector]);
+    tryActivation(option.connector);
+  };
 
   const getContent = () => {
     if (error) {
@@ -133,7 +147,6 @@ const WalletModal = ({ children, ...props }) => {
         </>
       );
     }
-
     return (
       <>
         {walletView === WALLET_VIEWS.PENDING ? (
@@ -258,9 +271,9 @@ const WalletAccountOverview = ({ connectedWallet, chainId, address, onWalletDisc
   );
 };
 
-const WalletPending = ({ connector, error = false, setPendingError, setWalletView, tryActivation }) => {
-  const isArgentXProviderError = error instanceof NoArgentXProviderError;
-  const isBraavosProviderError = error instanceof NoBraavosProviderError;
+const WalletPending = ({ connector, error, setPendingError, setWalletView, tryActivation }) => {
+  const isArgentXProviderError = error === 'argentX';
+  const isBraavosProviderError = error === 'braavos';
   const isStarknetProviderError = isArgentXProviderError || isBraavosProviderError;
 
   return (
@@ -301,7 +314,7 @@ const ProviderError = ({ error, onClick }) => {
   const braavosUrl = 'https://chrome.google.com/webstore/detail/braavos-wallet/jnlgamecbpmbajjfhmmmlhejkemejdma';
   const downloadArgentX = () => window.open(argentXUrl, '_blank');
   const downloadBraavos = () => window.open(braavosUrl, '_blank');
-  const isArgentXError = error instanceof NoArgentXProviderError;
+  const isArgentXError = error === 'argentX';
 
   const handleDownloadButtonClick = useCallback(() => {
     if (isArgentXError) {
