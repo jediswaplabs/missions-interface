@@ -132,5 +132,5 @@ export {
   QuestCardCalend,
   QuestCardNftNum,
   LaunchSoon,
-  QuestCardAddress
+  QuestCardAddress,
 };

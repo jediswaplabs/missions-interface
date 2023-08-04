@@ -17,7 +17,7 @@ const statuses = {
   claimed: 'claimed',
 };
 
-const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim }) => (
+const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim,isWalletConnected }) => (
   <MintBox>
     <div>
       <QuestCardTitle>
