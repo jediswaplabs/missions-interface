@@ -9,18 +9,19 @@ import nft from '../../resources/images/L1P1-min.png';
 import questImage from '../../resources/images/L1P1-L1P2.png';
 import { AllQuests } from './QuestPage.styles';
 import { sleep } from '../../common/sleepHelper';
-import { useAccountDetails } from '../../hooks/index.ts';
+import { useAccountDetails, useWalletActionHandlers } from '../../hooks/index.ts';
 
 const QuestPage = () => {
   const { id } = useParams();
   const [statusCheck, setStatus] = useState(statuses.beforeCheck);
   const [isWalletConnected, setWalletConnectivity] = useState();
   const { address, account, chainId, connector, status } = useAccountDetails();
+  const { setWalletModalOpen } = useWalletActionHandlers();
 
   const checkEligibility = async (id) => {
-    if(!isWalletConnected){
-      
-    }else {
+    if (!isWalletConnected) {
+      setWalletModalOpen(true);
+    } else {
       console.log(`questid: ${id}`);
       setStatus(statuses.checking);
       await sleep(1500);

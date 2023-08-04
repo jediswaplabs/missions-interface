@@ -1,11 +1,11 @@
 import { useStarknetReact as useStarknetReactCore } from "@web3-starknet-react/core";
-// import { isMobile } from "react-device-detect";
-import { useEffect, useState, useMemo , useRef} from "react";
-// import { ArgentXConnector } from "@web3-starknet-react/argentx-connector";
+import { useEffect, useCallback, useMemo , useRef} from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { InjectedConnector, useConnectors, useAccount } from '@starknet-react/core'
 
 import { NetworkContextName } from "../common/contansts";
 import { argentX, braavosWallet } from "../common/connectors";
-import { InjectedConnector, useConnectors, useAccount } from '@starknet-react/core'
+import { setWalletModalOpenAction } from "../features/wallet/walletSlice";
 
 
 export function useActiveStarknetReact() {
@@ -126,4 +126,16 @@ export function usePrevious(value) {
 
   // Return previous value (happens before update in useEffect above)
   return ref.current;
+}
+
+export function useWalletActionHandlers(){
+  const dispatch = useDispatch();
+
+  const setWalletModalOpen= useCallback((value) => {
+    dispatch(setWalletModalOpenAction(value));
+  }, [dispatch]);
+
+  return {
+    setWalletModalOpen
+  }
 }

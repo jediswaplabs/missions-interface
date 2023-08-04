@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { UnsupportedChainIdError } from '@web3-starknet-react/core';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
@@ -7,9 +7,10 @@ import { SvgIcon } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { HeaderContainer, HeaderLogo, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink, HeaderSelectionBar } from './Header.styles';
-import { useAccountDetails } from '../../hooks/index.ts';
+import { useAccountDetails, useWalletActionHandlers } from '../../hooks/index.ts';
 import { eventsLookup } from '../../common/contansts';
 import { argentX, braavosWallet } from '../../common/connectors/index.ts';
 import { getShortenAddress } from '../../common/addressHelper';
@@ -107,26 +108,27 @@ const StatusIcon = ({ connector }) => {
 };
 
 const Web3Status = () => {
-  const [showModal, setShowModal] = useState(false);
+  const { setWalletModalOpen } = useWalletActionHandlers();
+  const isWalletModalOpen = useSelector((state) => state.wallet.isWalletModalOpen);
 
   const handleToggleWalletModal = useCallback(() => {
-    setShowModal(!showModal);
-  }, [showModal]);
+    setWalletModalOpen(!isWalletModalOpen);
+  }, [isWalletModalOpen]);
 
   const handleCloseWalletModal = useCallback(() => {
-    setShowModal(false);
-  }, [showModal]);
+    setWalletModalOpen(false);
+  }, [isWalletModalOpen]);
 
   const handleOpenWalletModal = useCallback(() => {
-    setShowModal(true);
-  }, [showModal]);
+    setWalletModalOpen(true);
+  }, [isWalletModalOpen]);
 
   EventEmitter.subscribe(eventsLookup.openWalletModal, handleOpenWalletModal);
 
   return (
     <>
       <Web3StatusInner onWalletModalToggle={handleToggleWalletModal} />
-      <WalletModal open={showModal} onClose={handleCloseWalletModal} />
+      <WalletModal open={isWalletModalOpen} onClose={handleCloseWalletModal} />
     </>
   );
 };
