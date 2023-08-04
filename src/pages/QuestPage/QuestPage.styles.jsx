@@ -11,5 +11,5 @@ const AllQuests = styled.div`
 `;
 
 export {
-    AllQuests
+  AllQuests,
 };
