@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     -ms-overflow-style: scrollbar;
-    background: black;
+    background: linear-gradient(225deg, #14031D 0%, #2F0743 100%);
     font-size: 14px;
   }
 

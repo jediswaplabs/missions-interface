@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { Link, useLocation } from 'react-router-dom';
 
-import { HeaderContainer, HeaderLogo, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink } from './Header.styles';
+import { HeaderContainer, HeaderLogo, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink, HeaderSelectionBar } from './Header.styles';
 import { useAccountDetails } from '../../hooks/index.ts';
 import { eventsLookup } from '../../common/contansts';
 import { argentX, braavosWallet } from '../../common/connectors/index.ts';
@@ -19,6 +19,7 @@ import argentXIcon from '../../resources/icons/argentx.svg';
 import braavosIcon from '../../resources/icons/braavos.svg';
 import GradientButton from '../GradientButton/GradientButton';
 import WalletModal from '../../features/wallet/WalletModal/WalletModal';
+import ProfilePopout from '../ProfilePopout/ProfilePopout';
 
 const noop = () => { };
 
@@ -54,28 +55,35 @@ const Header = () => {
           >
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
-            <Stack direction="row" alignItems="center" gap={2}>
+            <Stack direction="row" alignItems="flex-start" gap={5}>
               {
                 location.pathname === '/home' ? (
                   <ActiveLink to="/home">
                     <Typography variant="body1" color="white">Quests</Typography>
+                    <HeaderSelectionBar />
                   </ActiveLink>
-                ) : (
-                  <Link to="/home">
-                    <Typography variant="body1" color="white">Quests</Typography>
-                  </Link>
                 )
+                  : (
+                    <Link to="/home">
+                      <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>Quests</Typography>
+                    </Link>
+                  )
+
               }
               {
                 location.pathname === '/profile' ? (
                   <ActiveLink to="/profile">
                     <Typography variant="body1" color="white">My Profile</Typography>
+                    <HeaderSelectionBar />
                   </ActiveLink>
-                ) : (
-                  <Link to="/profile">
-                    <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>My Profile</Typography>
-                  </Link>
                 )
+                  : (
+                    <Link to="/profile">
+                      <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>My Profile</Typography>
+                      <ProfilePopout />
+                    </Link>
+                  )
+
               }
               {/* {chainId && NETWORK_LABELS[chainId] && (
                   <Typography variant="body1" color="text.primary">Starknet-{NETWORK_LABELS[chainId]}</Typography>

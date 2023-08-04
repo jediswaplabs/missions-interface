@@ -1,49 +1,86 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SvgIcon } from '@mui/material';
 
-import { QuestBox, QuestCardTitle, QuestCardDescription, QuestCardAddress, QuestCardBtn } from '../QuestCard/QuestCard.styles';
+import { QuestCardTitle, QuestCardDescription, QuestCardAddress, QuestCardBtn } from '../QuestCard/QuestCard.styles';
+import { MintCardStatus, MintCardClaimed, MintBox } from './MintCard.styles';
 import { getShortenAddress } from '../../common/addressHelper';
 import claimed from '../../resources/icons/claimed.svg';
-import claimed_mark from '../../resources/icons/claimed_mark.svg';
+import claimedMark from '../../resources/icons/claimed_mark.svg';
+import noneligibleImg from '../../resources/icons/noneligible.svg';
 
-const MintCard = ({ title, description, address, nftImg }) => {
-  const [isClaimed, setIsClaimed] = useState(false);
+const statuses = {
+  beforeCheck: 'beforeCheck',
+  checking: 'checking',
+  eligible: 'eligible',
+  noneligible: 'noneligible',
+  claiming: 'claiming',
+  claimed: 'claimed',
+};
 
-  return (
-    <QuestBox style={{ width: '700px', height: 'unset', padding: '30px', marginTop: '20px', display: 'flex', justifyContent: 'space-between' }}>
-      <div>
-        <QuestCardTitle>
-          {title}
-        </QuestCardTitle>
-        <QuestCardAddress>
-          {getShortenAddress(address)}
-        </QuestCardAddress>
-        <QuestCardDescription style={{ maxWidth: '314px' }}>
-          {description}
-        </QuestCardDescription>
-        {!isClaimed
+const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim }) => (
+  <MintBox>
+    <div>
+      <QuestCardTitle>
+        {title}
+      </QuestCardTitle>
+      <QuestCardAddress>
+        {getShortenAddress(address)}
+      </QuestCardAddress>
+      <QuestCardDescription style={{ maxWidth: '314px' }}>
+        {description}
+      </QuestCardDescription>
+      {status === statuses.beforeCheck
         && (
-          <QuestCardBtn onClick={() => setIsClaimed(!isClaimed)}>
+          <QuestCardBtn onClick={onCheck}>
+            Check Eligibility
+          </QuestCardBtn>
+        )}
+      {status === statuses.checking
+        && (
+          <MintCardStatus>
+            Checking...
+          </MintCardStatus>
+        )}
+      {status === statuses.noneligible
+        && (
+          <MintCardStatus>
+            Not Eligible
+          </MintCardStatus>
+        )}
+      {status === statuses.eligible
+        && (
+          <QuestCardBtn onClick={onClaim}>
             Claim NFT
           </QuestCardBtn>
         )}
-        {isClaimed
+      {status === statuses.claiming
         && (
-          <QuestBox style={{ width: '314px', height: 'unset', padding: '6px', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+          <MintCardStatus>
+            Claiming...
+          </MintCardStatus>
+        )}
+      {status === statuses.claimed
+        && (
+          <MintCardClaimed>
             <div style={{ marginRight: '5px' }}>
-              <SvgIcon component={claimed_mark} inheritViewBox style={{ width: 'unset', height: 'unset' }} />
+              <SvgIcon component={claimedMark} inheritViewBox style={{ width: 'unset', height: 'unset' }} />
             </div>
             NFT Claimed!
-          </QuestBox>
+          </MintCardClaimed>
         )}
-      </div>
-      <div style={{ position: 'relative' }}>
-        {isClaimed
+    </div>
+    <div style={{ position: 'relative' }}>
+      {status === statuses.claimed
         && <SvgIcon component={claimed} inheritViewBox style={{ width: 'unset', height: 'unset', position: 'absolute', bottom: '30px', left: '-40px' }} />}
-        <img src={nftImg} />
-      </div>
-    </QuestBox>
-  );
-};
+      {status === statuses.noneligible
+        && <SvgIcon component={noneligibleImg} inheritViewBox style={{ width: 'unset', height: '240px' }} />}
+      {status !== statuses.noneligible
+        && <img src={nftImg} />}
+    </div>
+  </MintBox>
+);
 
+export {
+  statuses,
+};
 export default MintCard;
