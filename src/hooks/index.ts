@@ -6,6 +6,7 @@ import { InjectedConnector, useConnectors, useAccount } from '@starknet-react/co
 import { NetworkContextName } from "../common/contansts";
 import { argentX, braavosWallet } from "../common/connectors";
 import { setWalletModalOpenAction } from "../features/wallet/walletSlice";
+import {setUserEligibilityForNFTAction, setUserCheckingForEligibilityAction, setUserNonEligibilityForNFTAction, setUserClaimingNFTAction, setNFTClaimedByUserAction} from "../pages/QuestPage/questSlice"
 
 
 export function useActiveStarknetReact() {
@@ -137,5 +138,37 @@ export function useWalletActionHandlers(){
 
   return {
     setWalletModalOpen
+  }
+}
+
+export function useQuestActionHandlers(){
+  const dispatch = useDispatch();
+
+  const setUserEligibilityForNFT= useCallback((value) => {
+    dispatch(setUserEligibilityForNFTAction(value));
+  }, [dispatch]);
+
+  const setUserNonEligibilityForNFT= useCallback((value) => {
+    dispatch(setUserNonEligibilityForNFTAction(value));
+  }, [dispatch]);
+
+  const setUserCheckingForEligibility= useCallback((value) => {
+    dispatch(setUserCheckingForEligibilityAction(value));
+  }, [dispatch]);
+
+  const setUserClaimingNFT= useCallback((value) => {
+    dispatch(setUserClaimingNFTAction(value));
+  }, [dispatch]);
+
+  const setNFTClaimedByUser= useCallback((value) => {
+    dispatch(setNFTClaimedByUserAction(value));
+  }, [dispatch]);
+
+  return {
+    setUserEligibilityForNFT,
+    setUserNonEligibilityForNFT,
+    setUserCheckingForEligibility,
+    setUserClaimingNFT,
+    setNFTClaimedByUser,
   }
 }

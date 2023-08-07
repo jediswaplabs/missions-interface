@@ -4,20 +4,18 @@ import { SvgIcon } from '@mui/material';
 import { QuestCardTitle, QuestCardDescription, QuestCardAddress, QuestCardBtn } from '../QuestCard/QuestCard.styles';
 import { MintCardStatus, MintCardClaimed, MintBox } from './MintCard.styles';
 import { getShortenAddress } from '../../common/addressHelper';
-import claimed from '../../resources/icons/claimed.svg';
 import claimedMark from '../../resources/icons/claimed_mark.svg';
-import noneligibleImg from '../../resources/icons/noneligible.svg';
 
 const statuses = {
-  beforeCheck: 'beforeCheck',
-  checking: 'checking',
-  eligible: 'eligible',
-  noneligible: 'noneligible',
-  claiming: 'claiming',
-  claimed: 'claimed',
+  beforeCheck: 'isEligibiltyStatusBeforeCheck',
+  checking: 'isUserCheckingForEligibility',
+  eligible: 'isUserEligibleForNFT',
+  noneligible: 'isUserNonEligibleForNFT',
+  claiming: 'isUserClaimingNFT',
+  claimed: 'isNFTClaimedByUser',
 };
 
-const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim,isWalletConnected }) => (
+const MintCard = ({ title, description, address, nftImg, status, onCheck, onClaim }) => (
   <MintBox>
     <div>
       <QuestCardTitle>
@@ -70,12 +68,7 @@ const MintCard = ({ title, description, address, nftImg, status, onCheck, onClai
         )}
     </div>
     <div style={{ position: 'relative' }}>
-      {status === statuses.claimed
-        && <SvgIcon component={claimed} inheritViewBox style={{ width: 'unset', height: 'unset', position: 'absolute', bottom: '30px', left: '-40px' }} />}
-      {status === statuses.noneligible
-        && <SvgIcon component={noneligibleImg} inheritViewBox style={{ width: 'unset', height: '240px' }} />}
-      {status !== statuses.noneligible
-        && <img src={nftImg} />}
+      <img src={nftImg} />
     </div>
   </MintBox>
 );

@@ -1,43 +1,58 @@
+/* eslint-disable indent */
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, SvgIcon } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import MainLayout from '../../layouts/MainLayout/MainLayout';
 import backIcon from '../../resources/icons/back.svg';
-import MintCard, { statuses } from '../../components/MintCard/MintCard';
+import MintCard from '../../components/MintCard/MintCard';
 import nft from '../../resources/images/L1P1-min.png';
 import questImage from '../../resources/images/L1P1-L1P2.png';
+import noneligibleImg from '../../resources/icons/noneligible.svg';
+import claimed from '../../resources/icons/claimed.svg';
 import { AllQuests } from './QuestPage.styles';
-import { sleep } from '../../common/sleepHelper';
-import { useAccountDetails, useWalletActionHandlers } from '../../hooks/index.ts';
+import { useAccountDetails,
+  useQuestActionHandlers,
+  useWalletActionHandlers } from '../../hooks/index.ts';
 
 const QuestPage = () => {
   const { id } = useParams();
-  const [statusCheck, setStatus] = useState(statuses.beforeCheck);
+  const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
   const [isWalletConnected, setWalletConnectivity] = useState();
-  const { address, account, chainId, connector, status } = useAccountDetails();
+  const { address, status } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
+  const { setUserEligibilityForNFT, setUserCheckingForEligibility, setUserNonEligibilityForNFT, setUserClaimingNFT, setNFTClaimedByUser } = useQuestActionHandlers();
 
-  const checkEligibility = async (id) => {
+  const isUserEligibleForNFT = useSelector(
+    (state) => state.quest.isUserEligibleForNFT,
+  );
+  const isUserCheckingForEligibility = useSelector(
+    (state) => state.quest.isUserCheckingForEligibility,
+  );
+  const isUserNonEligibleForNFT = useSelector(
+    (state) => state.quest.isUserNonEligibleForNFT,
+  );
+  const isUserClaimingNFT = useSelector(
+    (state) => state.quest.isUserClaimingNFT,
+  );
+  const isNFTClaimedByUser = useSelector(
+    (state) => state.quest.isNFTClaimedByUser,
+  );
+
+  const checkEligibility = (id) => {
     if (!isWalletConnected) {
       setWalletModalOpen(true);
     } else {
       console.log(`questid: ${id}`);
-      setStatus(statuses.checking);
-      await sleep(1500);
-      if (Math.random() > 0.5) {
-        setStatus(statuses.eligible);
-      } else {
-        setStatus(statuses.noneligible);
-      }
+      setEligibiltyStatusBeforeCheck(false);
+      setUserEligibilityForNFT(true);
     }
   };
 
-  const claimNft = async (id) => {
+  const claimNft = (id) => {
     console.log(`questid: ${id}`);
-    setStatus(statuses.claiming);
-    await sleep(1500);
-    setStatus(statuses.claimed);
+    setUserClaimingNFT(true);
   };
 
   useEffect(() => {
@@ -46,6 +61,88 @@ const QuestPage = () => {
     }
   }, [status]);
 
+  const getMintCardContent = () => {
+    if (isEligibiltyStatusBeforeCheck && !isUserClaimingNFT && !isNFTClaimedByUser) {
+      return (
+        <MintCard
+          title="Rise of the first LPs"
+          description="Become a part of the first LPs to earn exclusiveNFT as a reward for the liquidity contribution inseveral pools. You can check your eligibility for NFT by clicking the button below."
+          address={address}
+          nftImg={questImage}
+          status="isEligibiltyStatusBeforeCheck"
+          onCheck={() => checkEligibility(id)}
+        />
+      );
+    }
+    if (isUserCheckingForEligibility && !isUserClaimingNFT && !isNFTClaimedByUser) {
+      return (
+        <MintCard
+          title="Rise of the first LPs"
+          description="Become a part of the first LPs to earn exclusiveNFT as a reward for the liquidity contribution inseveral pools. You can check your eligibility for NFT by clicking the button below."
+          address={address}
+          nftImg={questImage}
+          status="isUserCheckingForEligibility"
+          onCheck={() => checkEligibility(id)}
+        />
+      );
+    }
+    if (isUserEligibleForNFT && !isUserClaimingNFT && !isNFTClaimedByUser) {
+      return (
+        <MintCard
+          title="Rise of the first LPs"
+          description="Based on your ranking in LP contest,
+          you’re eligible for NFT - L1P1."
+          address={address}
+          nftImg={nft}
+          status="isUserEligibleForNFT"
+          onCheck={() => checkEligibility(id)}
+          onClaim={() => claimNft(id)}
+        />
+      );
+    }
+    if (isUserNonEligibleForNFT && !isUserClaimingNFT && !isNFTClaimedByUser) {
+      return (
+        <MintCard
+          title="Rise of the first LPs"
+          description="Oops! sorry as per our criteria you
+          are not eligible for any NFT"
+          address={address}
+          nftImg={noneligibleImg}
+          status="isUserNonEligibleForNFT"
+          onCheck={() => checkEligibility(id)}
+        />
+      );
+    }
+    if (isUserClaimingNFT) {
+      return (
+        <MintCard
+          title="Rise of the first LPs"
+          description="Based on your ranking in LP contest,
+          you’re eligible for NFT - L1P1."
+          address={address}
+          nftImg={nft}
+          status="isUserClaimingNFT"
+          onCheck={() => checkEligibility(id)}
+          onClaim={() => claimNft(id)}
+        />
+      );
+    }
+    if (isNFTClaimedByUser) {
+      return (
+        <MintCard
+          title="Rise of the first LPs"
+          description="Based on your ranking in LP contest,
+          you’re eligible for NFT - L1P1"
+          address={address}
+          nftImg={claimed}
+          status="isNFTClaimedByUser"
+          onCheck={() => checkEligibility(id)}
+          onClaim={() => claimNft(id)}
+        />
+      );
+    }
+  };
+
   const bodyContent = (
     <Container style={{ display: 'flex', justifyContent: 'center' }}>
       <div>
@@ -53,37 +150,23 @@ const QuestPage = () => {
           <div style={{ marginRight: '10px' }}>
             <SvgIcon component={backIcon} />
           </div>
-          <AllQuests>
-            All quests
-          </AllQuests>
+          <AllQuests>All quests</AllQuests>
         </Link>
         {isWalletConnected ? (
-          <MintCard
-            title="Rise of the first LPs"
-            description="Based on your ranking in LP contest, you’re eligible for NFT - L1P1"
-            address="0x00ccc18Ccd99b3Bb86bf0349ba0aa6BcD7cdF70a502a0D7CB9820C9922C5B744"
-            nftImg={nft}
-            status={statusCheck}
-            onCheck={() => checkEligibility(id)}
-            onClaim={() => claimNft(id)}
-            isWalletConnected={isWalletConnected}
-          />
+          getMintCardContent()
         ) : (
           <MintCard
             title="Rise of the first LPs"
             description="Become a part of the first LPs to earn exclusiveNFT as a reward for the liquidity contribution inseveral pools. You can check your eligibility for NFT by clicking the button below."
             nftImg={questImage}
-            status={statusCheck}
+            status="isEligibiltyStatusBeforeCheck"
             onCheck={() => checkEligibility(id)}
           />
         )}
-
       </div>
     </Container>
   );
-  return (
-    <MainLayout bodyContent={bodyContent} disableSidebar />
-  );
+  return <MainLayout bodyContent={bodyContent} disableSidebar />;
 };
 
 export default QuestPage;
