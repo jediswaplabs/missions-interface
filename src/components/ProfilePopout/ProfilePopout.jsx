@@ -1,26 +1,48 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { SvgIcon } from '@mui/material';
 
-import { ProfilePopoutContainer, ProfilePopoutRect, ProfilePopoutTriangle, ProfilePopoutText, ProfilePopoutClose } from './ProfilePopout.styles';
+import { ProfilePopoutContainer,
+  ProfilePopoutRect,
+  ProfilePopoutTriangle,
+  ProfilePopoutText,
+  ProfilePopoutClose } from './ProfilePopout.styles';
 import closeIcon from '../../resources/icons/close.svg';
 import triangleIcon from '../../resources/icons/triangle.svg';
 
 const ProfilePopout = () => {
+  const ref = useRef(null);
+
+  const hideProfilePopout = () => {
+    ref.current.style.display = 'none';
+  };
+
   return (
-    <ProfilePopoutContainer>
+    <ProfilePopoutContainer ref={ref}>
       <ProfilePopoutTriangle>
-        <SvgIcon component={triangleIcon} inheritViewBox style={{ width: 'unset', height: 'unset' }} />
+        <SvgIcon
+          component={triangleIcon}
+          inheritViewBox
+          style={{ width: 'unset', height: 'unset' }}
+        />
       </ProfilePopoutTriangle>
       <ProfilePopoutRect>
         <ProfilePopoutText>
           Your claimed NFTs can be found here
         </ProfilePopoutText>
-        <ProfilePopoutClose onClick={e => e.preventDefault()}>
-          <SvgIcon component={closeIcon} inheritViewBox style={{ width: 'unset', height: 'unset' }} />
+        <ProfilePopoutClose onClick={(e) => {
+          e.preventDefault();
+          hideProfilePopout();
+        }}
+        >
+          <SvgIcon
+            component={closeIcon}
+            inheritViewBox
+            style={{ width: 'unset', height: 'unset' }}
+          />
         </ProfilePopoutClose>
       </ProfilePopoutRect>
     </ProfilePopoutContainer>
-  )
-}
+  );
+};
 
 export default ProfilePopout;

@@ -22,7 +22,13 @@ const QuestPage = () => {
   const [isWalletConnected, setWalletConnectivity] = useState();
   const { address, status } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
-  const { setUserEligibilityForNFT, setUserCheckingForEligibility, setUserNonEligibilityForNFT, setUserClaimingNFT, setNFTClaimedByUser } = useQuestActionHandlers();
+  const {
+    setUserEligibilityForNFT,
+    setUserCheckingForEligibility,
+    setUserNonEligibilityForNFT,
+    setUserClaimingNFT,
+    setNFTClaimedByUser,
+  } = useQuestActionHandlers();
 
   const isUserEligibleForNFT = useSelector(
     (state) => state.quest.isUserEligibleForNFT,
@@ -62,7 +68,11 @@ const QuestPage = () => {
   }, [status]);
 
   const getMintCardContent = () => {
-    if (isEligibiltyStatusBeforeCheck && !isUserClaimingNFT && !isNFTClaimedByUser) {
+    if (
+      isEligibiltyStatusBeforeCheck
+      && !isUserClaimingNFT
+      && !isNFTClaimedByUser
+    ) {
       return (
         <MintCard
           title="Rise of the first LPs"
@@ -74,7 +84,11 @@ const QuestPage = () => {
         />
       );
     }
-    if (isUserCheckingForEligibility && !isUserClaimingNFT && !isNFTClaimedByUser) {
+    if (
+      isUserCheckingForEligibility
+      && !isUserClaimingNFT
+      && !isNFTClaimedByUser
+    ) {
       return (
         <MintCard
           title="Rise of the first LPs"

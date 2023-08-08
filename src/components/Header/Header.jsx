@@ -9,8 +9,16 @@ import Box from '@mui/material/Box';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { HeaderContainer, HeaderLogo, AccountElement, Web3StatusConnected, Web3StatusError, Web3StatusConnect, ActiveLink, HeaderSelectionBar } from './Header.styles';
-import { useAccountDetails, useWalletActionHandlers } from '../../hooks/index.ts';
+import { HeaderContainer,
+  HeaderLogo,
+  AccountElement,
+  Web3StatusConnected,
+  Web3StatusError,
+  Web3StatusConnect,
+  ActiveLink,
+  HeaderSelectionBar } from './Header.styles';
+import { useAccountDetails,
+  useWalletActionHandlers } from '../../hooks/index.ts';
 import { eventsLookup } from '../../common/contansts';
 import { argentX, braavosWallet } from '../../common/connectors/index.ts';
 import { getShortenAddress } from '../../common/addressHelper';
@@ -22,7 +30,7 @@ import GradientButton from '../GradientButton/GradientButton';
 import WalletModal from '../../features/wallet/WalletModal/WalletModal';
 import ProfilePopout from '../ProfilePopout/ProfilePopout';
 
-const noop = () => { };
+const noop = () => {};
 
 const Header = () => {
   const location = useLocation();
@@ -32,10 +40,15 @@ const Header = () => {
       <Grid container columnSpacing={{ md: 2 }} alignItems="center">
         <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center' }}>
           <HeaderLogo to="/home">
-            <SvgIcon component={logo} viewBox="0 0 173 34" style={{ width: 'unset', height: 'unset' }} />
+            <SvgIcon
+              component={logo}
+              viewBox="0 0 173 34"
+              style={{ width: 'unset', height: 'unset' }}
+            />
           </HeaderLogo>
         </Grid>
-        <Grid item
+        <Grid
+          item
           xs={12}
           md={6}
           sx={{
@@ -57,35 +70,43 @@ const Header = () => {
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
             <Stack direction="row" alignItems="flex-start" gap={5}>
-              {
-                location.pathname === '/home' ? (
-                  <ActiveLink to="/home">
-                    <Typography variant="body1" color="white">Quests</Typography>
-                    <HeaderSelectionBar />
-                  </ActiveLink>
-                )
-                  : (
-                    <Link to="/home">
-                      <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>Quests</Typography>
-                    </Link>
-                  )
-
-              }
-              {
-                location.pathname === '/profile' ? (
-                  <ActiveLink to="/profile">
-                    <Typography variant="body1" color="white">My Profile</Typography>
-                    <HeaderSelectionBar />
-                  </ActiveLink>
-                )
-                  : (
-                    <Link to="/profile">
-                      <Typography variant="body1" color="white" style={{ fontSize: '16px' }}>My Profile</Typography>
-                      <ProfilePopout />
-                    </Link>
-                  )
-
-              }
+              {location.pathname === '/home' ? (
+                <ActiveLink to="/home">
+                  <Typography variant="body1" color="white">
+                    Quests
+                  </Typography>
+                  <HeaderSelectionBar />
+                </ActiveLink>
+              ) : (
+                <Link to="/home">
+                  <Typography
+                    variant="body1"
+                    color="white"
+                    style={{ fontSize: '16px' }}
+                  >
+                    Quests
+                  </Typography>
+                </Link>
+              )}
+              {location.pathname === '/profile' ? (
+                <ActiveLink to="/profile">
+                  <Typography variant="body1" color="white">
+                    My Profile
+                  </Typography>
+                  <HeaderSelectionBar />
+                </ActiveLink>
+              ) : (
+                <Link to="/profile">
+                  <Typography
+                    variant="body1"
+                    color="white"
+                    style={{ fontSize: '16px' }}
+                  >
+                    My Profile
+                  </Typography>
+                  <ProfilePopout />
+                </Link>
+              )}
               {/* {chainId && NETWORK_LABELS[chainId] && (
                   <Typography variant="body1" color="text.primary">Starknet-{NETWORK_LABELS[chainId]}</Typography>
                 )} */}
@@ -102,14 +123,20 @@ const Header = () => {
 };
 
 const StatusIcon = ({ connector }) => {
-  if (connector === argentX) { return (<SvgIcon component={argentXIcon} />); }
-  if (connector === braavosWallet) { return (<SvgIcon component={braavosIcon} />); }
+  if (connector === argentX) {
+    return <SvgIcon component={argentXIcon} />;
+  }
+  if (connector === braavosWallet) {
+    return <SvgIcon component={braavosIcon} />;
+  }
   return null;
 };
 
 const Web3Status = () => {
   const { setWalletModalOpen } = useWalletActionHandlers();
-  const isWalletModalOpen = useSelector((state) => state.wallet.isWalletModalOpen);
+  const isWalletModalOpen = useSelector(
+    (state) => state.wallet.isWalletModalOpen,
+  );
 
   const handleToggleWalletModal = useCallback(() => {
     setWalletModalOpen(!isWalletModalOpen);
@@ -142,14 +169,27 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
       <Web3StatusConnected onClick={onWalletModalToggle}>
         <Stack direction="row" alignItems="center" gap={1}>
           {connector && <StatusIcon connector={connector} />}
-          <Typography variant="body1" color="text.primary" style={{ fontSize: '16px', fontFamily: 'Avenir LT Std', fontWeight: '600' }}>{getShortenAddress(address)}</Typography>
+          <Typography
+            variant="body1"
+            color="text.primary"
+            style={{
+              fontSize: '16px',
+              fontFamily: 'Avenir LT Std',
+              fontWeight: '600',
+            }}
+          >
+            {getShortenAddress(address)}
+          </Typography>
         </Stack>
       </Web3StatusConnected>
     );
-  } if (error) {
+  }
+  if (error) {
     return (
       <Web3StatusError onClick={onWalletModalToggle}>
-        <Typography variant="body1" color="text.primary">{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error'}</Typography>
+        <Typography variant="body1" color="text.primary">
+          {error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error'}
+        </Typography>
       </Web3StatusError>
     );
   }
