@@ -5,6 +5,7 @@ import { QuestCardTitle, QuestCardDescription, QuestCardAddress, QuestCardBtn } 
 import { MintCardStatus, MintCardClaimed, MintBox } from './MintCard.styles';
 import { getShortenAddress } from '../../common/addressHelper';
 import claimedMark from '../../resources/icons/claimed_mark.svg';
+import claimed from '../../resources/icons/claimed.svg';
 
 const statuses = {
   beforeCheck: 'isEligibiltyStatusBeforeCheck',
@@ -68,7 +69,10 @@ const MintCard = ({ title, description, address, nftImg, status, onCheck, onClai
         )}
     </div>
     <div style={{ position: 'relative' }}>
-      <img src={nftImg} />
+      {status === statuses.claimed
+        && <SvgIcon component={claimed} inheritViewBox style={{ width: 'unset', height: 'unset', position: 'absolute', bottom: '30px', left: '-40px' }} />}
+      {status !== statuses.claimed
+        && <img src={nftImg} />}
     </div>
   </MintBox>
 );

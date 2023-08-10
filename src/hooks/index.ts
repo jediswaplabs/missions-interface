@@ -1,13 +1,15 @@
 import { useStarknetReact as useStarknetReactCore } from "@web3-starknet-react/core";
-import { useEffect, useCallback, useMemo , useRef} from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { InjectedConnector, useConnectors, useAccount } from '@starknet-react/core'
+import { useEffect, useCallback, useMemo, useRef } from "react";
+import { useDispatch } from "react-redux";
+import {
+  InjectedConnector,
+  useConnectors,
+  useAccount,
+} from "@starknet-react/core";
 
 import { NetworkContextName } from "../common/contansts";
 import { argentX, braavosWallet } from "../common/connectors";
 import { setWalletModalOpenAction } from "../features/wallet/walletSlice";
-import {setUserEligibilityForNFTAction, setUserCheckingForEligibilityAction, setUserNonEligibilityForNFTAction, setUserClaimingNFTAction, setNFTClaimedByUserAction} from "../pages/QuestPage/questSlice"
-
 
 export function useActiveStarknetReact() {
   const context = useStarknetReactCore();
@@ -16,12 +18,12 @@ export function useActiveStarknetReact() {
 }
 
 export const useAccountDetails = () => {
-  const { account, address, connector, status } = useAccount()
-  const chainId = account?.chainId || account?.provider?.chainId
+  const { account, address, connector, status } = useAccount();
+  const chainId = account?.chainId || account?.provider?.chainId;
   return useMemo(() => {
-    return { address, connector, account, chainId, status }
-  }, [account])
-}
+    return { address, connector, account, chainId, status };
+  }, [account]);
+};
 
 // No longer required since we are now using starkrnet-react
 // export function useEagerConnect() {
@@ -44,25 +46,25 @@ export const useAccountDetails = () => {
 //     }
 //   }, [connector]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     if (!connector) { return; }
+// useEffect(() => {
+//   setTimeout(() => {
+//     if (!connector) { return; }
 
-  //     connector.isAuthorized().then((isAuthorized) => {
-  //       if (isAuthorized && connector) {
-  //         activate(connector, undefined, true).catch(() => {
-  //           setTried(true);
-  //         });
-  //       } else if (isMobile && window.starknet && connector) {
-  //         activate(connector, undefined, true).catch(() => {
-  //           setTried(true);
-  //         });
-  //       } else {
-  //         setTried(true);
-  //       }
-  //     });
-  //   }, 100);
-  // }, [activate, connector]); // intentionally only running on mount (make sure it's only mounted once :))
+//     connector.isAuthorized().then((isAuthorized) => {
+//       if (isAuthorized && connector) {
+//         activate(connector, undefined, true).catch(() => {
+//           setTried(true);
+//         });
+//       } else if (isMobile && window.starknet && connector) {
+//         activate(connector, undefined, true).catch(() => {
+//           setTried(true);
+//         });
+//       } else {
+//         setTried(true);
+//       }
+//     });
+//   }, 100);
+// }, [activate, connector]); // intentionally only running on mount (make sure it's only mounted once :))
 
 //    if the connection worked, wait until we get confirmation of that to flip the flag
 //   useEffect(() => {
@@ -75,27 +77,28 @@ export const useAccountDetails = () => {
 // }
 
 export function useInactiveListener(suppress = false) {
-  const { active, error, activate } = useStarknetReactCore() // specifically using useStarknetReact because of what this hook does
-  const { connector } = useAccountDetails()
-  const { connect } = useConnectors()
+  const { active, error, activate } = useStarknetReactCore(); // specifically using useStarknetReact because of what this hook does
+  const { connector } = useAccountDetails();
+  const { connect } = useConnectors();
 
   useEffect(() => {
-    const { starknet, starknet_braavos } = window
+    const { starknet, starknet_braavos } = window;
 
     if (starknet && !active && !error && !suppress && connector) {
-      const activeConnector = connector instanceof InjectedConnector ? argentX : braavosWallet
+      const activeConnector =
+        connector instanceof InjectedConnector ? argentX : braavosWallet;
 
       const handleChainChanged = () => {
         // eat errors
-        connect(activeConnector)
-      }
+        connect(activeConnector);
+      };
 
       const handleAccountsChanged = (accounts) => {
         if (accounts.length > 0) {
           // eat errors
-          connect(activeConnector)
+          connect(activeConnector);
         }
-      }
+      };
 
       // starknet.on('chainChanged', handleChainChanged)
       // starknet.on('accountsChanged', handleAccountsChanged)
@@ -103,18 +106,17 @@ export function useInactiveListener(suppress = false) {
       return () => {
         if (starknet) {
           // ethereum.removeListener('chainChanged', handleChainChanged)
-          starknet.off('accountsChanged', handleAccountsChanged)
+          starknet.off("accountsChanged", handleAccountsChanged);
         }
 
         if (starknet_braavos) {
-          starknet_braavos.off('accountsChanged', handleAccountsChanged)
+          starknet_braavos.off("accountsChanged", handleAccountsChanged);
         }
-      }
+      };
     }
-    return undefined
-  }, [active, error, suppress, activate, connector])
+    return undefined;
+  }, [active, error, suppress, activate, connector]);
 }
-
 
 // modified from https://usehooks.com/usePrevious/
 export function usePrevious(value) {
@@ -129,46 +131,17 @@ export function usePrevious(value) {
   return ref.current;
 }
 
-export function useWalletActionHandlers(){
+export function useWalletActionHandlers() {
   const dispatch = useDispatch();
 
-  const setWalletModalOpen= useCallback((value) => {
-    dispatch(setWalletModalOpenAction(value));
-  }, [dispatch]);
+  const setWalletModalOpen = useCallback(
+    (value) => {
+      dispatch(setWalletModalOpenAction(value));
+    },
+    [dispatch]
+  );
 
   return {
-    setWalletModalOpen
-  }
-}
-
-export function useQuestActionHandlers(){
-  const dispatch = useDispatch();
-
-  const setUserEligibilityForNFT= useCallback((value) => {
-    dispatch(setUserEligibilityForNFTAction(value));
-  }, [dispatch]);
-
-  const setUserNonEligibilityForNFT= useCallback((value) => {
-    dispatch(setUserNonEligibilityForNFTAction(value));
-  }, [dispatch]);
-
-  const setUserCheckingForEligibility= useCallback((value) => {
-    dispatch(setUserCheckingForEligibilityAction(value));
-  }, [dispatch]);
-
-  const setUserClaimingNFT= useCallback((value) => {
-    dispatch(setUserClaimingNFTAction(value));
-  }, [dispatch]);
-
-  const setNFTClaimedByUser= useCallback((value) => {
-    dispatch(setNFTClaimedByUserAction(value));
-  }, [dispatch]);
-
-  return {
-    setUserEligibilityForNFT,
-    setUserNonEligibilityForNFT,
-    setUserCheckingForEligibility,
-    setUserClaimingNFT,
-    setNFTClaimedByUser,
-  }
+    setWalletModalOpen,
+  };
 }

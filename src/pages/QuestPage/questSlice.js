@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const initialState = {
   isUserEligibleForNFT: false,
@@ -6,38 +6,62 @@ export const initialState = {
   isUserCheckingForEligibility: false,
   isUserClaimingNFT: false,
   isNFTClaimedByUser: false,
+  walletAddress: null,
 };
 
 export const reducers = {};
+
+export const fetchNFTContestData = createAsyncThunk('data/fetchData', async () => {
+  const response = await fetch('/data/nft-contest-data.json'); // Adjust the path to your JSON file
+  const data = await response.json();
+  return data;
+});
 
 export const questSlice = createSlice({
   name: 'quest',
   initialState,
   reducers: {
-    setUserEligibilityForNFTAction(state, action) {
-      state.isUserEligibleForNFT = action.payload;
-    },
-    setUserNonEligibilityForNFTAction(state, action) {
-      state.isUserNonEligibleForNFT = action.payload;
-    },
-    setUserCheckingForEligibilityAction(state, action) {
-      state.isUserCheckingForEligibility = action.payload;
-    },
     setUserClaimingNFTAction(state, action) {
       state.isUserClaimingNFT = action.payload;
     },
     setNFTClaimedByUserAction(state, action) {
       state.isNFTClaimedByUser = action.payload;
     },
+    setWalletAddressAction(state, action) {
+      state.walletAddress = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchNFTContestData.pending, (state) => ({
+        ...state,
+        isUserCheckingForEligibility: true,
+      }))
+      .addCase(fetchNFTContestData.fulfilled, (state, action) => {
+        const NFTContestData = action.payload;
+        let isUserEligibleForNFTValue = false;
+        NFTContestData.forEach((data) => {
+          if (data.address === state.walletAddress) { isUserEligibleForNFTValue = true; }
+        });
+
+        return {
+          ...state,
+          isUserCheckingForEligibility: false,
+          isUserEligibleForNFT: isUserEligibleForNFTValue,
+          isUserNonEligibleForNFT: !isUserEligibleForNFTValue,
+        };
+      })
+      .addCase(fetchNFTContestData.rejected, (state) => ({
+        ...state,
+        isUserCheckingForEligibility: false,
+      }));
   },
 });
 
 export const {
-  setUserEligibilityForNFTAction,
-  setUserCheckingForEligibilityAction,
-  setUserNonEligibilityForNFTAction,
   setUserClaimingNFTAction,
   setNFTClaimedByUserAction,
+  setWalletAddressAction,
 } = questSlice.actions;
 
 export default questSlice.reducer;

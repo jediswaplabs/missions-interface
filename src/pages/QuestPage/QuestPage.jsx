@@ -2,19 +2,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Container, SvgIcon } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import MainLayout from '../../layouts/MainLayout/MainLayout';
 import backIcon from '../../resources/icons/back.svg';
 import MintCard from '../../components/MintCard/MintCard';
 import nft from '../../resources/images/L1P1-min.png';
 import questImage from '../../resources/images/L1P1-L1P2.png';
-import noneligibleImg from '../../resources/icons/noneligible.svg';
+import noneligibleImg from '../../resources/images/noneligible.png';
 import claimed from '../../resources/icons/claimed.svg';
 import { AllQuests } from './QuestPage.styles';
 import { useAccountDetails,
-  useQuestActionHandlers,
   useWalletActionHandlers } from '../../hooks/index.ts';
+import { useQuestActionHandlers } from './hooks.ts';
+import {fetchNFTContestData} from './questSlice'
 
 const QuestPage = () => {
   const { id } = useParams();
@@ -23,11 +24,9 @@ const QuestPage = () => {
   const { address, status } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
   const {
-    setUserEligibilityForNFT,
-    setUserCheckingForEligibility,
-    setUserNonEligibilityForNFT,
     setUserClaimingNFT,
     setNFTClaimedByUser,
+    setWalletAddress
   } = useQuestActionHandlers();
 
   const isUserEligibleForNFT = useSelector(
@@ -46,19 +45,25 @@ const QuestPage = () => {
     (state) => state.quest.isNFTClaimedByUser,
   );
 
+  const dispatch = useDispatch();
+
+
   const checkEligibility = (id) => {
     if (!isWalletConnected) {
       setWalletModalOpen(true);
     } else {
       console.log(`questid: ${id}`);
       setEligibiltyStatusBeforeCheck(false);
-      setUserEligibilityForNFT(true);
+      setWalletAddress(address)
+      dispatch(fetchNFTContestData());
+      // setUserEligibilityForNFT(true);
     }
   };
 
   const claimNft = (id) => {
     console.log(`questid: ${id}`);
-    setUserClaimingNFT(true);
+    // setUserClaimingNFT(true);
+    setNFTClaimedByUser(true);
   };
 
   useEffect(() => {

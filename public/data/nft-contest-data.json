@@ -1,0 +1,68 @@
+[
+    {
+      "address": "0x0138EfE7c064c69140e715f58d1e29FC75E5594D342E568246a4D6a3131a5974",
+      "token_id": 1,
+      "task_id": 1,
+      "name": "L1P1",
+      "rank": 10,
+      "score": 12000,
+      "percentile": 1,
+      "level": 6,
+      "total_eligible_users": 120000
+    },
+    {
+        "address": "0x0161A9bCA8dCc5975A03b12f5F7bF9610e1541635eb40eB3A89bAeeDC168e636",
+        "token_id": 2,
+        "task_id": 1,
+        "name": "L1P2",
+        "rank": 20,
+        "score": 11000,
+        "percentile": 2,
+        "level": 6,
+        "total_eligible_users": 120000
+      },
+      {
+        "address": "0x0138EfE7c064c69140e715f58d1e29FC75E5594D342E568246a4D6a3131a5974",
+        "token_id": 3,
+        "task_id": 1,
+        "name": "L1P1",
+        "rank": 320,
+        "score": 10000,
+        "percentile": 3,
+        "level": 6,
+        "total_eligible_users": 120000
+      },
+      {
+        "address": "0x2b9ce3e6869192006820c2b41c084bab97f17dae966b981dca2fdae1c178065",
+        "token_id": 4,
+        "task_id": 1,
+        "name": "L1P1",
+        "rank": 420,
+        "score": 9000,
+        "percentile": 4,
+        "level": 6,
+        "total_eligible_users": 120000
+      },
+      {
+        "address": "0x0138EfE7c064c69140e715f58d1e29FC75E5594D342E568246a4D6a3131a597a",
+        "token_id": 5,
+        "task_id": 1,
+        "name": "L1P1",
+        "rank": 520,
+        "score": 8000,
+        "percentile": 5,
+        "level": 6,
+        "total_eligible_users": 120000
+      },  
+      {
+        "address": "0x0138EfE7c064c69140e715f58d1e29FC75E5594D342E568246a4D6a3131a597E",
+        "token_id": 6,
+        "task_id": 1,
+        "name": "L1P1",
+        "rank": 620,
+        "score": 7000,
+        "percentile": 6,
+        "level": 6,
+        "total_eligible_users": 120000
+      }
+  ]
