@@ -1,75 +1,98 @@
 /* eslint-disable indent */
-import React, { useState, useEffect, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { Container, SvgIcon } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { useContractWrite } from '@starknet-react/core';
+import React, { useState, useEffect, useMemo } from "react";
+import { useParams, Link } from "react-router-dom";
+import { Container, SvgIcon } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { useContract, useContractWrite } from "@starknet-react/core";
 
-import MainLayout from '../../layouts/MainLayout/MainLayout';
-import backIcon from '../../resources/icons/back.svg';
-import MintCard from '../../components/MintCard/MintCard';
-import nft from '../../resources/images/L1P1-min.png';
-import questImage from '../../resources/images/L1P1-L1P2.png';
-import noneligibleImg from '../../resources/images/noneligible.png';
-import claimed from '../../resources/icons/claimed.svg';
-import { AllQuests } from './QuestPage.styles';
-import { useAccountDetails,
-  useWalletActionHandlers } from '../../hooks/index.ts';
-import { useClaimNFT, useQuestActionHandlers } from './hooks.ts';
-import { fetchNFTContestData } from './questSlice';
+import MainLayout from "../../layouts/MainLayout/MainLayout";
+import backIcon from "../../resources/icons/back.svg";
+import MintCard from "../../components/MintCard/MintCard";
+import nft from "../../resources/images/L1P1-min.png";
+import questImage from "../../resources/images/L1P1-L1P2.png";
+import noneligibleImg from "../../resources/images/noneligible.png";
+import claimed from "../../resources/icons/claimed.svg";
+import { AllQuests } from "./QuestPage.styles";
+import {
+  useAccountDetails,
+  useWalletActionHandlers,
+} from "../../hooks/index.ts";
+import { useClaimNFT, useQuestActionHandlers } from "./hooks.ts";
+import { fetchNFTContestData } from "./questSlice";
+import { stark } from "starknet";
+import NFTContest_ABI from "../../constants/abis/nft-contest.json";
 
 const QuestPage = () => {
   const { id } = useParams();
-  const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
+  const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] =
+    useState(true);
   const [isWalletConnected, setWalletConnectivity] = useState();
   const { address, status, account } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
-  const { setUserClaimingNFT, setNFTClaimedByUser, setWalletAddress } = useQuestActionHandlers();
+  const { setUserClaimingNFT, setNFTClaimedByUser, setWalletAddress } =
+    useQuestActionHandlers();
 
   const isUserEligibleForNFT = useSelector(
-    (state) => state.quest.isUserEligibleForNFT,
+    (state) => state.quest.isUserEligibleForNFT
   );
   const isUserCheckingForEligibility = useSelector(
-    (state) => state.quest.isUserCheckingForEligibility,
+    (state) => state.quest.isUserCheckingForEligibility
   );
   const isUserNonEligibleForNFT = useSelector(
-    (state) => state.quest.isUserNonEligibleForNFT,
+    (state) => state.quest.isUserNonEligibleForNFT
   );
   const isUserClaimingNFT = useSelector(
-    (state) => state.quest.isUserClaimingNFT,
+    (state) => state.quest.isUserClaimingNFT
   );
   const isNFTClaimedByUser = useSelector(
-    (state) => state.quest.isNFTClaimedByUser,
+    (state) => state.quest.isNFTClaimedByUser
   );
 
   const accountDetailsForNFT = useSelector(
-    (state) => state.quest.accountDetailsForNFT,
+    (state) => state.quest.accountDetailsForNFT
   );
 
   const data = {
     token_id: 2,
-    proof: ['0x3b58162c643b300dcda504a76143ce39ce819f78798e247f8fed2d72783cf3c', '0x63edeac7f0773edfa49f70380c79c18c72fc065a398b813c4c658812c16b3c6', '0x2df262d0827ea289ff0ae82047e8c99bc35d7e3deb383b8b28bae51f38efec3'],
-    token_metadata: [1, 0x4c315032, 20, 11000, 2, 6, 120000]
-    // token_id: 4,
-    // task_id: 1,
-    // name: 'L1P1',
-    // rank: 420,
-    // score: 9000,
-    // percentile: 4,
-    // level: 6,
-    // total_eligible_users: 120000,
-};
+    proof: [
+      "0x3b58162c643b300dcda504a76143ce39ce819f78798e247f8fed2d72783cf3c",
+      "0x63edeac7f0773edfa49f70380c79c18c72fc065a398b813c4c658812c16b3c6",
+      "0x2df262d0827ea289ff0ae82047e8c99bc35d7e3deb383b8b28bae51f38efec3",
+    ],
+    // token_metadata: [1, 0x4c315032, 20, 11000, 2, 6, 120000],
+    token_metadata: {
+      type: "struct",
+      task_id: 1,
+      name: 0x4c315032,
+      rank: 20,
+      score: 11000,
+      percentile: 2,
+      level: 6,
+      total_eligible_users: 120000,
+    },
+  };
 
-const tx = {
-  contractAddress: '0x008cd5060ed29f603f918f69b49fa84b7a4995f74dafd9414935a9cf34aa5f5e',
-  entrypoint: 'mint_whitelist',
-  calldata: data,
-};
-const calls = useMemo(() => Array(1).fill(tx), [address]);
+  const { contract } = useContract({
+    address:
+      "0x060058bde1e565cfdbebb8cb100eb732dfcd8f3cedac6311e22c38e884e5ea83",
+    abi: NFTContest_ABI,
+  });
 
-const { write } = useContractWrite({ calls });
-// console.log(write())
-// debugger
+  const compiledDta = stark.compileCalldata(data);
+
+  const calls = useMemo(() => {
+    const tx = {
+      contractAddress:
+        "0x060058bde1e565cfdbebb8cb100eb732dfcd8f3cedac6311e22c38e884e5ea83",
+      entrypoint: "mint_whitelist",
+      calldata: compiledDta,
+    };
+    return Array(1).fill(tx);
+  }, [address]);
+
+  const { write } = useContractWrite({ calls });
+  // console.log(write())
+  // debugger
 
   const dispatch = useDispatch();
 
@@ -89,17 +112,26 @@ const { write } = useContractWrite({ calls });
     console.log(`questid: ${id}`);
     // setUserClaimingNFT(true);
     // setNFTClaimedByUser(true);
-    dispatch(useClaimNFT(accountDetailsForNFT));
+    // dispatch(useClaimNFT(accountDetailsForNFT));
   };
 
   useEffect(() => {
-    if (status === 'connected') {
+    if (status === "connected") {
       setWalletConnectivity(true);
     }
   }, [status]);
 
+  const handleMint = async () => {
+    const x = await write();
+    console.log("🚀 ~ file: QuestPage.jsx:112 ~ handleMint ~ x:", x);
+  };
+
   useEffect(() => {
-    if (address) { write(); }
+    if (address) {
+      setTimeout(() => {
+        handleMint();
+      }, 5000);
+    }
   }, [address]);
 
   // async function doSomething() {
@@ -108,9 +140,9 @@ const { write } = useContractWrite({ calls });
 
   const getMintCardContent = () => {
     if (
-      isEligibiltyStatusBeforeCheck
-      && !isUserClaimingNFT
-      && !isNFTClaimedByUser
+      isEligibiltyStatusBeforeCheck &&
+      !isUserClaimingNFT &&
+      !isNFTClaimedByUser
     ) {
       return (
         <MintCard
@@ -124,9 +156,9 @@ const { write } = useContractWrite({ calls });
       );
     }
     if (
-      isUserCheckingForEligibility
-      && !isUserClaimingNFT
-      && !isNFTClaimedByUser
+      isUserCheckingForEligibility &&
+      !isUserClaimingNFT &&
+      !isNFTClaimedByUser
     ) {
       return (
         <MintCard
@@ -197,10 +229,10 @@ const { write } = useContractWrite({ calls });
   };
 
   const bodyContent = (
-    <Container style={{ display: 'flex', justifyContent: 'center' }}>
+    <Container style={{ display: "flex", justifyContent: "center" }}>
       <div>
-        <Link to="/home" style={{ display: 'flex', color: '#fff' }}>
-          <div style={{ marginRight: '10px' }}>
+        <Link to="/home" style={{ display: "flex", color: "#fff" }}>
+          <div style={{ marginRight: "10px" }}>
             <SvgIcon component={backIcon} />
           </div>
           <AllQuests>All quests</AllQuests>
