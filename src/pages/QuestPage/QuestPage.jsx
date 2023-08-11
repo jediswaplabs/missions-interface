@@ -14,8 +14,8 @@ import claimed from '../../resources/icons/claimed.svg';
 import { AllQuests } from './QuestPage.styles';
 import { useAccountDetails,
   useWalletActionHandlers } from '../../hooks/index.ts';
-import { useQuestActionHandlers } from './hooks.ts';
-import {fetchNFTContestData} from './questSlice'
+import { useClaimNFT, useQuestActionHandlers } from './hooks.ts';
+import { fetchNFTContestData } from './questSlice';
 
 const QuestPage = () => {
   const { id } = useParams();
@@ -23,11 +23,7 @@ const QuestPage = () => {
   const [isWalletConnected, setWalletConnectivity] = useState();
   const { address, status } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
-  const {
-    setUserClaimingNFT,
-    setNFTClaimedByUser,
-    setWalletAddress
-  } = useQuestActionHandlers();
+  const { setUserClaimingNFT, setNFTClaimedByUser, setWalletAddress } = useQuestActionHandlers();
 
   const isUserEligibleForNFT = useSelector(
     (state) => state.quest.isUserEligibleForNFT,
@@ -45,8 +41,11 @@ const QuestPage = () => {
     (state) => state.quest.isNFTClaimedByUser,
   );
 
-  const dispatch = useDispatch();
+  const accountDetailsForNFT = useSelector(
+    (state) => state.quest.accountDetailsForNFT,
+  );
 
+  const dispatch = useDispatch();
 
   const checkEligibility = (id) => {
     if (!isWalletConnected) {
@@ -54,7 +53,7 @@ const QuestPage = () => {
     } else {
       console.log(`questid: ${id}`);
       setEligibiltyStatusBeforeCheck(false);
-      setWalletAddress(address)
+      setWalletAddress(address);
       dispatch(fetchNFTContestData());
       // setUserEligibilityForNFT(true);
     }
@@ -64,6 +63,7 @@ const QuestPage = () => {
     console.log(`questid: ${id}`);
     // setUserClaimingNFT(true);
     setNFTClaimedByUser(true);
+    dispatch(useClaimNFT(accountDetailsForNFT));
   };
 
   useEffect(() => {

@@ -24,7 +24,7 @@ let aimList = list.map(item => {
 
     return tmp;
 })
-const tree = new merkle.MerkleTree(aimList);
+export const tree = new merkle.MerkleTree(aimList);
 
 console.log(tree.root);
 

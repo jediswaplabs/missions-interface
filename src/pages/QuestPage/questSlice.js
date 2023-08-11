@@ -7,6 +7,7 @@ export const initialState = {
   isUserClaimingNFT: false,
   isNFTClaimedByUser: false,
   walletAddress: null,
+  accountDetailsForNFT: null,
 };
 
 export const reducers = {};
@@ -40,8 +41,12 @@ export const questSlice = createSlice({
       .addCase(fetchNFTContestData.fulfilled, (state, action) => {
         const NFTContestData = action.payload;
         let isUserEligibleForNFTValue = false;
+        let accountDetailsForNFTValue = null;
         NFTContestData.forEach((data) => {
-          if (data.address === state.walletAddress) { isUserEligibleForNFTValue = true; }
+          if (data.address === state.walletAddress) {
+            isUserEligibleForNFTValue = true;
+            accountDetailsForNFTValue = data;
+          }
         });
 
         return {
@@ -49,6 +54,7 @@ export const questSlice = createSlice({
           isUserCheckingForEligibility: false,
           isUserEligibleForNFT: isUserEligibleForNFTValue,
           isUserNonEligibleForNFT: !isUserEligibleForNFTValue,
+          accountDetailsForNFT: accountDetailsForNFTValue,
         };
       })
       .addCase(fetchNFTContestData.rejected, (state) => ({
