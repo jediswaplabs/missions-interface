@@ -53,28 +53,28 @@ const QuestPage = () => {
   );
 
   const data = {
-    token_id: 2,
+    token_id: 4,
     proof: [
-      "0x3b58162c643b300dcda504a76143ce39ce819f78798e247f8fed2d72783cf3c",
-      "0x63edeac7f0773edfa49f70380c79c18c72fc065a398b813c4c658812c16b3c6",
-      "0x2df262d0827ea289ff0ae82047e8c99bc35d7e3deb383b8b28bae51f38efec3",
+      "0x784a1ed7c410f8709b94ad3a90e03dee5a0cdbc7ce738b7cd2c096ba886dbe9",
+      "0x2768d075557adea6d7e2891700c648c3879627f5e2cf4f4c55d4c49e8d28e8e",
+      "0x5d32dd94548b77404420815161d866380fcdac237adea94f114dadb3e793b7d",
     ],
-    // token_metadata: [1, 0x4c315032, 20, 11000, 2, 6, 120000],
+    // token_metadata: [1, 1278300209, 420, 9000, 6, 120000],
     token_metadata: {
       type: "struct",
       task_id: 1,
-      name: 0x4c315032,
-      rank: 20,
-      score: 11000,
-      percentile: 2,
+      name: 1278300209,
+      rank: 420,
+      score: 9000,
       level: 6,
       total_eligible_users: 120000,
     },
+    // token_metadata: "1,1278300209,420,9000,6,120000",
   };
 
   const { contract } = useContract({
     address:
-      "0x060058bde1e565cfdbebb8cb100eb732dfcd8f3cedac6311e22c38e884e5ea83",
+      "0x04cc759cd01bd973f8a98edd04339e8077c98cb744c90d3de46045d560ea1bae",
     abi: NFTContest_ABI,
   });
 
@@ -83,7 +83,7 @@ const QuestPage = () => {
   const calls = useMemo(() => {
     const tx = {
       contractAddress:
-        "0x060058bde1e565cfdbebb8cb100eb732dfcd8f3cedac6311e22c38e884e5ea83",
+        "0x04cc759cd01bd973f8a98edd04339e8077c98cb744c90d3de46045d560ea1bae",
       entrypoint: "mint_whitelist",
       calldata: compiledDta,
     };
