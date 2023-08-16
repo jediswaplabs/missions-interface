@@ -7,7 +7,16 @@ export const initialState = {
   isUserClaimingNFT: false,
   isNFTClaimedByUser: false,
   walletAddress: null,
-  accountDetailsForNFT: null,
+  accountDetailsForNFT: {
+    address: '',
+    token_id: '',
+    task_id: '',
+    name: '',
+    rank: 0,
+    score: 0,
+    level: 0,
+    total_eligible_users: 0,
+  },
 };
 
 export const reducers = {};
