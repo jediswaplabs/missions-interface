@@ -14,9 +14,13 @@ import { useContractWrite } from "@starknet-react/core";
 
 export const getTokenContract = () => {
   // get token contract based on contract address
+//   const tokenContract = useTokenContract(
+//     "0x04cc759cd01bd973f8a98edd04339e8077c98cb744c90d3de46045d560ea1bae"
+//   );
   const tokenContract = useTokenContract(
-    "0x04cc759cd01bd973f8a98edd04339e8077c98cb744c90d3de46045d560ea1bae"
+    "0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6"
   );
+
   return tokenContract;
 };
 
