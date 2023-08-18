@@ -6,6 +6,7 @@ import { MintCardStatus, MintCardClaimed, MintBox } from './MintCard.styles';
 import { getShortenAddress } from '../../common/addressHelper';
 import claimedMark from '../../resources/icons/claimed_mark.svg';
 import claimed from '../../resources/icons/claimed.svg';
+import noneligibleImg from '../../resources/icons/noneligible.svg';
 
 const statuses = {
   beforeCheck: 'isEligibiltyStatusBeforeCheck',
@@ -68,10 +69,13 @@ const MintCard = ({ title, description, address, nftImg, status, onCheck, onClai
           </MintCardClaimed>
         )}
     </div>
+
     <div style={{ position: 'relative' }}>
       {status === statuses.claimed
         && <SvgIcon component={claimed} inheritViewBox style={{ width: 'unset', height: 'unset', position: 'absolute', bottom: '30px', left: '-40px' }} />}
-      {status !== statuses.claimed
+      {status === statuses.noneligible
+        && <SvgIcon component={noneligibleImg} inheritViewBox style={{ width: 'unset', height: '240px' }} />}
+      {status !== statuses.noneligible
         && <img src={nftImg} />}
     </div>
   </MintBox>

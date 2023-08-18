@@ -1,6 +1,4 @@
-import { Contract } from 'starknet'
 import { useMemo } from 'react'
-import { InjectedConnector } from '@starknet-react/core'
 
 import { getContract } from '../utils'
 import NFTContest_ABI from '../constants/abis/nft-contest.json'

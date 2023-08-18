@@ -40,6 +40,15 @@ export const questSlice = createSlice({
     setWalletAddressAction(state, action) {
       state.walletAddress = action.payload;
     },
+    setUserEligibleNFTAction(state, action) {
+      state.isUserEligibleForNFT = action.payload;
+    },
+    setUserNonEligibleNFTAction(state, action) {
+      state.isUserNonEligibleForNFT = action.payload;
+    },
+    setAccountDetailsForNFTAction(state, action) {
+      state.accountDetailsForNFT = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,25 +56,10 @@ export const questSlice = createSlice({
         ...state,
         isUserCheckingForEligibility: true,
       }))
-      .addCase(fetchNFTContestData.fulfilled, (state, action) => {
-        const NFTContestData = action.payload;
-        let isUserEligibleForNFTValue = false;
-        let accountDetailsForNFTValue = null;
-        NFTContestData.forEach((data) => {
-          if (data.address === state.walletAddress) {
-            isUserEligibleForNFTValue = true;
-            accountDetailsForNFTValue = data;
-          }
-        });
-
-        return {
-          ...state,
-          isUserCheckingForEligibility: false,
-          isUserEligibleForNFT: isUserEligibleForNFTValue,
-          isUserNonEligibleForNFT: !isUserEligibleForNFTValue,
-          accountDetailsForNFT: accountDetailsForNFTValue,
-        };
-      })
+      .addCase(fetchNFTContestData.fulfilled, (state) => ({
+        ...state,
+        isUserCheckingForEligibility: false,
+      }))
       .addCase(fetchNFTContestData.rejected, (state) => ({
         ...state,
         isUserCheckingForEligibility: false,
@@ -77,6 +71,9 @@ export const {
   setUserClaimingNFTAction,
   setNFTClaimedByUserAction,
   setWalletAddressAction,
+  setUserEligibleNFTAction,
+  setUserNonEligibleNFTAction,
+  setAccountDetailsForNFTAction,
 } = questSlice.actions;
 
 export default questSlice.reducer;
