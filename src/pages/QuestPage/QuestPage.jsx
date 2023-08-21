@@ -180,7 +180,6 @@ const QuestPage = () => {
   useEffect(() => {
     console.log(address, contract);
     if (address && contract) {
-      console.log("hello");
       fetchBalance();
       // claimNft();
       // handleMint();
