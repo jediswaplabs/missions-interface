@@ -15810,23 +15810,6 @@ starknet@4.4.2, starknet@^4.22.0, starknet@^4.3.0:
     ts-custom-error "^3.2.0"
     url-join "^4.0.1"
 
-starknet@^4.9.0:
-  version "4.9.0"
-  resolved "https://registry.npmjs.org/starknet/-/starknet-4.9.0.tgz#1d0b5a1ff532a41b84a619f3d7c3f833f67dad2d"
-  integrity sha512-0Y9Nce0msMs1k3jid93ZuPD2e3yW42FUuMFChRTaq1qcjP8G/fL+5+/zuq441VQ82/JxAHnVqBMvpmMgn5yJSA==
-  dependencies:
-    "@ethersproject/bytes" "^5.6.1"
-    bn.js "^5.2.1"
-    elliptic "^6.5.4"
-    ethereum-cryptography "^1.0.3"
-    hash.js "^1.1.7"
-    isomorphic-fetch "^3.0.0"
-    json-bigint "^1.0.0"
-    minimalistic-assert "^1.0.1"
-    pako "^2.0.4"
-    ts-custom-error "^3.2.0"
-    url-join "^4.0.1"
-
 statuses@2.0.1, statuses@^2.0.0:
   version "2.0.1"
   resolved "https://registry.npmjs.org/statuses/-/statuses-2.0.1.tgz#55cb000ccf1d48728bd23c685a063998cf1a1b63"

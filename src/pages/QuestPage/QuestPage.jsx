@@ -3,7 +3,11 @@ import React, { useState, useEffect, useMemo } from "react";
 import { useParams, Link } from "react-router-dom";
 import { Container, SvgIcon } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { useContractWrite, useWaitForTransaction } from "@starknet-react/core";
+import {
+  useContract,
+  useContractWrite,
+  useWaitForTransaction,
+} from "@starknet-react/core";
 import { stark } from "starknet";
 
 import MainLayout from "../../layouts/MainLayout/MainLayout";
