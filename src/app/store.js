@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import walletReducer from '../features/wallet/walletSlice.ts';
-import profileReducer from '../features/profile/profileSlice';
+import profileReducer from '../pages/ProfilePage/profileSlice';
 import questReducer from '../pages/QuestPage/questSlice';
 import { apiSlice } from '../features/api/apiSlice';
 

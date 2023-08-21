@@ -91,7 +91,7 @@ const Header = () => {
               {location.pathname === '/profile' ? (
                 <ActiveLink to="/profile">
                   <Typography variant="body1" color="white">
-                    My Profile
+                    Profile
                   </Typography>
                   <HeaderSelectionBar />
                 </ActiveLink>
@@ -102,7 +102,7 @@ const Header = () => {
                     color="white"
                     style={{ fontSize: '16px' }}
                   >
-                    My Profile
+                    Profile
                   </Typography>
                   <ProfilePopout />
                 </Link>
