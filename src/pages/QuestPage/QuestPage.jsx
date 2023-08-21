@@ -102,17 +102,7 @@ const QuestPage = () => {
           (resData) => resData.wallet_address === address,
         );
         if (found) {
-          const nftName = feltArrToStr([found?.calldata[2]]);
-          dispatch(setAccountDetailsForNFTAction({
-            address: found?.wallet_address,
-            token_id: found?.calldata[0],
-            task_id: found?.calldata[1],
-              name: nftName,
-              rank: found?.calldata[3],
-              score: found?.calldata[4],
-              level: found?.calldata[5],
-              total_eligible_users: found?.calldata[6],
-          }));
+          setStateForAccountDetailsForNFT(found);
           dispatch(setUserEligibleNFTAction(true));
           setMintData({
             token_id: found?.calldata[0],
@@ -145,28 +135,32 @@ const QuestPage = () => {
     }
   }, [status]);
 
+  const setStateForAccountDetailsForNFT = (nftData) => {
+    const nftName = feltArrToStr([nftData?.calldata[2]]);
+        dispatch(setAccountDetailsForNFTAction({
+          address: nftData?.wallet_address,
+          token_id: nftData?.calldata[0],
+          task_id: nftData?.calldata[1],
+            name: nftName,
+            rank: nftData?.calldata[3],
+            score: nftData?.calldata[4],
+            level: nftData?.calldata[5],
+            total_eligible_users: nftData?.calldata[6],
+        }));
+  };
+
   useEffect(() => {
     if (address) {
       dispatch(fetchNFTIsClaimedData());
       const addressLastChar = getLastCharacterOfAString(address);
       dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
-        const found = res?.payload?.data?.find(
-          (resData) => resData.wallet_address === address,
-        );
-        if (found) {
-          const nftName = feltArrToStr([found?.calldata[2]]);
-          dispatch(setAccountDetailsForNFTAction({
-            address: found?.wallet_address,
-            token_id: found?.calldata[0],
-            task_id: found?.calldata[1],
-              name: nftName,
-              rank: found?.calldata[3],
-              score: found?.calldata[4],
-              level: found?.calldata[5],
-              total_eligible_users: found?.calldata[6],
-          }));
-        }
-      });
+      const found = res?.payload?.data?.find(
+        (resData) => resData.wallet_address === address,
+      );
+      if (found) {
+        setStateForAccountDetailsForNFT(found);
+      }
+    });
     } else {
       setNFTClaimedByUser(false);
       setEligibiltyStatusBeforeCheck(true);
