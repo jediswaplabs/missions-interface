@@ -22,8 +22,8 @@ export const initialState = {
 
 export const reducers = {};
 
-export const fetchNFTContestData = createAsyncThunk('data/fetchNFTContestData', async () => {
-  const response = await fetch('/data/nft-contest-data.json'); // Adjust the path to your JSON file
+export const fetchNFTContestData = createAsyncThunk('data/fetchNFTContestData', async (addressLastChar) => {
+  const response = await fetch(`https://static.staging.jediswap.xyz/missions-list/${addressLastChar}.json`); // Adjust the path to your JSON file
   const data = await response.json();
   return data;
 });

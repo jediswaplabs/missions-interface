@@ -44,6 +44,13 @@ export function getContract(
   return new Contract(ABI, address, library)
 }
 
+export function feltArrToStr(felts){
+  return felts.reduce(
+    (memo, felt) => memo + Buffer.from(felt.toString(16), "hex").toString(),
+    ""
+  );
+}
+
 
   export function strToFeltArr(str){
     const size = Math.ceil(str.length / 31);

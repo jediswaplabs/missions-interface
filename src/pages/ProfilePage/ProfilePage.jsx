@@ -14,7 +14,7 @@ import { imageBasedOnNFTType } from '../../common/getImageBasedOnNFTType';
 import GradientButton from '../../components/GradientButton/GradientButton';
 
 const ProfilePage = () => {
-  const { address, status } = useAccountDetails();
+  const { address } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
   const { t } = useTranslation();
 

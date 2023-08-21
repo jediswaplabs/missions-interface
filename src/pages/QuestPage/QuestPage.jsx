@@ -20,9 +20,10 @@ import { fetchNFTContestData,
   setAccountDetailsForNFTAction,
   setUserEligibleNFTAction,
   setUserNonEligibleNFTAction } from './questSlice';
-import { strToFeltArr } from '../../utils/index.ts';
+import { feltArrToStr } from '../../utils/index.ts';
 import NFTContestABI from '../../constants/abis/nft-contest.json';
 import { imageBasedOnNFTType } from '../../common/getImageBasedOnNFTType';
+import { getLastCharacterOfAString } from '../../utils/getLastCharacterOfAString';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
@@ -85,7 +86,7 @@ const QuestPage = () => {
     if (!address) {
       setWalletModalOpen(true);
       dispatch(fetchNFTIsClaimedData()).then((res) => {
-        const found = res.payload.find(
+        const found = res?.payload?.find(
           (resData) => resData.address === address,
         );
         if (found?.is_completed) {
@@ -95,33 +96,40 @@ const QuestPage = () => {
     } else {
       setEligibiltyStatusBeforeCheck(false);
       setWalletAddress(address);
-      dispatch(fetchNFTContestData()).then((res) => {
-        const found = res.payload.find(
-          (resData) => resData.address === address,
+      const addressLastChar = getLastCharacterOfAString(address);
+      dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
+        const found = res?.payload?.data?.find(
+          (resData) => resData.wallet_address === address,
         );
         if (found) {
-          dispatch(setAccountDetailsForNFTAction(found));
+          const nftName = feltArrToStr([found?.calldata[2]]);
+          dispatch(setAccountDetailsForNFTAction({
+            address: found?.wallet_address,
+            token_id: found?.calldata[0],
+            task_id: found?.calldata[1],
+              name: nftName,
+              rank: found?.calldata[3],
+              score: found?.calldata[4],
+              level: found?.calldata[5],
+              total_eligible_users: found?.calldata[6],
+          }));
           dispatch(setUserEligibleNFTAction(true));
           setMintData({
-            token_id: found?.token_id,
+            token_id: found?.calldata[0],
             // proof: [
             //   '0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e',
             //   '0x2f946b3a9f2a0603b30b63c09110d82f151ed01442dae4208dc0366b52288ec',
             //   '0x5d32dd94548b77404420815161d866380fcdac237adea94f114dadb3e793b7d',
             // ],
-            proof: [
-              '0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e',
-              '0xe85e9c9e32736b77b3d0462bca847b5e189e170b7212ab9601a22a745a39c5',
-              '0x19d53d0ecde940a8f578331a0bf62dd4f9d38f7f0d2c187d6582ef2fc86b490',
-            ],
+            proof: found?.proof,
             token_metadata: {
               type: 'struct',
-              task_id: found?.task_id,
-              name: strToFeltArr(found?.name)[0],
-              rank: found?.rank,
-              score: found?.score,
-              level: found?.level,
-              total_eligible_users: found?.total_eligible_users,
+              task_id: found?.calldata[1],
+              name: found?.calldata[2],
+              rank: found?.calldata[3],
+              score: found?.calldata[4],
+              level: found?.calldata[5],
+              total_eligible_users: found?.calldata[6],
             },
           });
         } else {
@@ -130,8 +138,6 @@ const QuestPage = () => {
       });
     }
   };
-
-  console.log(address, status)
 
   useEffect(() => {
     if (status === 'connected') {
@@ -142,6 +148,25 @@ const QuestPage = () => {
   useEffect(() => {
     if (address) {
       dispatch(fetchNFTIsClaimedData());
+      const addressLastChar = getLastCharacterOfAString(address);
+      dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
+        const found = res?.payload?.data?.find(
+          (resData) => resData.wallet_address === address,
+        );
+        if (found) {
+          const nftName = feltArrToStr([found?.calldata[2]]);
+          dispatch(setAccountDetailsForNFTAction({
+            address: found?.wallet_address,
+            token_id: found?.calldata[0],
+            task_id: found?.calldata[1],
+              name: nftName,
+              rank: found?.calldata[3],
+              score: found?.calldata[4],
+              level: found?.calldata[5],
+              total_eligible_users: found?.calldata[6],
+          }));
+        }
+      });
     } else {
       setNFTClaimedByUser(false);
       setEligibiltyStatusBeforeCheck(true);
@@ -213,9 +238,9 @@ const QuestPage = () => {
         <MintCard
           title="Rise of the first LPs"
           description={`Based on your ranking in LP contest,
-          you’re eligible for NFT - ${accountDetailsForNFT.name}.`}
+          you’re eligible for NFT - ${accountDetailsForNFT?.name}.`}
           address={address}
-          nftImg={imageBasedOnNFTType(accountDetailsForNFT.name)}
+          nftImg={imageBasedOnNFTType(accountDetailsForNFT?.name)}
           status="isUserEligibleForNFT"
           onCheck={() => checkEligibility()}
           onClaim={() => claimNft()}
@@ -244,9 +269,9 @@ const QuestPage = () => {
         <MintCard
           title="Rise of the first LPs"
           description={`Based on your ranking in LP contest,
-          you’re eligible for NFT - ${accountDetailsForNFT.name}.`}
+          you’re eligible for NFT - ${accountDetailsForNFT?.name}.`}
           address={address}
-          nftImg={imageBasedOnNFTType(accountDetailsForNFT.name)}
+          nftImg={imageBasedOnNFTType(accountDetailsForNFT?.name)}
           status="isUserClaimingNFT"
           onCheck={() => checkEligibility()}
           onClaim={() => claimNft()}
@@ -258,9 +283,9 @@ const QuestPage = () => {
         <MintCard
           title="Rise of the first LPs"
           description={`Based on your ranking in LP contest,
-          you’re eligible for NFT - ${accountDetailsForNFT.name}.`}
+          you’re eligible for NFT - ${accountDetailsForNFT?.name}.`}
           address={address}
-          nftImg={imageBasedOnNFTType(accountDetailsForNFT.name)}
+          nftImg={imageBasedOnNFTType(accountDetailsForNFT?.name)}
           status="isNFTClaimedByUser"
           onCheck={() => checkEligibility()}
           onClaim={() => claimNft()}
