@@ -55,8 +55,7 @@ const QuestPage = () => {
 
   const { contract } = useContract({
     address:
-      "0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6",
-    abi: NFTContest_ABI
+      "0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6"
   });
 
   // const {
