@@ -173,7 +173,7 @@ const QuestPage = () => {
 
   const fetchBalance = async () => {
     console.log(contract);
-    const balance = contract.call("increase_counter", [129]);
+    const balance = contract.call("balanceOf", [address]);
     console.log("🚀 ~ file: QuestPage.jsx:64 ~ QuestPage ~ balance:", balance);
   };
 
