@@ -28,12 +28,6 @@ export const fetchNFTContestData = createAsyncThunk('data/fetchNFTContestData', 
   return data;
 });
 
-export const fetchNFTIsClaimedData = createAsyncThunk('data/fetchNFTIsClaimedData', async () => {
-  const response = await fetch('/data/nft-completed-data.json'); // Adjust the path to your JSON file
-  const data = await response.json();
-  return data;
-});
-
 export const questSlice = createSlice({
   name: 'quest',
   initialState,
@@ -56,6 +50,9 @@ export const questSlice = createSlice({
     setAccountDetailsForNFTAction(state, action) {
       state.accountDetailsForNFT = action.payload;
     },
+    setIsWalletClaimedAnyNFT(state, action){
+      state.isWalletClaimedAnyNFT = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,18 +68,18 @@ export const questSlice = createSlice({
         ...state,
         isUserCheckingForEligibility: false,
       }))
-      .addCase(fetchNFTIsClaimedData.fulfilled, (state, action) => {
-        const NFTIsClaimedData = action.payload;
-        const found = NFTIsClaimedData.find(
-          (resData) => resData.address === state.walletAddress,
-        );
+      // .addCase(fetchNFTIsClaimedData.fulfilled, (state, action) => {
+      //   const NFTIsClaimedData = action.payload;
+      //   const found = NFTIsClaimedData.find(
+      //     (resData) => resData.address === state.walletAddress,
+      //   );
 
-        return {
-          ...state,
-          isWalletClaimedAnyNFT: found?.is_completed,
-          isNFTClaimedByUser: true,
-        };
-      });
+      //   return {
+      //     ...state,
+      //     isWalletClaimedAnyNFT: found?.is_completed,
+      //     isNFTClaimedByUser: true,
+      //   };
+      // });
   },
 });
 
@@ -93,6 +90,7 @@ export const {
   setUserEligibleNFTAction,
   setUserNonEligibleNFTAction,
   setAccountDetailsForNFTAction,
+  setIsWalletClaimedAnyNFT,
 } = questSlice.actions;
 
 export default questSlice.reducer;

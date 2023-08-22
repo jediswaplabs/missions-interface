@@ -1,5 +1,5 @@
 import { InjectedConnector } from "@starknet-react/core";
-import { StarknetChainId } from "starknet/dist/constants";
+import { constants } from "starknet";
 
 export const isTestnetEnvironment = () => {
   if (!location) {
@@ -41,15 +41,15 @@ export const isProductionEnvironment = () => {
 };
 
 export const isProductionChainId = (id) => {
-  return id === StarknetChainId.MAINNET;
+  return id === constants.StarknetChainId.SN_MAIN;
 };
 
 export const isTestnetChainId = (id) => {
-  return id === StarknetChainId.TESTNET;
+  return id === constants.StarknetChainId.SN_GOERLI;
 };
 
 export const isStagingChainId = (id) => {
-  return [StarknetChainId.MAINNET, StarknetChainId.TESTNET].includes(id);
+  return [constants.StarknetChainId.SN_MAIN, constants.StarknetChainId.SN_GOERLI].includes(id);
 };
 
 export const NETWORK_CHAIN_ID = 1;

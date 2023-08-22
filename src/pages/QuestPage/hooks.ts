@@ -6,7 +6,6 @@ import {
   setUserClaimingNFTAction,
   setWalletAddressAction,
 } from "./questSlice";
-import { stark } from "starknet";
 // import { useSingleCallResult } from "../../hooks/multicall/hooks";
 
 // import {tree} from '../../data/merkle_stark'

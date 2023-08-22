@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Container, SvgIcon } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { useContractRead, useContractWrite } from '@starknet-react/core';
-import { stark } from 'starknet';
+import { useContract,
+  useContractRead,
+  useContractWrite } from '@starknet-react/core';
+import { CallData } from 'starknet';
 
 import MainLayout from '../../layouts/MainLayout/MainLayout';
 import backIcon from '../../resources/icons/back.svg';
@@ -14,10 +16,10 @@ import noneligibleImg from '../../resources/images/noneligible.png';
 import { AllQuests } from './QuestPage.styles';
 import { useAccountDetails,
   useWalletActionHandlers } from '../../hooks/index.ts';
-import { getTokenContract, useQuestActionHandlers } from './hooks.ts';
+import { useQuestActionHandlers } from './hooks.ts';
 import { fetchNFTContestData,
-  fetchNFTIsClaimedData,
   setAccountDetailsForNFTAction,
+  setIsWalletClaimedAnyNFT,
   setUserEligibleNFTAction,
   setUserNonEligibleNFTAction } from './questSlice';
 import { feltArrToStr } from '../../utils/index.ts';
@@ -56,9 +58,13 @@ const QuestPage = () => {
   );
 
   const [mintData, setMintData] = useState({});
-  const contract = getTokenContract();
+  const { contract } = useContract({
+    address:
+      '0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6',
+    abi: NFTContestABI,
+  });
 
-  const compiledDta = stark.compileCalldata(mintData);
+  const compiledDta = CallData.compile(mintData);
 
   const calls = {
     // contractAddress:
@@ -71,28 +77,31 @@ const QuestPage = () => {
 
   const { writeAsync } = useContractWrite({ calls });
 
-  const { data, isLoading, error, refetch, isSuccess } = useContractRead({
-    address:
-      '0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6',
-    abi: NFTContestABI,
+  const { data: response } = useContractRead({
+    address: contract.address,
+    abi: contract.abi,
     functionName: 'is_completed',
-    args: [{ task_id: 1, address }],
+    args: [1, address],
     watch: true,
   });
+
+  useEffect(() => {
+    if (response) {
+      dispatch(setIsWalletClaimedAnyNFT(response));
+      setNFTClaimedByUser(true);
+    }
+  }, [response]);
 
   const dispatch = useDispatch();
 
   const checkEligibility = () => {
     if (!address) {
       setWalletModalOpen(true);
-      dispatch(fetchNFTIsClaimedData()).then((res) => {
-        const found = res?.payload?.find(
-          (resData) => resData.address === address,
-        );
-        if (found?.is_completed) {
-          setNFTClaimedByUser(true);
-        }
-      });
+
+      if (response) {
+        dispatch(setIsWalletClaimedAnyNFT(response));
+        setNFTClaimedByUser(true);
+      }
     } else {
       setEligibiltyStatusBeforeCheck(false);
       setWalletAddress(address);
@@ -137,30 +146,35 @@ const QuestPage = () => {
 
   const setStateForAccountDetailsForNFT = (nftData) => {
     const nftName = feltArrToStr([nftData?.calldata[2]]);
-        dispatch(setAccountDetailsForNFTAction({
-          address: nftData?.wallet_address,
-          token_id: nftData?.calldata[0],
-          task_id: nftData?.calldata[1],
-            name: nftName,
-            rank: nftData?.calldata[3],
-            score: nftData?.calldata[4],
-            level: nftData?.calldata[5],
-            total_eligible_users: nftData?.calldata[6],
-        }));
+    dispatch(
+      setAccountDetailsForNFTAction({
+        address: nftData?.wallet_address,
+        token_id: nftData?.calldata[0],
+        task_id: nftData?.calldata[1],
+        name: nftName,
+        rank: nftData?.calldata[3],
+        score: nftData?.calldata[4],
+        level: nftData?.calldata[5],
+        total_eligible_users: nftData?.calldata[6],
+      }),
+    );
   };
 
   useEffect(() => {
     if (address) {
-      dispatch(fetchNFTIsClaimedData());
+      if (response) {
+        dispatch(setIsWalletClaimedAnyNFT(response));
+        setNFTClaimedByUser(true);
+      }
       const addressLastChar = getLastCharacterOfAString(address);
       dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
-      const found = res?.payload?.data?.find(
-        (resData) => resData.wallet_address === address,
-      );
-      if (found) {
-        setStateForAccountDetailsForNFT(found);
-      }
-    });
+        const found = res?.payload?.data?.find(
+          (resData) => resData.wallet_address === address,
+        );
+        if (found) {
+          setStateForAccountDetailsForNFT(found);
+        }
+      });
     } else {
       setNFTClaimedByUser(false);
       setEligibiltyStatusBeforeCheck(true);
@@ -174,8 +188,10 @@ const QuestPage = () => {
         .then((tx) => {
           setUserClaimingNFT(false);
           if (tx.transaction_hash) {
-            setNFTClaimedByUser(true);
-            dispatch(fetchNFTIsClaimedData());
+            if (response) {
+              dispatch(setIsWalletClaimedAnyNFT(response));
+              setNFTClaimedByUser(true);
+            }
           }
         })
         .catch((err) => {
@@ -184,11 +200,6 @@ const QuestPage = () => {
         });
     }
   };
-
-  useEffect(() => {
-    // setNFTClaimedByUser(true);
-    console.log(data, isLoading, isSuccess);
-  }, [data]);
 
   const getMintCardContent = () => {
     if (
@@ -223,11 +234,7 @@ const QuestPage = () => {
         />
       );
     }
-    if (
-      isUserEligibleForNFT
-      && !isUserClaimingNFT
-      && !isNFTClaimedByUser
-    ) {
+    if (isUserEligibleForNFT && !isUserClaimingNFT && !isNFTClaimedByUser) {
       return (
         <MintCard
           title="Rise of the first LPs"
@@ -241,11 +248,7 @@ const QuestPage = () => {
         />
       );
     }
-    if (
-      isUserNonEligibleForNFT
-      && !isUserClaimingNFT
-      && !isNFTClaimedByUser
-    ) {
+    if (isUserNonEligibleForNFT && !isUserClaimingNFT && !isNFTClaimedByUser) {
       return (
         <MintCard
           title="Rise of the first LPs"

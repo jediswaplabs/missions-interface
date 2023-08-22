@@ -15,7 +15,7 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useTranslation } from 'react-i18next';
 import { useConnectors } from '@starknet-react/core';
 import { getStarknet } from 'get-starknet-core';
-import { StarknetChainId } from 'starknet/dist/constants';
+import { constants } from 'starknet';
 
 import JediModal from '../../../components/JediModal/JediModal';
 import { getStarkscanLink } from '../../../common/explorerHelper';
@@ -78,7 +78,7 @@ const WalletModal = ({ children, ...props }) => {
       if (
         (isProductionEnvironment() && isTestnetChainId(chainId))
         || (isTestnetEnvironment() && isProductionChainId(chainId))
-        || !Object.values(StarknetChainId).includes(chainId)
+        || !Object.values(constants.StarknetChainId).includes(chainId)
       ) {
         setChainError(true);
         disconnect();
