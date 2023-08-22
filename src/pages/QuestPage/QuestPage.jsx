@@ -5,6 +5,7 @@ import { Container, SvgIcon } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import {
   useContract,
+  useContractRead,
   useContractWrite,
   useWaitForTransaction,
 } from "@starknet-react/core";
@@ -25,6 +26,7 @@ import {
 import { useQuestActionHandlers } from "./hooks.ts";
 import { fetchNFTContestData } from "./questSlice";
 import { strToFeltArr } from "../../utils/index.ts";
+import NFT_ABI from "../../constants/abis/nft-contest.json";
 
 const QuestPage = () => {
   const { id } = useParams();
@@ -60,32 +62,61 @@ const QuestPage = () => {
   const { contract } = useContract({
     address:
       "0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6",
+    abi: NFT_ABI,
   });
 
+  const { data: response } = useContractRead({
+    address: contract.address,
+    abi: contract.abi,
+    functionName: "is_completed",
+    args: [1, address],
+    watch: true,
+  });
+  console.log("🚀 ~ file: QuestPage.jsx:75 ~ QuestPage ~ response:", response);
+
   const mintData = {
-    token_id: accountDetailsForNFT.token_id,
+    // token_id: accountDetailsForNFT.token_id,
+    // // proof: [
+    // //   '0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e',
+    // //   '0x2f946b3a9f2a0603b30b63c09110d82f151ed01442dae4208dc0366b52288ec',
+    // //   '0x5d32dd94548b77404420815161d866380fcdac237adea94f114dadb3e793b7d',
+    // // ],
     // proof: [
-    //   '0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e',
-    //   '0x2f946b3a9f2a0603b30b63c09110d82f151ed01442dae4208dc0366b52288ec',
-    //   '0x5d32dd94548b77404420815161d866380fcdac237adea94f114dadb3e793b7d',
+    //   "0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e",
+    //   "0xe85e9c9e32736b77b3d0462bca847b5e189e170b7212ab9601a22a745a39c5",
+    //   "0x19d53d0ecde940a8f578331a0bf62dd4f9d38f7f0d2c187d6582ef2fc86b490",
     // ],
-    proof: [
-      "0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e",
-      "0xe85e9c9e32736b77b3d0462bca847b5e189e170b7212ab9601a22a745a39c5",
-      "0x19d53d0ecde940a8f578331a0bf62dd4f9d38f7f0d2c187d6582ef2fc86b490",
-    ],
-    token_metadata: {
-      type: "struct",
-      task_id: accountDetailsForNFT.task_id,
-      name: strToFeltArr(accountDetailsForNFT.name)[0],
-      rank: accountDetailsForNFT.rank,
-      score: accountDetailsForNFT.score,
-      level: accountDetailsForNFT.level,
-      total_eligible_users: accountDetailsForNFT.total_eligible_users,
-    },
+    // token_metadata: {
+    //   type: "struct",
+    //   task_id: accountDetailsForNFT.task_id,
+    //   name: strToFeltArr(accountDetailsForNFT.name)[0],
+    //   rank: accountDetailsForNFT.rank,
+    //   score: accountDetailsForNFT.score,
+    //   level: accountDetailsForNFT.level,
+    //   total_eligible_users: accountDetailsForNFT.total_eligible_users,
+    // },
   };
 
-  const compiledDta = stark.compileCalldata(mintData);
+  // const { data: response } = useContractRead({
+  //   address: contract?.address,
+  //   abi: contract?.abi,
+  //   functionName: "is_completed",
+  //   args: [1, address],
+  //   watch: false,
+  // });
+
+  // const readResponse = contract.call("balanceOf", [address]);
+  // console.log(
+  //   "🚀 ~ file: QuestPage.jsx:100 ~ QuestPage ~ readResponse:",
+  //   readResponse
+  // );
+  // console.log("🚀 ~ file: QuestPage.jsx:98 ~ QuestPage ~ response:", response);
+
+  const compiledDta = [];
+  console.log(
+    "🚀 ~ file: QuestPage.jsx:91 ~ QuestPage ~ compiledDta:",
+    compiledDta
+  );
 
   const calls = useMemo(() => {
     const tx = {
@@ -140,8 +171,8 @@ const QuestPage = () => {
 
   const fetchBalance = async () => {
     console.log(contract);
-    const balance = contract.call("balanceOf", [address]);
-    console.log("🚀 ~ file: QuestPage.jsx:64 ~ QuestPage ~ balance:", balance);
+    // const balance = await contract.call("is_completed", [1, address]);
+    // console.log("🚀 ~ file: QuestPage.jsx:64 ~ QuestPage ~ balance:", balance);
   };
 
   useEffect(() => {

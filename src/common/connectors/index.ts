@@ -1,5 +1,7 @@
 import { InjectedConnector } from "@starknet-react/core";
-import { StarknetChainId } from "starknet/dist/constants";
+import { constants } from "starknet";
+// import { StarknetChainId } from "starknet/dist/constants";
+const { StarknetChainId } = constants;
 
 export const isTestnetEnvironment = () => {
   if (!location) {

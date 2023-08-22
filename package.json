@@ -21,12 +21,20 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not op_mini all",
-    "ie 11"
-  ],
+  "browserslist": {
+    "production": [
+      "chrome >= 67",
+      "edge >= 79",
+      "firefox >= 68",
+      "opera >= 54",
+      "safari >= 14"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/eslint-parser": "^7.18.9",
@@ -121,7 +129,7 @@
     "@reach/router": "^1.3.4",
     "@reduxjs/toolkit": "^1.8.5",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
-    "@starknet-react/core": "^0.18.0",
+    "@starknet-react/core": "1.0.4",
     "@storybook/addon-contexts": "^5.3.21",
     "@web3-starknet-react/argentx-connector": "^2.2.3",
     "@web3-starknet-react/braavos-connector": "^2.2.3",
@@ -131,7 +139,7 @@
     "deepcopy": "^2.1.0",
     "deepmerge": "^4.2.2",
     "eventemitter3": "^5.0.1",
-    "get-starknet-core": "2.1.0",
+    "get-starknet-core": "3.2.0",
     "global": "^4.4.0",
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
@@ -151,7 +159,7 @@
     "react-redux": "^8.0.2",
     "react-router-dom": "^5.2.0",
     "resolve-url-loader": "^5.0.0",
-    "starknet": "4.4.2",
+    "starknet": "^5.19.2",
     "styled-components": "^5.3.5",
     "swiper": "^8.4.4",
     "url-loader": "^4.1.1",
@@ -159,8 +167,7 @@
   },
   "resolutions": {
     "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
-    "wrap-ansi": "^6.2.0",
-    "starknet": "4.4.2"
+    "wrap-ansi": "^6.2.0"
   },
   "msw": {
     "workerDirectory": "public"
