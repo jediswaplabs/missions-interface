@@ -50,8 +50,8 @@ export const questSlice = createSlice({
     setAccountDetailsForNFTAction(state, action) {
       state.accountDetailsForNFT = action.payload;
     },
-    setIsWalletClaimedAnyNFT(state, action){
-      state.isWalletClaimedAnyNFT = action.payload
+    setIsWalletClaimedAnyNFT(state, action) {
+      state.isWalletClaimedAnyNFT = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -67,19 +67,7 @@ export const questSlice = createSlice({
       .addCase(fetchNFTContestData.rejected, (state) => ({
         ...state,
         isUserCheckingForEligibility: false,
-      }))
-      // .addCase(fetchNFTIsClaimedData.fulfilled, (state, action) => {
-      //   const NFTIsClaimedData = action.payload;
-      //   const found = NFTIsClaimedData.find(
-      //     (resData) => resData.address === state.walletAddress,
-      //   );
-
-      //   return {
-      //     ...state,
-      //     isWalletClaimedAnyNFT: found?.is_completed,
-      //     isNFTClaimedByUser: true,
-      //   };
-      // });
+      }));
   },
 });
 

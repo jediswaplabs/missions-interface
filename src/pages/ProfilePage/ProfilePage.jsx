@@ -22,8 +22,6 @@ const ProfilePage = () => {
     (state) => state.profile.nftsClaimedByAUser,
   );
 
-  const walletAddress = useSelector((state) => state.profile.walletAddress);
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,8 +29,8 @@ const ProfilePage = () => {
   }, [address]);
 
   useEffect(() => {
-    dispatch(fetchProfileData());
-  }, [walletAddress]);
+    dispatch(fetchProfileData(address));
+  }, [address]);
 
   const getEmptyProfilePageContent = () => (
     <div style={{ maxWidth: '479px', margin: 'auto' }}>
@@ -62,7 +60,7 @@ const ProfilePage = () => {
   const bodyContent = address ? (
     <>
       {!nftsClaimedByAUser.length && getEmptyProfilePageContent()}
-      {nftsClaimedByAUser.length && (
+      {nftsClaimedByAUser.length !== 0 && (
         <div>
           <ProfileHeading>Claimed quests</ProfileHeading>
           <Stack
@@ -76,7 +74,7 @@ const ProfilePage = () => {
             {nftsClaimedByAUser.map((data, i) => (
               <RoundedRect key={i}>
                 <img
-                  src={imageBasedOnNFTType(data?.claimed_nft_name)}
+                  src={imageBasedOnNFTType(data?.name)}
                   alt=""
                   style={{ width: '200px', borderRadius: '5px' }}
                 />

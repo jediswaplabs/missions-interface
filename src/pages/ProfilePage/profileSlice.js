@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import api from './profileAPI';
+
 export const initialState = {
   nftsClaimedByAUser: [],
   walletAddress: null,
@@ -7,10 +9,9 @@ export const initialState = {
 
 export const reducers = {};
 
-export const fetchProfileData = createAsyncThunk('data/fetchProfileData', async () => {
-  const response = await fetch('/data/profile-data.json'); // Adjust the path to your JSON file
-  const data = await response.json();
-  return data;
+export const fetchProfileData = createAsyncThunk('data/fetchProfileData', async (address) => {
+  const response = await api.fetchData(address);
+  return response.data;
 });
 
 export const profileSlice = createSlice({
@@ -28,12 +29,9 @@ export const profileSlice = createSlice({
     builder
       .addCase(fetchProfileData.fulfilled, (state, action) => {
         const profileData = action.payload;
-        const found = profileData.find(
-          (resData) => resData.address === state.walletAddress,
-        );
         return {
           ...state,
-          nftsClaimedByAUser: [found],
+          nftsClaimedByAUser: profileData,
         };
       });
   },
@@ -41,7 +39,7 @@ export const profileSlice = createSlice({
 
 export const {
   setNftsClaimedByAUserAction,
-  setWalletAddressAction
+  setWalletAddressAction,
 } = profileSlice.actions;
 
 export default profileSlice.reducer;
