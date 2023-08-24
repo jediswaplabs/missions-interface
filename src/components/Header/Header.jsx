@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { UnsupportedChainIdError } from '@web3-starknet-react/core';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -188,7 +187,7 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
     return (
       <Web3StatusError onClick={onWalletModalToggle}>
         <Typography variant="body1" color="text.primary">
-          {error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error'}
+          {error ? 'Wrong Network' : 'Error'}
         </Typography>
       </Web3StatusError>
     );

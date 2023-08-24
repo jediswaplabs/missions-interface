@@ -17,12 +17,6 @@ if (module?.hot) {
   module.hot.accept();
 }
 
-if (process.env.NODE_MOCK_BE) {
-  // eslint-disable-next-line global-require
-  const { worker } = require('../__mocks__/mockBe');
-  worker.start();
-}
-
 const connectors = [
   new InjectedConnector({ options: { id: 'braavos' } }),
   new InjectedConnector({ options: { id: 'argentX' } }),

@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
-import { UnsupportedChainIdError, useStarknetReact } from '@web3-starknet-react/core';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Stack from '@mui/material/Stack';
@@ -39,24 +38,22 @@ const WalletModal = ({ children, ...props }) => {
   const { t, i18n } = useTranslation();
   const [modalTitle, setModalTitle] = useState();
 
-  const { active, error } = useStarknetReact();
   const { getAvailableWallets } = getStarknet();
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT);
-  const { address, account, chainId, connector, status } = useAccountDetails();
+  const { address, account, chainId, connector, status, error } = useAccountDetails();
   const [pendingWallet, setPendingWallet] = useState();
   const [pendingError, setPendingError] = useState();
   const [availableWallets, setAvailableWallets] = useState([]);
   const [chainError, setChainError] = useState(false);
-  const activePrevious = usePrevious(active);
   const connectorPrevious = usePrevious(connector);
   const { connect, disconnect } = useConnectors();
 
   useEffect(() => {
-    if (((active && !activePrevious) || (connector && connector !== connectorPrevious && !error))) {
+    if ((connector && connector !== connectorPrevious) && !error) {
       setWalletView(WALLET_VIEWS.ACCOUNT);
     }
-  }, [setWalletView, active, error, connector, activePrevious, connectorPrevious]);
+  }, [setWalletView, error, connector, connectorPrevious]);
 
   const getConnectedWalletOptions = () => {
     const option = Object.values(SUPPORTED_WALLETS).filter((w) => w.connector.options.id === connector.options.id);
@@ -119,8 +116,8 @@ const WalletModal = ({ children, ...props }) => {
   };
 
   useEffect(() => {
-    if (error || chainError) {
-      setModalTitle(error instanceof UnsupportedChainIdError || chainError ? t('walletModal.errors.wrongNetwork') : t('walletModal.errors.connectingError'));
+    if (chainError) {
+      setModalTitle(chainError ? t('walletModal.errors.wrongNetwork') : t('walletModal.errors.connectingError'));
       return;
     }
 
@@ -144,10 +141,10 @@ const WalletModal = ({ children, ...props }) => {
   };
 
   const getContent = () => {
-    if (error || chainError) {
+    if (chainError) {
       return (
         <>
-          {error instanceof UnsupportedChainIdError || chainError ? (
+          {chainError ? (
             <Typography variant="body2" color="text.primary">{t('walletModal.errors.connectAppropriateNetwork')}</Typography>
           ) : (
             <Typography variant="body2" component="span" color="text.primary">{t('walletModal.errors.tryRefresh')}</Typography>
