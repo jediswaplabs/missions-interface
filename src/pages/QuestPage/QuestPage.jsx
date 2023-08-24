@@ -122,7 +122,6 @@ const QuestPage = () => {
             // ],
             proof: found?.proof,
             token_metadata: {
-              type: 'struct',
               task_id: found?.calldata[1],
               name: found?.calldata[2],
               rank: found?.calldata[3],
