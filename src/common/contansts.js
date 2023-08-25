@@ -30,15 +30,6 @@ export const SUPPORTED_WALLETS = {
   },
 };
 
-export const chainIds = {
-  MAINNET: 1,
-};
-
-export const NETWORK_LABELS = {
-  [chainIds.MAINNET]: 'Mainnet',
-  unknown: 'Unknown',
-};
-
 export const STARKSCAN_PREFIXES = {
   1: '',
   3: 'testnet.',

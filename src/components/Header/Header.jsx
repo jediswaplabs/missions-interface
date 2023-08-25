@@ -114,9 +114,6 @@ const Header = () => {
                   )}
                 </>
               )}
-              {/* {chainId && NETWORK_LABELS[chainId] && (
-                  <Typography variant="body1" color="text.primary">Starknet-{NETWORK_LABELS[chainId]}</Typography>
-                )} */}
               <AccountElement>
                 <Web3Status />
               </AccountElement>
