@@ -15,22 +15,20 @@ const nfts = {
 };
 
 export const imageBasedOnNFTType = (nftTypeReceived) => {
-  if (nftTypeReceived === nfts.nft1) {
-    return nft1;
-  }
-  if (nftTypeReceived === nfts.nft2) {
-    return nft2;
-  }
-  if (nftTypeReceived === nfts.nft3) {
-    return nft3;
-  }
-  if (nftTypeReceived === nfts.nft4) {
-    return nft4;
-  }
-  if (nftTypeReceived === nfts.nft5) {
-    return nft5;
-  }
-  if (nftTypeReceived === nfts.nft6) {
-    return nftw;
+  switch (nftTypeReceived) {
+    case nfts.nft1:
+      return nft1;
+    case nfts.nft2:
+      return nft2;
+    case nfts.nft3:
+      return nft3;
+    case nfts.nft4:
+      return nft4;
+    case nfts.nft5:
+      return nft5;
+    case nfts.nft6:
+      return nftw;
+    default:
+      return nft1;
   }
 };

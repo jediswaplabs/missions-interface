@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -36,7 +36,6 @@ const Header = () => {
   const closeProfilePopout = useSelector(
     (state) => state.profile.closeProfilePopout,
   );
-
 
   return (
     <HeaderContainer py={1}>
