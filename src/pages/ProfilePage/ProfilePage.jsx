@@ -10,7 +10,6 @@ import start_claiming from '../../resources/icons/start_claiming.svg';
 import { fetchProfileData, setWalletAddressAction } from './profileSlice';
 import { useAccountDetails,
   useWalletActionHandlers } from '../../hooks/index.ts';
-import { imageBasedOnNFTType } from '../../common/getImageBasedOnNFTType';
 import GradientButton from '../../components/GradientButton/GradientButton';
 
 const ProfilePage = () => {
@@ -74,7 +73,7 @@ const ProfilePage = () => {
             {nftsClaimedByAUser.map((data, i) => (
               <RoundedRect key={i}>
                 <img
-                  src={imageBasedOnNFTType(data?.name)}
+                  src={data.image_url}
                   alt=""
                   style={{ width: '200px', borderRadius: '5px' }}
                 />
