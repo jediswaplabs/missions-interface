@@ -2,14 +2,19 @@ import { InjectedConnector } from "@starknet-react/core";
 import { constants } from "starknet";
 
 export const isTestnetEnvironment = () => {
+  const hostname = location.hostname;
+
   if (!location) {
     return false;
   }
   if (String(location) === "//") {
     return false;
   }
-  const host = new URL(String(location))?.host || "";
-  return host === "app.testnet.jediswap.xyz";
+  else if(hostname === "missions.testnet.jediswap.xyz" || hostname === "localhost" ) {
+    return true
+  }
+  // const host = new URL(String(location))?.host || "";
+  // return host === "app.testnet.jediswap.xyz";
 };
 
 export const isStagingEnvironment = () => {
