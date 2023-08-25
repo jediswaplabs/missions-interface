@@ -34,4 +34,3 @@ export const imageBasedOnNFTType = (nftTypeReceived) => {
     return nftw;
   }
 };
-
