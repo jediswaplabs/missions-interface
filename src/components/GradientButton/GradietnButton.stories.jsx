@@ -1,5 +1,4 @@
 import React from 'react';
-import { expect } from '@storybook/jest'; // eslint-disable-line import/no-extraneous-dependencies
 
 import GradientButton from './GradientButton';
 
