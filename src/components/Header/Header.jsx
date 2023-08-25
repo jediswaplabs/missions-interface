@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -33,6 +33,10 @@ const noop = () => {};
 
 const Header = () => {
   const location = useLocation();
+  const closeProfilePopout = useSelector(
+    (state) => state.profile.closeProfilePopout,
+  );
+
 
   return (
     <HeaderContainer py={1}>
@@ -105,7 +109,9 @@ const Header = () => {
                       Profile
                     </Typography>
                   </Link>
-                  <ProfilePopout />
+                  {!closeProfilePopout && (
+                    <ProfilePopout />
+                  )}
                 </>
               )}
               {/* {chainId && NETWORK_LABELS[chainId] && (

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { SvgIcon } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 import { ProfilePopoutContainer,
   ProfilePopoutRect,
@@ -8,12 +9,16 @@ import { ProfilePopoutContainer,
   ProfilePopoutClose } from './ProfilePopout.styles';
 import closeIcon from '../../resources/icons/close.svg';
 import triangleIcon from '../../resources/icons/triangle.svg';
+import { setCloseProfilePopout } from '../../pages/ProfilePage/profileSlice';
 
 const ProfilePopout = () => {
   const ref = useRef(null);
 
+  const dispatch = useDispatch();
+
   const hideProfilePopout = () => {
     ref.current.style.display = 'none';
+    dispatch(setCloseProfilePopout(true));
   };
 
   return (
