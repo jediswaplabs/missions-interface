@@ -24,7 +24,7 @@ const MainPage = () => {
             title="Rise of the first LPs"
             description="This is our first-ever liquidity contest.
             With this initiative, we want to recognise and reward the most loyal liquidity providers of JediSwap with some special NFTs."
-            duration="Apr 17, 2023 - Jul 25, 2023"
+            duration="Apr 17, 2023 - Jul 26, 2023"
             nftAmount={5}
             campaignImg={campaign}
           />

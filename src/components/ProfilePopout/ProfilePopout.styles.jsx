@@ -2,18 +2,20 @@ import styled from 'styled-components';
 
 const ProfilePopoutTriangle = styled.div`
   position: relative;
-  left: 30px;
+  left: 52px;
   bottom: -4px;
 `;
 
 const ProfilePopoutContainer = styled.div`
   position: absolute;
+  right: -30px;
+  top: 32px;
 `;
 
 const ProfilePopoutRect = styled.div`
   border-radius: 16px;
   background: var(--jedi-gradient, linear-gradient(151deg, #29AAFD 0%, #FF00E9 100%));
-  width: 291px;
+  width: 268px;
   height: 102px;
   padding: 20px;
   // position: absolute;
@@ -41,8 +43,8 @@ const ProfilePopoutClose = styled.div`
 
 export {
   ProfilePopoutContainer,
-  ProfilePopoutTriangle, 
+  ProfilePopoutTriangle,
   ProfilePopoutRect,
   ProfilePopoutText,
-  ProfilePopoutClose
-}
+  ProfilePopoutClose,
+};

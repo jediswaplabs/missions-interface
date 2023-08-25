@@ -95,16 +95,18 @@ const Header = () => {
                   <HeaderSelectionBar />
                 </ActiveLink>
               ) : (
-                <Link to="/profile">
-                  <Typography
-                    variant="body1"
-                    color="white"
-                    style={{ fontSize: '16px' }}
-                  >
-                    Profile
-                  </Typography>
+                <>
+                  <Link to="/profile">
+                    <Typography
+                      variant="body1"
+                      color="white"
+                      style={{ fontSize: '16px' }}
+                    >
+                      Profile
+                    </Typography>
+                  </Link>
                   <ProfilePopout />
-                </Link>
+                </>
               )}
               {/* {chainId && NETWORK_LABELS[chainId] && (
                   <Typography variant="body1" color="text.primary">Starknet-{NETWORK_LABELS[chainId]}</Typography>
