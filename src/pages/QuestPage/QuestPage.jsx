@@ -107,27 +107,22 @@ const QuestPage = () => {
       setWalletAddress(address);
       const addressLastChar = getLastCharacterOfAString(address);
       dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
-        const found = res?.payload?.data?.find(
+        const nftData = res?.payload?.data?.find(
           (resData) => resData.wallet_address === address,
         );
-        if (found) {
-          setStateForAccountDetailsForNFT(found);
+        if (nftData && Object.keys(nftData).length) {
+          setStateForAccountDetailsForNFT(nftData);
           dispatch(setUserEligibleNFTAction(true));
           setMintData({
-            token_id: found?.calldata[0],
-            // proof: [
-            //   '0x7aafb266518806486b3d98b4aa4ae938d8b0ec2d190b3350c5d4edbf666b36e',
-            //   '0x2f946b3a9f2a0603b30b63c09110d82f151ed01442dae4208dc0366b52288ec',
-            //   '0x5d32dd94548b77404420815161d866380fcdac237adea94f114dadb3e793b7d',
-            // ],
-            proof: found?.proof,
+            token_id: nftData?.calldata[0],
+            proof: nftData?.proof,
             token_metadata: {
-              task_id: found?.calldata[1],
-              name: found?.calldata[2],
-              rank: found?.calldata[3],
-              score: found?.calldata[4],
-              level: found?.calldata[5],
-              total_eligible_users: found?.calldata[6],
+              task_id: nftData?.calldata[1],
+              name: nftData?.calldata[2],
+              rank: nftData?.calldata[3],
+              score: nftData?.calldata[4],
+              level: nftData?.calldata[5],
+              total_eligible_users: nftData?.calldata[6],
             },
           });
         } else {
@@ -144,17 +139,19 @@ const QuestPage = () => {
   }, [status]);
 
   const setStateForAccountDetailsForNFT = (nftData) => {
+    const nftCalldata = nftData?.calldata || [];
+    const [tokenId, taskId, rank, score, level, totalEligibleUsers] = nftCalldata;
     const nftName = feltArrToStr([nftData?.calldata[2]]);
     dispatch(
       setAccountDetailsForNFTAction({
         address: nftData?.wallet_address,
-        token_id: nftData?.calldata[0],
-        task_id: nftData?.calldata[1],
+        token_id: tokenId,
+        task_id: taskId,
         name: nftName,
-        rank: nftData?.calldata[3],
-        score: nftData?.calldata[4],
-        level: nftData?.calldata[5],
-        total_eligible_users: nftData?.calldata[6],
+        rank,
+        score,
+        level,
+        total_eligible_users: totalEligibleUsers,
       }),
     );
   };
@@ -167,11 +164,11 @@ const QuestPage = () => {
       }
       const addressLastChar = getLastCharacterOfAString(address);
       dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
-        const found = res?.payload?.data?.find(
+        const nftData = res?.payload?.data?.find(
           (resData) => resData.wallet_address === address,
         );
-        if (found) {
-          setStateForAccountDetailsForNFT(found);
+        if (nftData && Object.keys(nftData).length) {
+          setStateForAccountDetailsForNFT(nftData);
         }
       });
     } else {
