@@ -1,13 +1,12 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
-import { Link } from 'react-router-dom';
 
-const ActiveLink = styled(Link)`
+const ActiveLink = styled(RouterLink)`
   margin-top: 3px;
   p {
     margin-bottom: 5px;
-    font-family: 'Avenir LT Std';
+    font-family: 'sans-serif';
     font-style: normal;
     font-weight: 750;
     font-size: 16px;

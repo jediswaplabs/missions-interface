@@ -4,14 +4,12 @@ import styled from 'styled-components';
 
 const InfoLabel = styled(Typography)`
     color: #999;
-    font-feature-settings: 'salt' on, 'clig' off, 'liga' off;
-    font-family: DM Sans;
-    font-size: 32px;
+    font-family: sans-serif;
+    font-size: 32px !important;
     font-style: normal;
-    font-weight: 700;
-    padding: 0 48px;
-    line-height: 41.5px; /* 129.688% */
-    // width: 280px;
+    font-weight: 700 !important;
+    padding: 0 66px 0px 24px;
+    line-height: 41.5px !important; /* 129.688% */
 `;
 
 const InfoBox = styled(Box)`
@@ -28,6 +26,6 @@ const InfoBox = styled(Box)`
 `;
 
 export {
-    InfoLabel,
-    InfoBox
+  InfoLabel,
+  InfoBox,
 };

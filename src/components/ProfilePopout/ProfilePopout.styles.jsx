@@ -24,7 +24,7 @@ const ProfilePopoutRect = styled.div`
   align-items: center;
   color: var(--jedi-white, #FFF);
   font-feature-settings: 'clig' off, 'liga' off;
-  font-family: DM Sans;
+  font-family: sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;

@@ -16,7 +16,7 @@ const RoundedRect = styled(Box)`
 const ProfileHeading = styled.div`
   color: #FFF;
   font-feature-settings: 'salt' on, 'clig' off, 'liga' off;
-  font-family: DM Sans;
+  font-family: sans-serif;
   font-size: 34px;
   font-style: normal;
   font-weight: 700;
@@ -25,7 +25,7 @@ const ProfileHeading = styled.div`
 const ProfileText = styled.div`
   color: #F2F2F2;
   text-align: center;
-  font-family: DM Sans;
+  font-family: sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
