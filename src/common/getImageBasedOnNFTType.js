@@ -1,9 +1,9 @@
 import nft1 from '../resources/images/L1P1-min.png';
 import nft2 from '../resources/images/L1P2-min.png';
-import nft3 from '../resources/images/L1P3.png';
-import nft4 from '../resources/images/L1P4.png';
-import nft5 from '../resources/images/L1P5.png';
-import nftw from '../resources/images/L1PW.png';
+import nft3 from '../resources/images/L1P3-min.png';
+import nft4 from '../resources/images/L1P4-min.png';
+import nft5 from '../resources/images/L1P5-min.png';
+import nftw from '../resources/images/L1PW-min.png';
 
 const nfts = {
   nft1: 'L1P1',
