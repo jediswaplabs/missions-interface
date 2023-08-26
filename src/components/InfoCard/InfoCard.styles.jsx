@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const InfoLabel = styled(Typography)`
     color: #999;
-    font-family: sans-serif;
+    font-family: DM Sans, sans-serif;
     font-size: 32px !important;
     font-style: normal;
     font-weight: 700 !important;

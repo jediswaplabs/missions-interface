@@ -6,7 +6,7 @@ const ActiveLink = styled(RouterLink)`
   margin-top: 3px;
   p {
     margin-bottom: 5px;
-    font-family: 'sans-serif';
+    font-family: Avenir LT Std, sans-serif;
     font-style: normal;
     font-weight: 750;
     font-size: 16px;

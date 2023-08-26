@@ -2,7 +2,7 @@ import { createTheme } from '@material-ui/core/styles';
 
 const jediSwapDark = createTheme({
   typography: {
-    fontFamily: '"sans-serif", "Helvetica Neue", Arial, sans-serif',
+    fontFamily: '"DM Sans",  sans-serif',
     htmlFontSize: 14,
     fontSize: 14,
     fontWeightLight: 300,
@@ -38,14 +38,14 @@ const jediSwapDark = createTheme({
       color: '#fff',
     },
     h5: {
-      fontFamily: '"sans-serif","Helvetica Neue",Arial,sans-serif',
+      fontFamily: '"Avenir LT Std", sans-serif',
       fontWeight: 500,
       fontSize: '1.5rem',
       lineHeight: 1.334,
       color: '#fff',
     },
     h6: {
-      fontFamily: '"sans-serif","Helvetica Neue",Arial,sans-serif',
+      fontFamily: '"Avenir LT Std", sans-serif',
       fontWeight: 600,
       fontSize: '1.28rem',
       lineHeight: 1.1,
@@ -64,13 +64,13 @@ const jediSwapDark = createTheme({
     //   lineHeight: 1.57,
     // },
     body1: {
-      fontFamily: '"sans-serif","Helvetica Neue",Arial,sans-serif',
+      fontFamily: '"Avenir LT Std", sans-serif',
       fontWeight: 500,
       fontSize: '1rem',
       lineHeight: 1.5,
     },
     body2: {
-      fontFamily: '"sans-serif","Helvetica Neue",Arial,sans-serif',
+      fontFamily: '"Avenir LT Std", sans-serif',
       fontWeight: 400,
       fontSize: '0.875rem',
       lineHeight: 1.5,
@@ -82,7 +82,7 @@ const jediSwapDark = createTheme({
       textTransform: 'none',
     },
     caption: {
-      fontFamily: '"sans-serif","Helvetica Neue",Arial,sans-serif',
+      fontFamily: '"Avenir LT Std", sans-serif',
       fontWeight: 400,
       fontSize: '0.75rem',
       lineHeight: 1.3,

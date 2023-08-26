@@ -21,7 +21,7 @@ const QuestCardCalend = styled.div`
   margin-bottom: 30px;
   .duration_title {
     color: #F2F2F2;
-    font-family: sans-serif;
+    font-family: DM Sans, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -29,7 +29,7 @@ const QuestCardCalend = styled.div`
   }
   .duration_text {
     color: var(--white, #FFF);
-    font-family: sans-serif;
+    font-family: DM Sans, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -39,7 +39,7 @@ const QuestCardCalend = styled.div`
 
 const QuestCardType = styled.p`
   color: #FFF;
-  font-family: sans-serif;
+  font-family: DM Sans, sans-serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -49,7 +49,7 @@ const QuestCardType = styled.p`
 const QuestCardTitle = styled.p`
   color: var(--jedi-white, #FFF);
   font-feature-settings: 'salt' on, 'clig' off, 'liga' off;
-  font-family: sans-serif;
+  font-family: DM Sans, sans-serif;
   font-size: 32px;
   font-style: normal;
   font-weight: 700;
@@ -58,7 +58,7 @@ const QuestCardTitle = styled.p`
 
 const QuestCardDescription = styled.p`
   color: #F2F2F2;
-  font-family: sans-serif;
+  font-family: DM Sans, sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
@@ -69,7 +69,7 @@ const QuestCardDescription = styled.p`
 const QuestCardNftNum = styled.div`
   .title {
     color: #F2F2F2;
-    font-family: sans-serif;
+    font-family: DM Sans, sans-serif;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
@@ -77,7 +77,7 @@ const QuestCardNftNum = styled.div`
   }
   .value {
     color: var(--white, #FFF);
-    font-family: sans-serif;
+    font-family: DM Sans, sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -89,7 +89,7 @@ const LaunchSoon = styled.div`
   color: var(--jedi-white, #FFF);
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;
-  font-family: sans-serif;
+  font-family: Avenir LT Std, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 750;
@@ -105,7 +105,7 @@ const QuestCardBtn = styled.button`
   color: var(--jedi-white, #FFF);
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;
-  font-family: sans-serif;
+  font-family: Avenir LT Std, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 750;
@@ -116,7 +116,7 @@ const QuestCardBtn = styled.button`
 const QuestCardAddress = styled.div`
   color: var(--jedi-white, #FFF);
   font-feature-settings: 'salt' on, 'clig' off, 'liga' off;
-  font-family: sans-serif;
+  font-family: Avenir LT Std, sans-serif;
   font-size: 22px;
   font-style: normal;
   font-weight: 700;

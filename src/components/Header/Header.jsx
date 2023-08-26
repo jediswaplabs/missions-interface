@@ -177,7 +177,7 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
             color="text.primary"
             style={{
               fontSize: '16px',
-              fontFamily: 'sans-serif',
+              fontFamily: '"Avenir LT Std", sans-serif',
               fontWeight: '600',
             }}
           >

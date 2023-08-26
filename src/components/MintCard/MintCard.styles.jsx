@@ -19,7 +19,7 @@ const MintCardStatus = styled.div`
   justify-content: center;
   align-items: center;
   font-feature-settings: 'clig' off, 'liga' off;
-  font-family: sans-serif;
+  font-family: Avenir LT Std, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 750;
@@ -33,7 +33,7 @@ const MintCardClaimed = styled.div`
   color: var(--jedi-white, #FFF);
   text-align: center;
   font-feature-settings: 'clig' off, 'liga' off;
-  font-family: sans-serif;
+  font-family: Avenir LT Std, sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 750;
