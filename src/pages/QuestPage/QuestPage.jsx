@@ -23,13 +23,18 @@ import { fetchNFTContestData,
   setUserEligibleNFTAction,
   setUserNonEligibleNFTAction } from './questSlice';
 import { feltArrToStr } from '../../utils/index.ts';
-import NFTContestABI from '../../constants/abis/nft-contest.json';
+import NFTContestABITestnet from '../../constants/abis/nft-contest-testnet.json';
+import NFTContestABIMainnet from '../../constants/abis/nft-contest-mainnet.json';
 import { imageBasedOnNFTType } from '../../common/getImageBasedOnNFTType';
 import { getLastCharacterOfAString } from '../../utils/getLastCharacterOfAString';
+import { mainnetContractAddress, testnetContractAddress } from '../../common/contansts';
+import { isProductionChainId, isTestnetChainId } from '../../common/connectors/index.ts';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
-  const { address, status } = useAccountDetails();
+  const [contractAddress, setContractAddress] = useState(testnetContractAddress);
+  const [nftContestABI, setNftContestABI] = useState(NFTContestABITestnet);
+  const { address, status, chainId } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
   const { setUserClaimingNFT, setNFTClaimedByUser, setWalletAddress } = useQuestActionHandlers();
 
@@ -57,20 +62,29 @@ const QuestPage = () => {
     (state) => state.quest.isWalletClaimedAnyNFT,
   );
 
+  useEffect(() => {
+    if (status === 'connected' && chainId) {
+      if (
+         isTestnetChainId(chainId)) {
+        setContractAddress(testnetContractAddress);
+        setNftContestABI(NFTContestABITestnet);
+      } else if (isProductionChainId(chainId)) {
+        setContractAddress(mainnetContractAddress);
+        setNftContestABI(NFTContestABIMainnet);
+      }
+  }
+  }, [status]);
+
   const [mintData, setMintData] = useState({});
   const { contract } = useContract({
-    address:
-      '0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6',
-    abi: NFTContestABI,
+    address: contractAddress,
+    abi: nftContestABI,
   });
 
   const compiledDta = CallData.compile(mintData);
 
   const calls = {
-    // contractAddress:
-    //   '0x04cc759cd01bd973f8a98edd04339e8077c98cb744c90d3de46045d560ea1bae',
-    contractAddress:
-      '0x06c4f71c1c4a14bba747b4d18dfb73b486aa2ba921dd0de4f64dc415536b8ba6',
+    contractAddress,
     entrypoint: 'mint_whitelist',
     calldata: compiledDta,
   };
