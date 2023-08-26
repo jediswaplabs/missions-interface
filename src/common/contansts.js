@@ -10,6 +10,10 @@ export {
 
 export const NetworkContextName = 'NETWORK';
 
+export const testnetContractAddress = '0x0735c7eb714a1d67559a3acbee637462223f9f4dfa5d45cbe142c06e57255d1c';
+
+export const mainnetContractAddress = '0x05b01e344f902b5fe42a996e8d0c1d19f17405573a90b050ca73823a2ffef3cb';
+
 export const SUPPORTED_WALLETS = {
   ArgentX: {
     connector: argentX,
