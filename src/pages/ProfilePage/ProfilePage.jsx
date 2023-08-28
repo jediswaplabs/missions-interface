@@ -13,7 +13,7 @@ import { useAccountDetails,
 import GradientButton from '../../components/GradientButton/GradientButton';
 
 const ProfilePage = () => {
-  const { address } = useAccountDetails();
+  const { address, chainId } = useAccountDetails();
   const { setWalletModalOpen } = useWalletActionHandlers();
   const { t } = useTranslation();
 
@@ -28,7 +28,9 @@ const ProfilePage = () => {
   }, [address]);
 
   useEffect(() => {
-    dispatch(fetchProfileData(address));
+    if (address) {
+      dispatch(fetchProfileData(address, chainId));
+    }
   }, [address]);
 
   const getEmptyProfilePageContent = () => (

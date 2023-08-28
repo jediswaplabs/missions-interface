@@ -10,8 +10,8 @@ export const initialState = {
 
 export const reducers = {};
 
-export const fetchProfileData = createAsyncThunk('data/fetchProfileData', async (address) => {
-  const response = await api.fetchData(address);
+export const fetchProfileData = createAsyncThunk('data/fetchProfileData', async (address, chainId) => {
+  const response = await api.fetchData(address, chainId);
   return response.data;
 });
 
@@ -27,7 +27,7 @@ export const profileSlice = createSlice({
     },
     setCloseProfilePopout(state, action) {
       state.closeProfilePopout = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder

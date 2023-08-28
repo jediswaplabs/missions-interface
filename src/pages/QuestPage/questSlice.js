@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
+import { config } from '../../config';
+
 export const initialState = {
   isUserEligibleForNFT: false,
   isUserNonEligibleForNFT: false,
@@ -22,8 +24,9 @@ export const initialState = {
 
 export const reducers = {};
 
-export const fetchNFTContestData = createAsyncThunk('data/fetchNFTContestData', async (addressLastChar) => {
-  const response = await fetch(`https://static.staging.jediswap.xyz/missions-list/${addressLastChar}.json`); // Adjust the path to your JSON file
+export const fetchNFTContestData = createAsyncThunk('data/fetchNFTContestData', async (addressLastChar, chainId) => {
+  const configResponse = config(chainId);
+  const response = await fetch(`${configResponse.questPageJSONLink}${addressLastChar}.json`); // Adjust the path to your JSON file
   const data = await response.json();
   return data;
 });

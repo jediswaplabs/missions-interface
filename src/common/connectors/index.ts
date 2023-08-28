@@ -9,9 +9,11 @@ export const isTestnetEnvironment = () => {
   }
   if (String(location) === "//") {
     return false;
-  }
-  else if(hostname === "missions.testnet.jediswap.xyz" || hostname === "localhost" ) {
-    return true
+  } else if (
+    hostname === "missions.testnet.jediswap.xyz" ||
+    hostname === "localhost"
+  ) {
+    return true;
   }
   // const host = new URL(String(location))?.host || "";
   // return host === "app.testnet.jediswap.xyz";
@@ -53,8 +55,16 @@ export const isTestnetChainId = (id) => {
   return id === constants.StarknetChainId.SN_GOERLI;
 };
 
+export const isTestnet2ChainId = (id) => {
+  return id === constants.StarknetChainId.SN_GOERLI2;
+};
+
 export const isStagingChainId = (id) => {
-  return [constants.StarknetChainId.SN_MAIN, constants.StarknetChainId.SN_GOERLI].includes(id);
+  return [
+    constants.StarknetChainId.SN_MAIN,
+    constants.StarknetChainId.SN_GOERLI,
+    constants.StarknetChainId.SN_GOERLI2,
+  ].includes(id);
 };
 
 export const NETWORK_CHAIN_ID = 1;

@@ -1,15 +1,16 @@
-import { testnetContractAddress } from '../../common/constants';
+import { config } from '../../config';
 
 const options = {
   method: 'GET',
-  headers: { accept: 'application/json', 'x-api-key': 'GjhopFFeeF5GM9egesqoTNzmwHUTReQ4ZgZD3RKe' },
+  headers: { accept: 'application/json', 'x-api-key': 'zSKSBBpoGL1D1ocmfIIEd4OZck7KZTaN9dbmcXDX' },
 };
 
 const api = {
 
-  fetchData: async (address) => {
+  fetchData: async (address, chainId) => {
     try {
-      const response = await fetch(`https://api-testnet.starkscan.co/api/v0/nfts?contract_address=${testnetContractAddress}&owner_address=${address}`, options);
+      const configResponse = config(chainId);
+      const response = await fetch(`${configResponse.profilePageAPI}?contract_address=${configResponse.contractAddress}&owner_address=${address}`, options);
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }

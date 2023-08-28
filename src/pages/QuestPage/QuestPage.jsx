@@ -120,7 +120,7 @@ const QuestPage = () => {
       setEligibiltyStatusBeforeCheck(false);
       setWalletAddress(address);
       const addressLastChar = getLastCharacterOfAString(address);
-      dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
+      dispatch(fetchNFTContestData(addressLastChar, chainId)).then((res) => {
         const nftData = res?.payload?.data?.find(
           (resData) => resData.wallet_address === address,
         );
@@ -177,7 +177,7 @@ const QuestPage = () => {
         setNFTClaimedByUser(true);
       }
       const addressLastChar = getLastCharacterOfAString(address);
-      dispatch(fetchNFTContestData(addressLastChar)).then((res) => {
+      dispatch(fetchNFTContestData(addressLastChar, chainId)).then((res) => {
         const nftData = res?.payload?.data?.find(
           (resData) => resData.wallet_address === address,
         );
