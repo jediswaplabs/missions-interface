@@ -28,10 +28,10 @@ const ProfilePage = () => {
   }, [address]);
 
   useEffect(() => {
-    if (address) {
+    if (address && chainId) {
       dispatch(fetchProfileData(address, chainId));
     }
-  }, [address]);
+  }, [address, chainId]);
 
   const getEmptyProfilePageContent = () => (
     <div style={{ maxWidth: '479px', margin: 'auto' }}>
