@@ -36,18 +36,10 @@ const App = () => (
         <ApplicationContainer>
           <HashRouter>
             <Switch>
-              <Route path="/home">
-                <MainPage />
-              </Route>
-              <Route path="/profile">
-                <ProfilePage />
-              </Route>
-
-              <Route path="/quest/:id">
-                <QuestPage />
-              </Route>
-
-              <Redirect to="/home" />
+              <Route exact strict path="/" component={MainPage} />
+              <Route exact strict path="/profile" component={ProfilePage} />
+              <Route exact strict path="/quest" component={QuestPage} />
+              <Route component={MainPage} />
             </Switch>
           </HashRouter>
         </ApplicationContainer>

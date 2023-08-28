@@ -1,49 +1,63 @@
-import React from 'react';
-import { SvgIcon } from '@mui/material';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { SvgIcon } from "@mui/material";
+import { Link } from "react-router-dom";
 
-import { QuestBox, QuestCardBtn, QuestCardTitle, QuestCardType, QuestCardDescription, QuestCardCalend, QuestCardNftNum, LaunchSoon } from './QuestCard.styles';
-import calend from '../../resources/images/calend.png';
-import medal from '../../resources/images/medal.png';
+import {
+  QuestBox,
+  QuestCardBtn,
+  QuestCardTitle,
+  QuestCardType,
+  QuestCardDescription,
+  QuestCardCalend,
+  QuestCardNftNum,
+  LaunchSoon,
+} from "./QuestCard.styles";
+import calend from "../../resources/images/calend.png";
+import medal from "../../resources/images/medal.png";
 
-const QuestCard = ({ questId, questType, title, description, duration, nftAmount, campaignImg }) => {
+const QuestCard = ({
+  questId,
+  questType,
+  title,
+  description,
+  duration,
+  nftAmount,
+  campaignImg,
+}) => {
   const styles = {};
-  if (questType === 'FEATURED CONTEST') {
-    styles.maxWidth = '430px';
+  if (questType === "FEATURED CONTEST") {
+    styles.maxWidth = "430px";
   }
   return (
     <QuestBox>
       <div>
         <QuestCardType>{questType}</QuestCardType>
-        <QuestCardTitle>
-          {title}
-        </QuestCardTitle>
+        <QuestCardTitle>{title}</QuestCardTitle>
         <QuestCardDescription style={styles}>
           {description}
         </QuestCardDescription>
-        <div style={{ display: 'flex' }}>
-          {duration
-          && (
+        <div style={{ display: "flex" }}>
+          {duration && (
             <QuestCardCalend>
-              <div style={{ marginRight: '10px' }}>
+              <div style={{ marginRight: "10px" }}>
                 <img src={calend} />
               </div>
-              <div style={{ marginRight: '20px' }}>
-                <div style={{ marginBottom: '5px' }} className="duration_title">
+              <div style={{ marginRight: "20px" }}>
+                <div style={{ marginBottom: "5px" }} className="duration_title">
                   CONTEST DURATION
                 </div>
-                <div className="duration_text">
-                  {duration}
-                </div>
+                <div className="duration_text">{duration}</div>
               </div>
             </QuestCardCalend>
           )}
           {!duration && <LaunchSoon>Launching Soon!</LaunchSoon>}
-          {nftAmount
-          && (
-            <div style={{ display: 'flex' }}>
+          {nftAmount && (
+            <div style={{ display: "flex" }}>
               <div>
-                <img src={medal} style={{ position: 'relative', top: '-5px' }} />
+                <img
+                  src={medal}
+                  style={{ position: "relative", top: "-5px" }}
+                />
               </div>
               <QuestCardNftNum>
                 <div className="title">NFTs</div>
@@ -51,21 +65,22 @@ const QuestCard = ({ questId, questType, title, description, duration, nftAmount
               </QuestCardNftNum>
             </div>
           )}
-
         </div>
 
-        <Link to={`/quest/${questId}`}>
+        <Link to={`/quest`}>
           {duration && <QuestCardBtn>Enter</QuestCardBtn>}
         </Link>
-
       </div>
       {campaignImg && (
         <div>
-          <SvgIcon component={campaignImg} inheritViewBox style={{ width: 'unset', height: 'unset' }} />
+          <SvgIcon
+            component={campaignImg}
+            inheritViewBox
+            style={{ width: "unset", height: "unset" }}
+          />
         </div>
       )}
     </QuestBox>
-
   );
 };
 
