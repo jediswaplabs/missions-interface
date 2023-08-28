@@ -39,7 +39,7 @@ const App = () => (
               <Route exact strict path="/" component={MainPage} />
               <Route exact strict path="/profile" component={ProfilePage} />
               <Route exact strict path="/quest" component={QuestPage} />
-              <Route component={MainPage} />
+              <Redirect to="/" />
             </Switch>
           </HashRouter>
         </ApplicationContainer>
