@@ -1,0 +1,139 @@
+{
+  "header": {
+    "connectWallet": "Connect wallet"
+  },
+  "contributorPage": {
+    "titles": {
+      "title": "JediSwap Contributor Profile"
+    }
+  },
+  "mainPage": {
+    "header": "Contributors Global Leaderboard",
+    "connectWalletToSee": "Connect Wallet to see Personalised Profile",
+    "seePersonalProfile": "See your Personalised Profile"
+  },
+  "activitiesList": {
+    "errors": {
+      "fetching": "An error occurred during the request.",
+      "empty": "All activities will be listed here"
+    },
+    "titles": {
+      "title": "Recent activities"
+    },
+    "controls": {
+      "showMore": "Show more",
+      "showLess": "Show less"
+    }
+  },
+  "wallet": {
+    "errors": {
+      "fetching": "An error occurred during the request.",
+      "empty": "Your wallet is empty."
+    },
+    "title": "Wallet Balance"
+  },
+  "walletModal": {
+    "titleConnect": "Connect to a wallet",
+    "titleAccountDetails": "Account details",
+    "downloadNow": "Download now",
+    "copyAddress": "Copy address",
+    "copied": "Copied!",
+    "viewOnStarkscan": "View on Starkscan",
+    "disconnect": "Disconnect",
+    "connectedWith": "Connected with {{wallet}}",
+    "walletNotFound": "{{wallet}} wallet not found.",
+    "errors": {
+      "wrongNetwork": "Wrong Network",
+      "connectingError": "Error connecting",
+      "connectAppropriateNetwork": "Please connect to the appropriate network.",
+      "tryRefresh": "Try refreshing the page."
+    }
+  },
+  "selectProfilePictureModal": {
+    "introductionStep": {
+      "title": "Show off your prized possessions",
+      "subtitle": "Set your profile picture to an NFT you have earned",
+      "controls": {
+        "next": "Select NFT"
+      }
+    },
+    "selectNftStep": {
+      "title": "Select NFT",
+      "outOf": "{{current}} out of {{total}}",
+      "controls": {
+        "apply": "Apply"
+      },
+      "errors": {
+        "noAvailableNfts": "You don't have available NFTs"
+      }
+    },
+    "finalStep": {
+      "title": "Looks Great!",
+      "subtitle": "You can always change it later",
+
+      "controls": {
+        "done": "You're done"
+      }
+    },
+    "errors": {
+      "noAccount": "No account connected",
+      "fetching": "An error occurred during the request",
+      "unknown": "Unknown error"
+    }
+  },
+  "profileCard": {
+    "errors": {
+      "fetching": "An error occurred during the request."
+    },
+    "controls": {
+      "editProfile": "Edit Profile",
+      "copyAddress": "Copy address",
+      "copied": "Copied!",
+      "switchAccount": "Switch account"
+    }
+  },
+  "guildsList": {
+    "errors": {
+      "fetching": "An error occurred during the request.",
+      "empty": "An error occurred during the request."
+    }
+  },
+  "guild": {
+    "meshPoints": "Mesh points",
+    "kickStart": "Kick Start Your journey",
+    "startContrib": "Start Contributing"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "fullTitle": "{{guildName}} Leaderboard",
+    "controls": {
+      "prev": "Prev",
+      "next": "Next"
+    },
+    "errors": {
+      "fetching": "An error occurred during the request.",
+      "unselected": "Select guild from above to see respective leaderboard"
+    },
+    "columns": {
+      "address": "Address",
+      "rank": "Overall rank",
+      "points": "Total points"
+    }
+  },
+  "meshNftsCarousel": {
+    "title": "Mesh NFTs",
+    "card": {
+      "level": "Level {{level}}",
+      "score":  "{{score}} pts",
+      "earnedDate": "Earned on",
+      "controls": {
+        "unlock": "Unlock at {{score}} pts"
+      }
+    },
+    "errors": {
+      "fetching": "An error occurred during the request.",
+      "empty": "Empty NFTs list"
+    }
+  },
+  "intlDateTime": "{{val, datetime}}"
+}

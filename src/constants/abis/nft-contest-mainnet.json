@@ -1,0 +1,818 @@
+[
+    {
+      "name": "JediNFTImpl",
+      "type": "impl",
+      "interface_name": "jedinft::jedi_nft::IJediNFT"
+    },
+    {
+      "name": "core::integer::u256",
+      "type": "struct",
+      "members": [
+        {
+          "name": "low",
+          "type": "core::integer::u128"
+        },
+        {
+          "name": "high",
+          "type": "core::integer::u128"
+        }
+      ]
+    },
+    {
+      "name": "core::array::Span::<core::felt252>",
+      "type": "struct",
+      "members": [
+        {
+          "name": "snapshot",
+          "type": "@core::array::Array::<core::felt252>"
+        }
+      ]
+    },
+    {
+      "name": "core::bool",
+      "type": "enum",
+      "variants": [
+        {
+          "name": "False",
+          "type": "()"
+        },
+        {
+          "name": "True",
+          "type": "()"
+        }
+      ]
+    },
+    {
+      "name": "jedinft::jedi_nft::TokenMetadata",
+      "type": "struct",
+      "members": [
+        {
+          "name": "task_id",
+          "type": "core::integer::u128"
+        },
+        {
+          "name": "name",
+          "type": "core::felt252"
+        },
+        {
+          "name": "rank",
+          "type": "core::integer::u128"
+        },
+        {
+          "name": "score",
+          "type": "core::integer::u128"
+        },
+        {
+          "name": "level",
+          "type": "core::integer::u8"
+        },
+        {
+          "name": "total_eligible_users",
+          "type": "core::integer::u128"
+        }
+      ]
+    },
+    {
+      "name": "jedinft::jedi_nft::IJediNFT",
+      "type": "interface",
+      "items": [
+        {
+          "name": "tokenURI",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::array::Span::<core::felt252>"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "contractURI",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::array::Span::<core::felt252>"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "is_completed",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "task_id",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "address",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::bool"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "set_merkle_root",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "task_id",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "merkle_root",
+              "type": "core::felt252"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "get_merkle_root",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "task_id",
+              "type": "core::integer::u128"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::felt252"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "set_mint_sig_pub_key",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "mint_sig_public_key",
+              "type": "core::felt252"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "get_mint_sig_pub_key",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::felt252"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "mint_sig",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "signature",
+              "type": "core::array::Span::<core::felt252>"
+            },
+            {
+              "name": "token_metadata",
+              "type": "jedinft::jedi_nft::TokenMetadata"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "mint_whitelist",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u128"
+            },
+            {
+              "name": "proof",
+              "type": "core::array::Array::<core::felt252>"
+            },
+            {
+              "name": "token_metadata",
+              "type": "jedinft::jedi_nft::TokenMetadata"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "get_token_metadata",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u128"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "jedinft::jedi_nft::TokenMetadata"
+            }
+          ],
+          "state_mutability": "view"
+        }
+      ]
+    },
+    {
+      "name": "IERC721Impl",
+      "type": "impl",
+      "interface_name": "rules_erc721::erc721::interface::IERC721"
+    },
+    {
+      "name": "rules_erc721::erc721::interface::IERC721",
+      "type": "interface",
+      "items": [
+        {
+          "name": "balance_of",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "account",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::integer::u256"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "owner_of",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "get_approved",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "is_approved_for_all",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "operator",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::bool"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "transfer_from",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "from",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "to",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "safe_transfer_from",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "from",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "to",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "data",
+              "type": "core::array::Span::<core::felt252>"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "approve",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "to",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "set_approval_for_all",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "operator",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "approved",
+              "type": "core::bool"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "name": "ISRC5Impl",
+      "type": "impl",
+      "interface_name": "rules_utils::introspection::interface::ISRC5"
+    },
+    {
+      "name": "rules_utils::introspection::interface::ISRC5",
+      "type": "interface",
+      "items": [
+        {
+          "name": "supports_interface",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "interface_id",
+              "type": "core::felt252"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::bool"
+            }
+          ],
+          "state_mutability": "view"
+        }
+      ]
+    },
+    {
+      "name": "ISRC5CamelImpl",
+      "type": "impl",
+      "interface_name": "rules_utils::introspection::interface::ISRC5Camel"
+    },
+    {
+      "name": "rules_utils::introspection::interface::ISRC5Camel",
+      "type": "interface",
+      "items": [
+        {
+          "name": "supportsInterface",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "interfaceId",
+              "type": "core::felt252"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::bool"
+            }
+          ],
+          "state_mutability": "view"
+        }
+      ]
+    },
+    {
+      "name": "IERC721MetadataImpl",
+      "type": "impl",
+      "interface_name": "rules_erc721::erc721::interface::IERC721Metadata"
+    },
+    {
+      "name": "rules_erc721::erc721::interface::IERC721Metadata",
+      "type": "interface",
+      "items": [
+        {
+          "name": "name",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::felt252"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "symbol",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::felt252"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "token_uri",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "token_id",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::felt252"
+            }
+          ],
+          "state_mutability": "view"
+        }
+      ]
+    },
+    {
+      "name": "JediERC721CamelImpl",
+      "type": "impl",
+      "interface_name": "rules_erc721::erc721::interface::IERC721CamelOnly"
+    },
+    {
+      "name": "rules_erc721::erc721::interface::IERC721CamelOnly",
+      "type": "interface",
+      "items": [
+        {
+          "name": "balanceOf",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "account",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::integer::u256"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "ownerOf",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "getApproved",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "isApprovedForAll",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "operator",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::bool"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "transferFrom",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "from",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "to",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "tokenId",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "safeTransferFrom",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "from",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "to",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "tokenId",
+              "type": "core::integer::u256"
+            },
+            {
+              "name": "data",
+              "type": "core::array::Span::<core::felt252>"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "setApprovalForAll",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "operator",
+              "type": "core::starknet::contract_address::ContractAddress"
+            },
+            {
+              "name": "approved",
+              "type": "core::bool"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "name": "IERC721MetadataCamelImpl",
+      "type": "impl",
+      "interface_name": "rules_erc721::erc721::interface::IERC721MetadataCamelOnly"
+    },
+    {
+      "name": "rules_erc721::erc721::interface::IERC721MetadataCamelOnly",
+      "type": "interface",
+      "items": [
+        {
+          "name": "tokenUri",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "tokenId",
+              "type": "core::integer::u256"
+            }
+          ],
+          "outputs": [
+            {
+              "type": "core::felt252"
+            }
+          ],
+          "state_mutability": "view"
+        }
+      ]
+    },
+    {
+      "name": "IOwnableImpl",
+      "type": "impl",
+      "interface_name": "jedinft::access::ownable::IOwnable"
+    },
+    {
+      "name": "jedinft::access::ownable::IOwnable",
+      "type": "interface",
+      "items": [
+        {
+          "name": "owner",
+          "type": "function",
+          "inputs": [],
+          "outputs": [
+            {
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "state_mutability": "view"
+        },
+        {
+          "name": "transfer_ownership",
+          "type": "function",
+          "inputs": [
+            {
+              "name": "new_owner",
+              "type": "core::starknet::contract_address::ContractAddress"
+            }
+          ],
+          "outputs": [],
+          "state_mutability": "external"
+        },
+        {
+          "name": "renounce_ownership",
+          "type": "function",
+          "inputs": [],
+          "outputs": [],
+          "state_mutability": "external"
+        }
+      ]
+    },
+    {
+      "name": "constructor",
+      "type": "constructor",
+      "inputs": [
+        {
+          "name": "name_",
+          "type": "core::felt252"
+        },
+        {
+          "name": "symbol_",
+          "type": "core::felt252"
+        },
+        {
+          "name": "uri_",
+          "type": "core::array::Span::<core::felt252>"
+        },
+        {
+          "name": "contract_uri",
+          "type": "core::array::Span::<core::felt252>"
+        },
+        {
+          "name": "owner_",
+          "type": "core::starknet::contract_address::ContractAddress"
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "jedinft::jedi_nft::JediNFT::Transfer",
+      "type": "event",
+      "members": [
+        {
+          "kind": "data",
+          "name": "from_",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "to",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "tokenId",
+          "type": "core::integer::u256"
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "jedinft::jedi_nft::JediNFT::Approval",
+      "type": "event",
+      "members": [
+        {
+          "kind": "data",
+          "name": "owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "approved",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "token_id",
+          "type": "core::integer::u256"
+        }
+      ]
+    },
+    {
+      "kind": "struct",
+      "name": "jedinft::jedi_nft::JediNFT::ApprovalForAll",
+      "type": "event",
+      "members": [
+        {
+          "kind": "data",
+          "name": "owner",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "operator",
+          "type": "core::starknet::contract_address::ContractAddress"
+        },
+        {
+          "kind": "data",
+          "name": "approved",
+          "type": "core::bool"
+        }
+      ]
+    },
+    {
+      "kind": "enum",
+      "name": "jedinft::jedi_nft::JediNFT::Event",
+      "type": "event",
+      "variants": [
+        {
+          "kind": "nested",
+          "name": "Transfer",
+          "type": "jedinft::jedi_nft::JediNFT::Transfer"
+        },
+        {
+          "kind": "nested",
+          "name": "Approval",
+          "type": "jedinft::jedi_nft::JediNFT::Approval"
+        },
+        {
+          "kind": "nested",
+          "name": "ApprovalForAll",
+          "type": "jedinft::jedi_nft::JediNFT::ApprovalForAll"
+        }
+      ]
+    }
+  ]

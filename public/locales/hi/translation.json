@@ -1,0 +1,141 @@
+{
+  "header": {
+    "connectWallet": "वॉलेट कनेक्ट करें"
+  },
+  "contributorPage": {
+    "titles": {
+      "title": "जेडीस्वैप योगदानकर्ता प्रोफ़ाइल"
+    }
+  },
+  "mainPage": {
+    "header": "योगदानकर्ता वैश्विक लीडरबोर्ड",
+    "connectWalletToSee": "वैयक्तिकृत प्रोफ़ाइल देखने के लिए वॉलेट कनेक्ट करें",
+    "seePersonalProfile": "अपनी वैयक्तिकृत प्रोफ़ाइल देखें"
+  },
+  "activitiesList": {
+    "errors": {
+      "fetching": "अनुरोध के दौरान एक त्रुटि हुई ।",
+      "empty": "आपके पास अभी तक कोई हालिया गतिविधि नहीं है ।"
+    },
+    "titles": {
+      "title": "हाल की गतिविधियाँ"
+    },
+    "controls": {
+      "showMore": "अधिक दिखाएं",
+      "showLess": "कम दिखाओ"
+    }
+  },
+  "wallet": {
+    "errors": {
+      "fetching": "अनुरोध के दौरान एक त्रुटि हुई ।",
+      "empty": "आपका बटुआ खाली है ।"
+    },
+    "title": "वॉलेट बैलेंस"
+  },
+  "walletModal": {
+    "titleConnect": "वॉलेट से कनेक्ट करें",
+    "titleAccountDetails": "खाता विवरण",
+    "downloadNow": "अब डाउनलोड करो",
+    "copyAddress": "पता कॉपी करें",
+    "copied": "नकल की गई!",
+    "viewOnStarkscan": "स्टार्कस्कैन पर देखें",
+    "disconnect": "डिस्कनेक्ट",
+    "connectedWith": "साथ जुड़े {{wallet}}",
+    "walletNotFound": "{{wallet}} बटुआ नहीं मिला.",
+    "errors": {
+      "wrongNetwork": "ग़लत नेटवर्क",
+      "connectingError": "कनेक्ट करने में त्रुटि",
+      "connectAppropriateNetwork": "कृपया उचित नेटवर्क से जुड़ें.",
+      "tryRefresh": "पृष्ठ को ताज़ा करने का प्रयास करें."
+    }
+  },
+  "selectProfilePictureModal": {
+    "introductionStep": {
+      "title": "अपना कीमती सामान दिखाओ",
+      "subtitle": "अपनी प्रोफ़ाइल तस्वीर को आपके द्वारा अर्जित एनएफटी पर सेट करें",
+      "controls": {
+        "next": "एनएफटी का चयन करें"
+      }
+    },
+
+    "selectNftStep": {
+      "title": "एनएफटी का चयन करें",
+      "outOf": "{{current}} में से {{total}}",
+      "controls": {
+        "apply": "लागू करें"
+      },
+      "errors": {
+        "noAvailableNfts": "आपके पास उपलब्ध एनएफटी नहीं हैं"
+      }
+    },
+    "finalStep": {
+      "title": "बहुत अच्छा लग रहा है!",
+      "subtitle": "आप इसे बाद में हमेशा बदल सकते हैं",
+
+      "controls": {
+        "done": "आप कर चुके हैं"
+      }
+    },
+
+    "errors": {
+      "noAccount": "कोई खाता जुड़ा नहीं",
+      "fetching": "अनुरोध के दौरान एक त्रुटि हुई",
+      "unknown": "अज्ञात त्रुटि"
+    }
+  },
+  "profileCard": {
+    "errors": {
+      "fetching": "अनुरोध के दौरान एक त्रुटि हुई ।"
+    },
+    "controls": {
+      "editProfile": "प्रोफ़ाइल संपादित करें",
+      "copyAddress": "पता कॉपी करें",
+      "copied": "नकल की गई!",
+      "switchAccount": "खाता स्विच करें"
+    }
+  },
+  "guildsList": {
+    "errors": {
+      "fetching": "अनुरोध के दौरान एक त्रुटि उत्पन्न हुई.",
+      "empty": "अनुरोध के दौरान एक त्रुटि उत्पन्न हुई."
+    }
+  },
+  "guild": {
+    "meshPoints": "जाल बिंदु",
+    "kickStart": "अपनी यात्रा किक स्टार्ट करें",
+    "startContrib": "योगदान देना प्रारंभ करें"
+  },
+  "leaderboard": {
+    "title": "लीडरबोर्ड",
+    "fullTitle": "{{guildName}} लीडरबोर्ड",
+    "controls": {
+      "prev": "पहले का",
+      "next": "अगला"
+    },
+    "errors": {
+      "fetching": "अनुरोध के दौरान एक त्रुटि उत्पन्न हुई.",
+      "unselected": "संबंधित लीडरबोर्ड देखने के लिए ऊपर से गिल्ड का चयन करें"
+    },
+    "columns": {
+      "address": "पता",
+      "rank": "समग्र रैंक",
+      "points": "कुल अंक"
+    }
+  },
+  "meshNftsCarousel": {
+    "title": "मेष एनएफटी",
+    "card": {
+      "level": "स्तर {{level}}",
+      "score": "{{score}} अंक",
+      "earnedDate": "पर कमाया",
+      "controls": {
+        "unlock": "पर अनलॉक करें {{score}} अंक"
+      }
+    },
+    "errors": {
+      "fetching": "अनुरोध के दौरान एक त्रुटि उत्पन्न हुई.",
+      "empty": "खाली एनएफटी सूची"
+    }
+  },
+  "intlDateTime": "{{val, datetime}}"
+}
