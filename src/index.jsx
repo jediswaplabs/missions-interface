@@ -1,25 +1,31 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import './app/i18next';
-import { ThemeProvider } from '@mui/material/styles';
-import { Provider } from 'react-redux';
-import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import { StarknetConfig, InjectedConnector } from '@starknet-react/core';
+import React from "react";
+import { createRoot } from "react-dom/client";
+import "./app/i18next";
+import { ThemeProvider } from "@mui/material/styles";
+import { Provider } from "react-redux";
+import {
+  Route,
+  BrowserRouter,
+  Switch,
+  Redirect,
+  HashRouter,
+} from "react-router-dom";
+import { StarknetConfig, InjectedConnector } from "@starknet-react/core";
 
-import { jediSwapDarkTheme } from './resources/themes';
-import setupStore from './app/store';
-import GlobalStyle, { ApplicationContainer } from './index.styles';
-import MainPage from './pages/MainPage/MainPage';
-import ProfilePage from './pages/ProfilePage/ProfilePage';
-import QuestPage from './pages/QuestPage/QuestPage';
+import { jediSwapDarkTheme } from "./resources/themes";
+import setupStore from "./app/store";
+import GlobalStyle, { ApplicationContainer } from "./index.styles";
+import MainPage from "./pages/MainPage/MainPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import QuestPage from "./pages/QuestPage/QuestPage";
 
 if (module?.hot) {
   module.hot.accept();
 }
 
 const connectors = [
-  new InjectedConnector({ options: { id: 'braavos' } }),
-  new InjectedConnector({ options: { id: 'argentX' } }),
+  new InjectedConnector({ options: { id: "braavos" } }),
+  new InjectedConnector({ options: { id: "argentX" } }),
 ];
 
 const App = () => (
@@ -28,7 +34,7 @@ const App = () => (
       <Provider store={setupStore()}>
         <GlobalStyle />
         <ApplicationContainer>
-          <BrowserRouter>
+          <HashRouter>
             <Switch>
               <Route path="/home">
                 <MainPage />
@@ -43,11 +49,11 @@ const App = () => (
 
               <Redirect to="/home" />
             </Switch>
-          </BrowserRouter>
+          </HashRouter>
         </ApplicationContainer>
       </Provider>
     </StarknetConfig>
   </ThemeProvider>
 );
 
-createRoot(document.getElementById('app')).render(<App />);
+createRoot(document.getElementById("app")).render(<App />);
