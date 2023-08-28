@@ -1,5 +1,5 @@
 import { validateAndParseAddress, Abi, Contract, AccountInterface } from 'starknet'
-import { ZERO_ADDRESS } from '../constants'
+import { zeroAddress } from '../common/constants'
 import isZero from './isZero'
 import { InjectedConnector } from '@starknet-react/core'
 
@@ -35,7 +35,7 @@ export function getContract(
 ) {
   const parsedAddress = isAddress(address)
 
-  if (!parsedAddress || parsedAddress === ZERO_ADDRESS) {
+  if (!parsedAddress || parsedAddress === zeroAddress) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
 
