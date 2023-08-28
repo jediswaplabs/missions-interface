@@ -165,7 +165,7 @@ const Web3Status = () => {
 
 const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   const { t } = useTranslation();
-  const { error } = useAccountDetails();
+  // const { error } = useAccountDetails();
   const { address, connector } = useAccountDetails();
   if (address) {
     return (
@@ -187,15 +187,15 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
       </Web3StatusConnected>
     );
   }
-  if (error) {
-    return (
-      <Web3StatusError onClick={onWalletModalToggle}>
-        <Typography variant="body1" color="text.primary">
-          {error ? 'Wrong Network' : 'Error'}
-        </Typography>
-      </Web3StatusError>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <Web3StatusError onClick={onWalletModalToggle}>
+  //       <Typography variant="body1" color="text.primary">
+  //         {error ? 'Wrong Network' : 'Error'}
+  //       </Typography>
+  //     </Web3StatusError>
+  //   );
+  // }
   return (
     <Web3StatusConnect onClick={onWalletModalToggle}>
       <GradientButton>{t('header.connectWallet')}</GradientButton>
