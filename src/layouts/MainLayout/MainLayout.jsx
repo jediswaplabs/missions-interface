@@ -3,7 +3,6 @@ import React from 'react';
 import Page from '../../components/Page/Page';
 import Header from '../../components/Header/Header';
 import { MainLayoutContainer, MainLayoutHeaderContainer, MainLayoutBodyContainer, MainLayoutFooterContainer, HeaderLine } from './MainLayout.styles';
-// import { NetworkContextName } from '../../common/contansts';
 
 const MainLayout = ({ sidebarContent = null, bodyContent = null, disableSidebar = false }) => (
   <Page>

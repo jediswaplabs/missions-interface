@@ -1,4 +1,4 @@
-import { testnetContractAddress } from '../../common/contansts';
+import { testnetContractAddress } from '../../common/constants';
 
 const options = {
   method: 'GET',

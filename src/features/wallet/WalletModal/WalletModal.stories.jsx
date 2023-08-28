@@ -4,7 +4,7 @@ import { userEvent, within } from '@storybook/testing-library';
 import WalletModal, { WalletConnectOptionsView, WalletAccountOverview } from './WalletModal';
 import { supportedWallets } from './WalletModal.testData';
 import { renderWithProviders } from '../../../common/testsHelper';
-import { zeroAddress } from '../../../common/contansts';
+import { zeroAddress } from '../../../common/constants';
 import { walletModal as walletModalNames } from '../../../../public/locales/en/translation.json';
 
 const TemplateWithComponent = (Component) => (args) => (

@@ -27,7 +27,7 @@ import NFTContestABITestnet from '../../constants/abis/nft-contest-testnet.json'
 import NFTContestABIMainnet from '../../constants/abis/nft-contest-mainnet.json';
 import { imageBasedOnNFTType } from '../../common/getImageBasedOnNFTType';
 import { getLastCharacterOfAString } from '../../utils/getLastCharacterOfAString';
-import { mainnetContractAddress, testnetContractAddress } from '../../common/contansts';
+import { mainnetContractAddress, testnetContractAddress } from '../../common/constants';
 import { isProductionChainId, isTestnetChainId } from '../../common/connectors/index.ts';
 
 const QuestPage = () => {

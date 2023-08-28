@@ -19,7 +19,7 @@ import { constants } from 'starknet';
 import JediModal from '../../../components/JediModal/JediModal';
 import { getStarkscanLink } from '../../../common/explorerHelper';
 import { getShortenAddress } from '../../../common/addressHelper';
-import { SUPPORTED_WALLETS } from '../../../common/contansts';
+import { SUPPORTED_WALLETS } from '../../../common/constants';
 import { useAccountDetails, usePrevious } from '../../../hooks/index.ts';
 import { ModalInner, WalletConnectorContainer } from './WalletModal.styles';
 import { isProductionChainId, isProductionEnvironment, isTestnetChainId, isTestnetEnvironment } from '../../../common/connectors/index.ts';

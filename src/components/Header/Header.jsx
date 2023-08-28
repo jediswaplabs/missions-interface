@@ -18,7 +18,7 @@ import { HeaderContainer,
   HeaderSelectionBar } from './Header.styles';
 import { useAccountDetails,
   useWalletActionHandlers } from '../../hooks/index.ts';
-import { eventsLookup } from '../../common/contansts';
+import { eventsLookup } from '../../common/constants';
 import { argentX, braavosWallet } from '../../common/connectors/index.ts';
 import { getShortenAddress } from '../../common/addressHelper';
 import { EventEmitter } from '../../common/eventEmitter';

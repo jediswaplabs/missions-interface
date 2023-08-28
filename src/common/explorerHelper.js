@@ -1,4 +1,4 @@
-import { STARKSCAN_PREFIXES } from './contansts';
+import { STARKSCAN_PREFIXES } from './constants';
 
 export function getStarkscanLink(chainId, data, type) {
   const prefix = `https://${STARKSCAN_PREFIXES[chainId] || STARKSCAN_PREFIXES[1]}starkscan.co`;
