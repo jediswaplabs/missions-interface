@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import api from './profileAPI';
+import api from "./profileAPI";
 
 export const initialState = {
   nftsClaimedByAUser: [],
@@ -10,13 +10,16 @@ export const initialState = {
 
 export const reducers = {};
 
-export const fetchProfileData = createAsyncThunk('data/fetchProfileData', async (address, chainId) => {
-  const response = await api.fetchData(address, chainId);
-  return response.data;
-});
+export const fetchProfileData = createAsyncThunk(
+  "data/fetchProfileData",
+  async (options) => {
+    const response = await api.fetchData(options.address, options.chainId);
+    return response.data;
+  }
+);
 
 export const profileSlice = createSlice({
-  name: 'profile',
+  name: "profile",
   initialState,
   reducers: {
     setNftsClaimedByAUserAction(state, action) {
@@ -30,14 +33,13 @@ export const profileSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchProfileData.fulfilled, (state, action) => {
-        const profileData = action.payload;
-        return {
-          ...state,
-          nftsClaimedByAUser: profileData,
-        };
-      });
+    builder.addCase(fetchProfileData.fulfilled, (state, action) => {
+      const profileData = action.payload;
+      return {
+        ...state,
+        nftsClaimedByAUser: profileData,
+      };
+    });
   },
 });
 

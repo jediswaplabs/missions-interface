@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
-import Stack from '@mui/material/Stack';
-import { SvgIcon } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect } from "react";
+import Stack from "@mui/material/Stack";
+import { SvgIcon } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
-import MainLayout from '../../layouts/MainLayout/MainLayout';
-import { RoundedRect, ProfileHeading, ProfileText } from './ProfilePage.styles';
-import start_claiming from '../../resources/icons/start_claiming.svg';
-import { fetchProfileData, setWalletAddressAction } from './profileSlice';
-import { useAccountDetails,
-  useWalletActionHandlers } from '../../hooks/index.ts';
-import GradientButton from '../../components/GradientButton/GradientButton';
+import MainLayout from "../../layouts/MainLayout/MainLayout";
+import { RoundedRect, ProfileHeading, ProfileText } from "./ProfilePage.styles";
+import start_claiming from "../../resources/icons/start_claiming.svg";
+import { fetchProfileData, setWalletAddressAction } from "./profileSlice";
+import {
+  useAccountDetails,
+  useWalletActionHandlers,
+} from "../../hooks/index.ts";
+import GradientButton from "../../components/GradientButton/GradientButton";
 
 const ProfilePage = () => {
   const { address, chainId } = useAccountDetails();
@@ -18,7 +20,7 @@ const ProfilePage = () => {
   const { t } = useTranslation();
 
   const nftsClaimedByAUser = useSelector(
-    (state) => state.profile.nftsClaimedByAUser,
+    (state) => state.profile.nftsClaimedByAUser
   );
 
   const dispatch = useDispatch();
@@ -29,19 +31,19 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (address && chainId) {
-      dispatch(fetchProfileData(address, chainId));
+      dispatch(fetchProfileData({ address, chainId }));
     }
   }, [address, chainId]);
 
   const getEmptyProfilePageContent = () => (
-    <div style={{ maxWidth: '479px', margin: 'auto' }}>
+    <div style={{ maxWidth: "479px", margin: "auto" }}>
       <SvgIcon
         component={start_claiming}
         width="479"
         viewBox=" 0 0 479 334"
-        style={{ width: 'unset', height: 'unset', maxWidth: '90vw' }}
+        style={{ width: "unset", height: "unset", maxWidth: "90vw" }}
       />
-      <ProfileHeading style={{ textAlign: 'center' }}>
+      <ProfileHeading style={{ textAlign: "center" }}>
         Start Claiming!
       </ProfileHeading>
       {address ? (
@@ -65,7 +67,7 @@ const ProfilePage = () => {
         <div>
           <ProfileHeading>Claimed quests</ProfileHeading>
           <Stack
-            direction={{ xs: 'column', sm: 'row' }}
+            direction={{ xs: "column", sm: "row" }}
             justifyContent="center"
             alignItems="center"
             // spacing={4}
@@ -77,7 +79,7 @@ const ProfilePage = () => {
                 <img
                   src={data.image_url}
                   alt=""
-                  style={{ width: '200px', borderRadius: '5px' }}
+                  style={{ width: "200px", borderRadius: "5px" }}
                 />
               </RoundedRect>
             ))}
@@ -88,12 +90,12 @@ const ProfilePage = () => {
   ) : (
     <div>
       {getEmptyProfilePageContent()}
-      <div style={{ textAlign: 'center', marginTop: '24px' }}>
+      <div style={{ textAlign: "center", marginTop: "24px" }}>
         <GradientButton
-          style={{ padding: '12px 48px' }}
+          style={{ padding: "12px 48px" }}
           onClick={() => setWalletModalOpen(true)}
         >
-          {t('header.connectWallet')}
+          {t("header.connectWallet")}
         </GradientButton>
       </div>
     </div>
