@@ -5,7 +5,7 @@ export const config = (chainId) => {
   const conf = isProductionChainId(chainId)
     ? {
       contractAddress:
-          '0x0699dfb167522d11c5ada99714b2d41788246361e18a22a90f27905ebd18222a',
+          '0x05b991e122ff2410d32575eb369059bd26cb69a05d15001a0c93f2678d96d81c',
       profilePageAPI: 'https://api.starkscan.co/api/v0/nfts',
       questPageJSONLink: 'https://static.jediswap.xyz/missions-list/',
     }

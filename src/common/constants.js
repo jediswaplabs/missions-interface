@@ -13,7 +13,7 @@ export const testnetContractAddress =
   "0x077126e027feb93fafa4a07147747ba8ce41e28f17bb25a8c281311f91b8b994";
 
 export const mainnetContractAddress =
-  "0x0699dfb167522d11c5ada99714b2d41788246361e18a22a90f27905ebd18222a";
+  "0x05b991e122ff2410d32575eb369059bd26cb69a05d15001a0c93f2678d96d81c";
 
 export const SUPPORTED_WALLETS = {
   ArgentX: {
