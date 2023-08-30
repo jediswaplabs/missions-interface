@@ -24,12 +24,17 @@ export const initialState = {
 
 export const reducers = {};
 
-export const fetchNFTContestData = createAsyncThunk('data/fetchNFTContestData', async (addressLastChar, chainId) => {
-  const configResponse = config(chainId);
-  const response = await fetch(`${configResponse.questPageJSONLink}${addressLastChar}.json`); // Adjust the path to your JSON file
-  const data = await response.json();
-  return data;
-});
+export const fetchNFTContestData = createAsyncThunk(
+  'data/fetchNFTContestData',
+  async (options) => {
+    const configResponse = config(options.chainId);
+    const response = await fetch(
+      `${configResponse.questPageJSONLink}${options.addressLastChar}.json`,
+    ); // Adjust the path to your JSON file
+    const data = await response.json();
+    return data;
+  },
+);
 
 export const questSlice = createSlice({
   name: 'quest',
