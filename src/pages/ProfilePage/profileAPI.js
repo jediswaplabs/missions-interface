@@ -2,7 +2,7 @@ import { config } from '../../config';
 
 const options = {
   method: 'GET',
-  headers: { accept: 'application/json', 'x-api-key': 'zSKSBBpoGL1D1ocmfIIEd4OZck7KZTaN9dbmcXDX' },
+  headers: { accept: 'application/json' },
 };
 
 const api = {
