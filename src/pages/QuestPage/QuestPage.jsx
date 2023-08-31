@@ -31,6 +31,7 @@ import { mainnetContractAddress,
   testnetContractAddress } from '../../common/constants';
 import { isProductionChainId,
   isTestnetChainId } from '../../common/connectors/index.ts';
+import TransactionModal from '../../components/TransactionModal';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
@@ -104,6 +105,7 @@ const QuestPage = () => {
 
   useEffect(() => {
     if (response) {
+      console.log("🚀 ~ file: QuestPage.jsx:108 ~ useEffect ~ response:", response)
       dispatch(setIsWalletClaimedAnyNFT(response));
       setNFTClaimedByUser(true);
     }
@@ -314,7 +316,11 @@ const QuestPage = () => {
           <AllQuests>All quests</AllQuests>
         </Link>
         {address ? (
-          getMintCardContent()
+          <>
+            {getMintCardContent()}
+            {!isNFTClaimedByUser && !isWalletClaimedAnyNFT
+            && <TransactionModal /> }
+          </>
         ) : (
           <MintCard
             title="Rise of the first LPs"
