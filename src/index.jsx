@@ -38,7 +38,7 @@ const App = () => (
             <Switch>
               <Route exact strict path="/" component={MainPage} />
               <Route exact strict path="/profile" component={ProfilePage} />
-              <Route exact strict path="/quest" component={QuestPage} />
+              <Route exact strict path="/mission" component={QuestPage} />
               <Redirect to="/" />
             </Switch>
           </HashRouter>

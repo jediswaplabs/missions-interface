@@ -11,7 +11,7 @@ const InfoCard = () => (
       <SvgIcon component={icon} inheritViewBox style={{ width: 'unset', height: 'unset' }} />
     </Box>
     <InfoLabel>
-      Your one stop space for all JediSwap quests.
+      Your one stop space for all JediSwap missions.
     </InfoLabel>
   </InfoBox>
 );

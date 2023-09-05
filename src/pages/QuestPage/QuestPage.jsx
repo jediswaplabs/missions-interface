@@ -311,7 +311,7 @@ const QuestPage = () => {
           <div style={{ marginRight: '10px' }}>
             <SvgIcon component={backIcon} />
           </div>
-          <AllQuests>All quests</AllQuests>
+          <AllQuests>All Missions</AllQuests>
         </Link>
         {address ? (
           getMintCardContent()
