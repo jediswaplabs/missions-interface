@@ -65,7 +65,7 @@ const ProfilePage = () => {
       {!nftsClaimedByAUser.length && getEmptyProfilePageContent()}
       {nftsClaimedByAUser.length !== 0 && (
         <div>
-          <ProfileHeading>Claimed quests</ProfileHeading>
+          <ProfileHeading>Claimed Missions</ProfileHeading>
           <Stack
             direction={{ xs: "column", sm: "row" }}
             justifyContent="center"

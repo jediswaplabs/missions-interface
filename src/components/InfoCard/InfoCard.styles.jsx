@@ -8,7 +8,7 @@ const InfoLabel = styled(Typography)`
     font-size: 32px !important;
     font-style: normal;
     font-weight: 700 !important;
-    padding: 0 66px 0px 24px;
+    padding: 0 32px 0px 20px;
     line-height: 41.5px !important; /* 129.688% */
 `;
 

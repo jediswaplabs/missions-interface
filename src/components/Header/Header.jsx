@@ -76,21 +76,21 @@ const Header = () => {
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
             <Stack direction="row" alignItems="flex-start" gap={5}>
-              {location.pathname === "/quest" ? (
-                <ActiveLink to="/quest">
+              {location.pathname === "/mission" ? (
+                <ActiveLink to="/mission">
                   <Typography variant="body1" color="white">
-                    Quests
+                    Missions
                   </Typography>
                   <HeaderSelectionBar />
                 </ActiveLink>
               ) : (
-                <Link to="/quest">
+                <Link to="/mission">
                   <Typography
                     variant="body1"
                     color="white"
                     style={{ fontSize: "16px" }}
                   >
-                    Quests
+                    Missions
                   </Typography>
                 </Link>
               )}

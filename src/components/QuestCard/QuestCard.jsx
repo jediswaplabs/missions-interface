@@ -67,7 +67,7 @@ const QuestCard = ({
           )}
         </div>
 
-        <Link to={`/quest`}>
+        <Link to={`/mission`}>
           {duration && <QuestCardBtn>Enter</QuestCardBtn>}
         </Link>
       </div>
