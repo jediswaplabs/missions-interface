@@ -11,7 +11,7 @@ const rotate = keyframes`
   }
 `
 
-const StyledSVG = styled.svg`
+const StyledSVG = styled.svg<{ size, stroke }>`
   animation: 2s ${rotate} linear infinite;
   height: ${({ size }) => size};
   width: ${({ size }) => size};

@@ -9,10 +9,10 @@ import { CloseIcon, CustomLightSpinner } from '../../theme/components';
 import { RowBetween } from '../Row';
 import { ButtonGradient, ButtonPrimary } from '../Button';
 import { AutoColumn, ColumnCenter } from '../Column';
-import Circle from '../../assets/jedi/loadingCircle.svg';
-import { getStarkscanLink } from '../../utils';
-import openInBrowser from '../../assets/jedi/openInBrowser.svg';
+import Circle from '../../resources/icons/loadingCircle.svg';
+import openInBrowser from '../../resources/icons/openInBrowser.svg';
 import { useAccountDetails } from '../../hooks';
+import { getStarkscanLink } from '../../common/explorerHelper';
 
 const Wrapper = styled.div`
   width: 100%;
