@@ -74,6 +74,7 @@
     "postcss-safe-parser": "^6.0.0",
     "react-device-detect": "^1.6.2",
     "react-feather": "^2.0.10",
+    "react-ga4": "^1.4.1",
     "react-refresh": "^0.14.0",
     "react-spring": "^8.0.27",
     "react-use-gesture": "^6.0.14",

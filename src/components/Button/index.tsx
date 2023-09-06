@@ -6,13 +6,7 @@ import { RowBetween } from '../Row'
 import { ChevronDown } from 'react-feather'
 import { Button as RebassButton, ButtonProps } from 'rebass/styled-components'
 
-const Base = styled(RebassButton)<{
-  padding?: string
-  width?: string
-  borderRadius?: string
-  altDisabledStyle?: boolean
-  fontSize?: number
-}>`
+const Base = styled(RebassButton)`
   padding: ${({ padding }) => (padding ? padding : '22px 10px')};
   width: ${({ width }) => (width ? width : '100%')};
   font-size: ${({ fontSize }) => (fontSize ? `${fontSize}px` : '24px')};
@@ -292,7 +286,7 @@ export function ButtonConfirmed({
   confirmed,
   altDisabledStyle,
   ...rest
-}: { confirmed?: boolean; altDisabledStyle?: boolean } & ButtonProps) {
+}) {
   if (confirmed) {
     return <ButtonConfirmedStyle {...rest} />
   } else {
@@ -300,7 +294,7 @@ export function ButtonConfirmed({
   }
 }
 
-export function ButtonError({ error, ...rest }: { error?: boolean } & ButtonProps) {
+export function ButtonError({ error, ...rest }) {
   if (error) {
     return <ButtonErrorStyle {...rest} />
   } else {
@@ -308,7 +302,7 @@ export function ButtonError({ error, ...rest }: { error?: boolean } & ButtonProp
   }
 }
 
-export function ButtonDropdown({ disabled = false, children, ...rest }: { disabled?: boolean } & ButtonProps) {
+export function ButtonDropdown({ disabled = false, children, ...rest }) {
   return (
     <ButtonPrimary {...rest} disabled={disabled}>
       <RowBetween>
@@ -319,7 +313,7 @@ export function ButtonDropdown({ disabled = false, children, ...rest }: { disabl
   )
 }
 
-export function ButtonDropdownLight({ disabled = false, children, ...rest }: { disabled?: boolean } & ButtonProps) {
+export function ButtonDropdownLight({ disabled = false, children, ...rest }) {
   return (
     <ButtonOutlined {...rest} disabled={disabled}>
       <RowBetween>
@@ -330,7 +324,7 @@ export function ButtonDropdownLight({ disabled = false, children, ...rest }: { d
   )
 }
 
-export function ButtonRadio({ active, ...rest }: { active?: boolean } & ButtonProps) {
+export function ButtonRadio({ active, ...rest }) {
   if (!active) {
     return <ButtonWhite {...rest} />
   } else {

@@ -31,7 +31,7 @@ import { mainnetContractAddress,
   testnetContractAddress } from '../../common/constants';
 import { isProductionChainId,
   isTestnetChainId } from '../../common/connectors/index.ts';
-import TransactionModal from '../../components/TransactionModal';
+import TransactionConfirmationModal from '../../components/TransactionModal/index.tsx';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
@@ -105,7 +105,10 @@ const QuestPage = () => {
 
   useEffect(() => {
     if (response) {
-      console.log("🚀 ~ file: QuestPage.jsx:108 ~ useEffect ~ response:", response)
+      console.log(
+        '🚀 ~ file: QuestPage.jsx:108 ~ useEffect ~ response:',
+        response,
+      );
       dispatch(setIsWalletClaimedAnyNFT(response));
       setNFTClaimedByUser(true);
     }
@@ -125,29 +128,31 @@ const QuestPage = () => {
       setEligibiltyStatusBeforeCheck(false);
       setWalletAddress(address);
       const addressLastChar = getLastCharacterOfAString(address);
-      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then((res) => {
-        const nftData = res?.payload?.data?.find(
-          (resData) => resData.wallet_address === address,
-        );
-        if (nftData && Object.keys(nftData).length) {
-          setStateForAccountDetailsForNFT(nftData);
-          dispatch(setUserEligibleNFTAction(true));
-          setMintData({
-            token_id: nftData?.calldata[0],
-            proof: nftData?.proof,
-            token_metadata: {
-              task_id: nftData?.calldata[1],
-              name: nftData?.calldata[2],
-              rank: nftData?.calldata[3],
-              score: nftData?.calldata[4],
-              level: nftData?.calldata[5],
-              total_eligible_users: nftData?.calldata[6],
-            },
-          });
-        } else {
-          dispatch(setUserNonEligibleNFTAction(true));
-        }
-      });
+      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then(
+        (res) => {
+          const nftData = res?.payload?.data?.find(
+            (resData) => resData.wallet_address === address,
+          );
+          if (nftData && Object.keys(nftData).length) {
+            setStateForAccountDetailsForNFT(nftData);
+            dispatch(setUserEligibleNFTAction(true));
+            setMintData({
+              token_id: nftData?.calldata[0],
+              proof: nftData?.proof,
+              token_metadata: {
+                task_id: nftData?.calldata[1],
+                name: nftData?.calldata[2],
+                rank: nftData?.calldata[3],
+                score: nftData?.calldata[4],
+                level: nftData?.calldata[5],
+                total_eligible_users: nftData?.calldata[6],
+              },
+            });
+          } else {
+            dispatch(setUserNonEligibleNFTAction(true));
+          }
+        },
+      );
     }
   };
 
@@ -182,14 +187,16 @@ const QuestPage = () => {
         setNFTClaimedByUser(true);
       }
       const addressLastChar = getLastCharacterOfAString(address);
-      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then((res) => {
-        const nftData = res?.payload?.data?.find(
-          (resData) => resData.wallet_address === address,
-        );
-        if (nftData && Object.keys(nftData).length) {
-          setStateForAccountDetailsForNFT(nftData);
-        }
-      });
+      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then(
+        (res) => {
+          const nftData = res?.payload?.data?.find(
+            (resData) => resData.wallet_address === address,
+          );
+          if (nftData && Object.keys(nftData).length) {
+            setStateForAccountDetailsForNFT(nftData);
+          }
+        },
+      );
     } else {
       setNFTClaimedByUser(false);
       setEligibiltyStatusBeforeCheck(true);
@@ -318,8 +325,13 @@ const QuestPage = () => {
         {address ? (
           <>
             {getMintCardContent()}
-            {!isNFTClaimedByUser && !isWalletClaimedAnyNFT
-            && <TransactionModal /> }
+            {isUserClaimingNFT && (
+              <TransactionConfirmationModal
+                attemptingTxn={isUserClaimingNFT}
+                isOpen={isUserClaimingNFT}
+                pendingText={`Claiming NFT ${accountDetailsForNFT?.name}`}
+              />
+            )}
           </>
         ) : (
           <MintCard

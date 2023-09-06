@@ -4,8 +4,9 @@ import { Text } from 'rebass';
 import { AlertTriangle, ArrowUp } from 'react-feather';
 
 import Modal from '../Modal';
-import { ExternalLink } from '../../theme';
-import { CloseIcon, CustomLightSpinner } from '../../theme/components';
+import { ExternalLink } from '../../theme/components';
+import { CustomLightSpinner } from '../../theme/components';
+import CloseIcon from '@mui/icons-material/Close';
 import { RowBetween } from '../Row';
 import { ButtonGradient, ButtonPrimary } from '../Button';
 import { AutoColumn, ColumnCenter } from '../Column';
@@ -13,16 +14,14 @@ import Circle from '../../resources/icons/loadingCircle.svg';
 import openInBrowser from '../../resources/icons/openInBrowser.svg';
 import { useAccountDetails } from '../../hooks';
 import { getStarkscanLink } from '../../common/explorerHelper';
+import { SvgIcon } from '@mui/material';
 
 const Wrapper = styled.div`
   width: 100%;
-  background: linear-gradient(to top right, #50d5ff, #ef35ff);
   color: ${({ theme }) => theme.jediWhite};
   font-family: 'DM Sans', sans-serif;
-  /* border-radius: 8px; */
-  padding: 1px;
 `;
-const Section = styled(AutoColumn) < { withBorderBottom } > `
+const Section = styled(AutoColumn)`
   padding: 16px 32px;
   background-color: ${({ theme }) => theme.jediNavyBlue};
   border-radius: ${({ withBorderBottom }) => (withBorderBottom ? '8px' : '8px 8px 0 0')};
@@ -52,12 +51,14 @@ function ConfirmationPendingContent({ onDismiss, pendingText }) {
   return (
     <Wrapper>
       <Section style={{ padding: '35px 32px 32px' }} withBorderBottom>
-        {/* <RowBetween>
-          <div />
-          <CloseIcon onClick={onDismiss} />
-        </RowBetween> */}
         <ConfirmedIcon>
-          <CustomLightSpinner src={Circle} alt="loader" size="80px" />
+          <CustomLightSpinner>
+             <SvgIcon
+          component={Circle}
+          inheritViewBox
+          style={{ width: 'unset', height: '240px' }}
+        />
+          </CustomLightSpinner>
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify="center">
           <Text fontWeight={700} fontSize={24} fontFamily="DM Sans" color="#F2F2F2" letterSpacing="0px">
@@ -214,10 +215,8 @@ export default function TransactionConfirmationModal({
     <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
       {attemptingTxn ? (
         <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
-      ) : hash ? (
-        <TransactionSubmittedContent chainId={chainId} hash={hash} onDismiss={onDismiss} />
       ) : (
-        content()
+        <TransactionSubmittedContent chainId={chainId} hash={hash} onDismiss={onDismiss} />
       )}
     </Modal>
   );

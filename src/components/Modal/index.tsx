@@ -35,8 +35,8 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
 
   &[data-reach-dialog-content] {
     margin: 0 0 0 0;
-    background-color: ${({ theme }) => theme.jediNavyBlue};
-    box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
+    background-color: #141451;
+    // box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
     width: 50vw;
     overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
@@ -57,20 +57,11 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, ...r
       `}
     display: flex;
     border-radius: 8px;
-    ${({ theme }) => theme.mediaWidth.upToMedium`
-      width: 65vw;
-      margin: 0;
-    `}
-    ${({ theme, mobile }) => theme.mediaWidth.upToSmall`
-      width:  85vw;
-      ${mobile &&
-        css`
-          width: 100vw;
-          border-radius: 20px;
-          border-bottom-left-radius: 0;
-          border-bottom-right-radius: 0;
-        `}
-    `}
+    // ${({ theme }) => theme.mediaWidth.upToMedium`
+    //   width: 65vw;
+    //   margin: 0;
+    // `}
+   
   }
 `
 const BorderWrapper = styled.div`
@@ -78,15 +69,6 @@ const BorderWrapper = styled.div`
   padding: 2px;
   border-radius: 8px;
 `
-interface ModalProps {
-  isOpen: boolean
-  onDismiss: () => void
-  minHeight?: number | false
-  maxHeight?: number
-  initialFocusRef?: React.RefObject<any>
-  children?: React.ReactNode
-}
-
 export default function Modal({
   isOpen,
   onDismiss,
@@ -94,7 +76,7 @@ export default function Modal({
   maxHeight = 90,
   initialFocusRef,
   children
-}: ModalProps) {
+}) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
     from: { opacity: 0 },
