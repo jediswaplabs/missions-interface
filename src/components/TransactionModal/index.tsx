@@ -1,30 +1,31 @@
-import React, { useContext } from 'react';
-import styled, { ThemeContext } from 'styled-components';
-import { Text } from 'rebass';
-import { AlertTriangle, ArrowUp } from 'react-feather';
+import React, { useContext } from "react";
+import styled, { ThemeContext } from "styled-components";
+import { Text } from "rebass";
+import { AlertTriangle, ArrowUp } from "react-feather";
 
-import Modal from '../Modal';
-import { ExternalLink } from '../../theme/components';
-import { CustomLightSpinner } from '../../theme/components';
-import CloseIcon from '@mui/icons-material/Close';
-import { RowBetween } from '../Row';
-import { ButtonGradient, ButtonPrimary } from '../Button';
-import { AutoColumn, ColumnCenter } from '../Column';
-import Circle from '../../resources/icons/loadingCircle.svg';
-import openInBrowser from '../../resources/icons/openInBrowser.svg';
-import { useAccountDetails } from '../../hooks';
-import { getStarkscanLink } from '../../common/explorerHelper';
-import { SvgIcon } from '@mui/material';
+import Modal from "../Modal";
+import { ExternalLink } from "../../theme/components";
+import { CustomLightSpinner } from "../../theme/components";
+import CloseIcon from "@mui/icons-material/Close";
+import { RowBetween } from "../Row";
+import { ButtonGradient, ButtonPrimary } from "../Button";
+import { AutoColumn, ColumnCenter } from "../Column";
+import Circle from "../../resources/icons/loadingCircle.svg";
+import openInBrowser from "../../resources/icons/openInBrowser.svg";
+import { useAccountDetails } from "../../hooks";
+import { getStarkscanLink } from "../../common/explorerHelper";
+import { SvgIcon } from "@mui/material";
 
 const Wrapper = styled.div`
   width: 100%;
   color: ${({ theme }) => theme.jediWhite};
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
 `;
 const Section = styled(AutoColumn)`
   padding: 16px 32px;
   background-color: ${({ theme }) => theme.jediNavyBlue};
-  border-radius: ${({ withBorderBottom }) => (withBorderBottom ? '8px' : '8px 8px 0 0')};
+  border-radius: ${({ withBorderBottom }) =>
+    withBorderBottom ? "8px" : "8px 8px 0 0"};
 `;
 
 const BottomSection = styled(Section)`
@@ -50,18 +51,24 @@ const Row = styled.div`
 function ConfirmationPendingContent({ onDismiss, pendingText }) {
   return (
     <Wrapper>
-      <Section style={{ padding: '35px 32px 32px' }} withBorderBottom>
+      <Section style={{ padding: "35px 32px 32px" }} withBorderBottom>
         <ConfirmedIcon>
           <CustomLightSpinner>
-             <SvgIcon
-          component={Circle}
-          inheritViewBox
-          style={{ width: 'unset', height: '240px' }}
-        />
+            <SvgIcon
+              component={Circle}
+              inheritViewBox
+              style={{ width: "unset", height: "240px" }}
+            />
           </CustomLightSpinner>
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify="center">
-          <Text fontWeight={700} fontSize={24} fontFamily="DM Sans" color="#F2F2F2" letterSpacing="0px">
+          <Text
+            fontWeight={700}
+            fontSize={24}
+            fontFamily="DM Sans"
+            color="#F2F2F2"
+            letterSpacing="0px"
+          >
             Waiting For Confirmation
           </Text>
           <AutoColumn gap="12px" justify="center">
@@ -93,36 +100,40 @@ function ConfirmationPendingContent({ onDismiss, pendingText }) {
   );
 }
 
-function TransactionSubmittedContent({
-  onDismiss,
-  chainId,
-  hash,
-}) {
-  const theme = useContext(ThemeContext);
-
+function TransactionSubmittedContent({ onDismiss, chainId, hash }) {
   return (
     <Wrapper>
-      <Section style={{ padding: '18px' }} withBorderBottom>
+      <Section style={{ padding: "18px" }} withBorderBottom>
         <RowBetween>
           <div />
-          <CloseIcon onClick={onDismiss} />
+          <CloseIcon onClick={onDismiss} style={{ color: "#fff" }} />
         </RowBetween>
         <ConfirmedIcon>
-          <ArrowUp strokeWidth={1} size={90} color={theme.jediWhite} />
+          <ArrowUp strokeWidth={1} size={90} color={"#fff"} />
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify="center">
-          <Text fontWeight={700} fontSize={24} fontFamily="DM Sans" color="#FFFFFF" letterSpacing="0px">
+          <Text
+            fontWeight={700}
+            fontSize={24}
+            fontFamily="DM Sans"
+            color="#FFFFFF"
+            letterSpacing="0px"
+          >
             Transaction Submitted
           </Text>
 
           {chainId && hash && (
-            <ExternalLink href={getStarkscanLink(chainId, hash, 'transaction')}>
+            <ExternalLink href={getStarkscanLink(chainId, hash, "transaction")}>
               <Row>
-                <img src={openInBrowser} alt="open" />
+                <SvgIcon
+                  component={openInBrowser}
+                  inheritViewBox
+                  style={{ width: "unset"}}
+                />{" "}
                 <Text
                   fontWeight={500}
                   fontSize={14}
-                  color={theme.jediWhite}
+                  color={"#fff"}
                   fontFamily="DM Sans"
                   letterSpacing="0px"
                 >
@@ -131,7 +142,7 @@ function TransactionSubmittedContent({
               </Row>
             </ExternalLink>
           )}
-          <ButtonGradient onClick={onDismiss} style={{ margin: '20px 0 0 0' }}>
+          <ButtonGradient onClick={onDismiss} style={{ margin: "20px 0 0 0" }}>
             <Text>Close</Text>
           </ButtonGradient>
         </AutoColumn>
@@ -140,53 +151,31 @@ function TransactionSubmittedContent({
   );
 }
 
-export function ConfirmationModalContent({
-  title,
-  titleFont,
-  bottomContent,
-  onDismiss,
-  topContent,
-}) {
-  return (
-    <Wrapper>
-      <Section style={{ paddingBottom: '8px' }}>
-        <TextWrapper>
-          <RowBetween>
-            <Text
-              fontWeight={titleFont?.weight ?? 800}
-              fontSize={titleFont?.size ?? '21px'}
-              fontFamily={titleFont?.family}
-              letterSpacing={titleFont?.letterSpacing}
-              lineHeight={titleFont?.lineHeight ?? '100%'}
-            >
-              {title}
-            </Text>
-            <CloseIcon onClick={onDismiss} />
-          </RowBetween>
-        </TextWrapper>
-        {topContent()}
-      </Section>
-      <BottomSection gap="12px" style={{ paddingTop: '8px' }}>
-        {bottomContent()}
-      </BottomSection>
-    </Wrapper>
-  );
-}
-
 export function TransactionErrorContent({ message, onDismiss }) {
-  const theme = useContext(ThemeContext);
   return (
     <Wrapper>
       <Section>
         <RowBetween>
-          <Text fontWeight={500} fontSize={20}>
-            Error
-          </Text>
-          <CloseIcon onClick={onDismiss} />
+          <div />
+          <CloseIcon onClick={onDismiss} style={{ color: "#fff" }} />
         </RowBetween>
-        <AutoColumn style={{ marginTop: 20, padding: '2rem 0' }} gap="24px" justify="center">
-          <AlertTriangle color={theme.red1} style={{ strokeWidth: 1.5 }} size={64} />
-          <Text fontWeight={500} fontSize={16} color={theme.red1} style={{ textAlign: 'center', width: '85%' }}>
+        <AutoColumn
+          style={{ marginTop: 20, padding: "2rem 0" }}
+          gap="24px"
+          justify="center"
+        >
+          <AlertTriangle
+            color={"#FF3257"}
+            style={{ strokeWidth: 1.5 }}
+            size={64}
+          />
+          <Text
+            fontWeight={700}
+            fontSize={24}
+            color={"#fff"}
+            fontFamily={"DM Sans"}
+            style={{ textAlign: "center", width: "85%" }}
+          >
             {message}
           </Text>
         </AutoColumn>
@@ -204,19 +193,31 @@ export default function TransactionConfirmationModal({
   attemptingTxn,
   hash,
   pendingText,
-  content,
+  error,
+  message,
 }) {
   const { account, chainId } = useAccountDetails();
 
-  if (!chainId) { return null; }
+  if (!chainId) {
+    return null;
+  }
 
   // confirmation screen
   return (
     <Modal isOpen={isOpen} onDismiss={onDismiss} maxHeight={90}>
-      {attemptingTxn ? (
-        <ConfirmationPendingContent onDismiss={onDismiss} pendingText={pendingText} />
+      {attemptingTxn && !error && !hash ? (
+        <ConfirmationPendingContent
+          onDismiss={onDismiss}
+          pendingText={pendingText}
+        />
+      ) : error && !hash ? (
+        <TransactionErrorContent message={message} onDismiss={onDismiss} />
       ) : (
-        <TransactionSubmittedContent chainId={chainId} hash={hash} onDismiss={onDismiss} />
+        <TransactionSubmittedContent
+          onDismiss={onDismiss}
+          hash={hash}
+          chainId={chainId}
+        />
       )}
     </Modal>
   );

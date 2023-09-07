@@ -31,10 +31,12 @@ import { mainnetContractAddress,
   testnetContractAddress } from '../../common/constants';
 import { isProductionChainId,
   isTestnetChainId } from '../../common/connectors/index.ts';
-import TransactionConfirmationModal from '../../components/TransactionModal/index.tsx';
+import TransactionConfirmationModal, { TransactionErrorContent } from '../../components/TransactionModal/index.tsx';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
+  const [transactionError, setTransactionError] = useState('');
+  const [hash, setHash] = useState('');
   const [contractAddress, setContractAddress] = useState(
     testnetContractAddress,
   );
@@ -105,10 +107,6 @@ const QuestPage = () => {
 
   useEffect(() => {
     if (response) {
-      console.log(
-        '🚀 ~ file: QuestPage.jsx:108 ~ useEffect ~ response:',
-        response,
-      );
       dispatch(setIsWalletClaimedAnyNFT(response));
       setNFTClaimedByUser(true);
     }
@@ -208,17 +206,16 @@ const QuestPage = () => {
     if (Object.keys(mintData).length) {
       writeAsync()
         .then((tx) => {
-          setUserClaimingNFT(false);
           if (tx.transaction_hash) {
             if (response) {
               dispatch(setIsWalletClaimedAnyNFT(response));
               setNFTClaimedByUser(true);
+              setHash(tx.transaction_hash);
             }
           }
         })
         .catch((err) => {
-          setUserClaimingNFT(false);
-          console.log(err);
+          setTransactionError(err.message);
         });
     }
   };
@@ -330,6 +327,14 @@ const QuestPage = () => {
                 attemptingTxn={isUserClaimingNFT}
                 isOpen={isUserClaimingNFT}
                 pendingText={`Claiming NFT ${accountDetailsForNFT?.name}`}
+                error={transactionError}
+                message={transactionError ? 'Transaction Rejected' : ''}
+                hash={hash}
+                onDismiss={() => {
+                  setUserClaimingNFT(false);
+                  setTransactionError('');
+                  setHash('');
+                }}
               />
             )}
           </>
