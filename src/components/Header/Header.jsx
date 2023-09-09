@@ -1,15 +1,14 @@
-import React, { useCallback } from "react";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { SvgIcon } from "@mui/material";
-import { useTranslation } from "react-i18next";
-import Box from "@mui/material/Box";
-import { Link, useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useCallback } from 'react';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { SvgIcon } from '@mui/material';
+import { useTranslation } from 'react-i18next';
+import Box from '@mui/material/Box';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import {
-  HeaderContainer,
+import { HeaderContainer,
   HeaderLogo,
   AccountElement,
   Web3StatusConnected,
@@ -17,39 +16,38 @@ import {
   Web3StatusConnect,
   ActiveLink,
   HeaderSelectionBar,
-} from "./Header.styles";
-import {
-  useAccountDetails,
-  useWalletActionHandlers,
-} from "../../hooks/index.ts";
-import { eventsLookup } from "../../common/constants";
-import { argentX, braavosWallet } from "../../common/connectors/index.ts";
-import { getShortenAddress } from "../../common/addressHelper";
-import { EventEmitter } from "../../common/eventEmitter";
-import logo from "../../resources/icons/logo.svg";
-import argentXIcon from "../../resources/icons/argentx.svg";
-import braavosIcon from "../../resources/icons/braavos.svg";
-import GradientButton from "../GradientButton/GradientButton";
-import WalletModal from "../../features/wallet/WalletModal/WalletModal";
-import ProfilePopout from "../ProfilePopout/ProfilePopout";
+  NetworkCard,
+  AddressCard } from './Header.styles';
+import { useAccountDetails,
+  useWalletActionHandlers } from '../../hooks/index.ts';
+import { eventsLookup } from '../../common/constants';
+import { isProductionChainId } from '../../common/connectors/index.ts';
+import { getShortenAddress } from '../../common/addressHelper';
+import { EventEmitter } from '../../common/eventEmitter';
+import logo from '../../resources/icons/logo.svg';
+import argentXIcon from '../../resources/icons/argentx.svg';
+import braavosIcon from '../../resources/icons/braavos.svg';
+import GradientButton from '../GradientButton/GradientButton';
+import WalletModal from '../../features/wallet/WalletModal/WalletModal';
+import ProfilePopout from '../ProfilePopout/ProfilePopout';
 
 const noop = () => {};
 
 const Header = () => {
   const location = useLocation();
   const closeProfilePopout = useSelector(
-    (state) => state.profile.closeProfilePopout
+    (state) => state.profile.closeProfilePopout,
   );
 
   return (
     <HeaderContainer py={1}>
       <Grid container columnSpacing={{ md: 2 }} alignItems="center">
-        <Grid item xs={6} sx={{ display: "flex", alignItems: "center" }}>
+        <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center' }}>
           <HeaderLogo to="/">
             <SvgIcon
               component={logo}
               viewBox="0 0 173 34"
-              style={{ width: "unset", height: "unset" }}
+              style={{ width: 'unset', height: 'unset' }}
             />
           </HeaderLogo>
         </Grid>
@@ -58,9 +56,9 @@ const Header = () => {
           xs={12}
           md={6}
           sx={{
-            position: { xs: "fixed", md: "static" },
+            position: { xs: 'fixed', md: 'static' },
             zIndex: 1,
-            width: { xs: "100%", md: "auto" },
+            width: { xs: '100%', md: 'auto' },
             bottom: 0,
             left: 0,
           }}
@@ -68,15 +66,15 @@ const Header = () => {
           <Box
             display="flex"
             width="100%"
-            backgroundColor={{ xs: "#212429", md: "transparent" }}
-            justifyContent={{ xs: "flex-start", md: "flex-end" }}
+            backgroundColor={{ xs: '#212429', md: 'transparent' }}
+            justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
             px={{ xs: 2, md: 0 }}
             py={{ xs: 2, md: 0 }}
           >
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
             <Stack direction="row" alignItems="flex-start" gap={5}>
-              {location.pathname === "/mission" ? (
+              {location.pathname === '/mission' ? (
                 <ActiveLink to="/mission">
                   <Typography variant="body1" color="white">
                     Missions
@@ -88,13 +86,13 @@ const Header = () => {
                   <Typography
                     variant="body1"
                     color="white"
-                    style={{ fontSize: "16px" }}
+                    style={{ fontSize: '16px' }}
                   >
                     Missions
                   </Typography>
                 </Link>
               )}
-              {location.pathname === "/profile" ? (
+              {location.pathname === '/profile' ? (
                 <ActiveLink to="/profile">
                   <Typography variant="body1" color="white">
                     Profile
@@ -107,7 +105,7 @@ const Header = () => {
                     <Typography
                       variant="body1"
                       color="white"
-                      style={{ fontSize: "16px" }}
+                      style={{ fontSize: '16px' }}
                     >
                       Profile
                     </Typography>
@@ -128,11 +126,27 @@ const Header = () => {
 };
 
 const StatusIcon = ({ connector }) => {
-  if (connector === argentX) {
-    return <SvgIcon component={argentXIcon} />;
+  if (connector.options.id === 'argentX') {
+    return (
+      <SvgIcon
+        component={argentXIcon}
+        style={{
+          width: '16px',
+          height: '16px',
+        }}
+      />
+    );
   }
-  if (connector === braavosWallet) {
-    return <SvgIcon component={braavosIcon} />;
+  if (connector.options.id === 'braavos') {
+    return (
+      <SvgIcon
+        component={braavosIcon}
+        style={{
+          width: '16px',
+          height: '16px',
+        }}
+      />
+    );
   }
   return null;
 };
@@ -140,7 +154,7 @@ const StatusIcon = ({ connector }) => {
 const Web3Status = () => {
   const { setWalletModalOpen } = useWalletActionHandlers();
   const isWalletModalOpen = useSelector(
-    (state) => state.wallet.isWalletModalOpen
+    (state) => state.wallet.isWalletModalOpen,
   );
 
   const handleToggleWalletModal = useCallback(() => {
@@ -168,23 +182,35 @@ const Web3Status = () => {
 const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   const { t } = useTranslation();
   // const { error } = useAccountDetails();
-  const { address, connector } = useAccountDetails();
+  const { address, connector, status, chainId } = useAccountDetails();
   if (address) {
     return (
       <Web3StatusConnected onClick={onWalletModalToggle}>
-        <Stack direction="row" alignItems="center" gap={1}>
-          {connector && <StatusIcon connector={connector} />}
-          <Typography
-            variant="body1"
-            color="text.primary"
-            style={{
-              fontSize: "16px",
-              fontFamily: '"Avenir LT Std", sans-serif',
-              fontWeight: "600",
-            }}
-          >
-            {getShortenAddress(address)}
-          </Typography>
+        <Stack direction="row" alignItems="center" gap={1.5}>
+          {status === 'connected'
+            && (isProductionChainId(chainId) ? (
+              <NetworkCard title="Starknet Mainnet">
+                Starknet Mainnet
+              </NetworkCard>
+            ) : (
+              <NetworkCard title="Starknet Görli">Starknet Görli</NetworkCard>
+            ))}
+          <AddressCard>
+            {connector && <StatusIcon connector={connector} />}
+            <Typography
+              variant="body1"
+              color="text.primary"
+              style={{
+                fontSize: '16px',
+                fontFamily: '"Avenir LT Std", sans-serif',
+                fontWeight: '600',
+                marginLeft: '4px',
+                lineHeight: '1',
+              }}
+            >
+              {getShortenAddress(address)}
+            </Typography>
+          </AddressCard>
         </Stack>
       </Web3StatusConnected>
     );
@@ -200,7 +226,7 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   // }
   return (
     <Web3StatusConnect onClick={onWalletModalToggle}>
-      <GradientButton>{t("header.connectWallet")}</GradientButton>
+      <GradientButton>{t('header.connectWallet')}</GradientButton>
     </Web3StatusConnect>
   );
 };

@@ -36,6 +36,39 @@ const HeaderLogo = styled(RouterLink)`
   font-size: 0;
 `;
 
+const Card = styled(Box)`
+  width: 100%;
+  border-radius: 16px;
+  padding: 1.25rem;
+  padding: ${({ padding }) => padding};
+  border: ${({ border }) => border};
+  border-radius: ${({ borderRadius }) => borderRadius};
+`;
+
+const NetworkCard = styled(Card)`
+  border-radius: 8px;
+  flex: 1;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: Avenir LT Std, sans-serif;
+  background: var(--jedi-navy-blue, #141451); 
+  padding: 8px 16px;
+`;
+
+const AddressCard = styled(Card)`
+  border-radius: 8px;
+  flex: 1;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: Avenir LT Std, sans-serif;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+`;
+
 const AccountElement = styled.div`
   display: flex;
   flex: 0;
@@ -91,5 +124,7 @@ export {
   Web3StatusConnected,
   Web3StatusError,
   Web3StatusConnect,
-  HeaderSelectionBar
+  HeaderSelectionBar,
+  NetworkCard,
+  AddressCard,
 };
