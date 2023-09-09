@@ -31,7 +31,7 @@ import { mainnetContractAddress,
   testnetContractAddress } from '../../common/constants';
 import { isProductionChainId,
   isTestnetChainId } from '../../common/connectors/index.ts';
-import TransactionConfirmationModal, { TransactionErrorContent } from '../../components/TransactionModal/index.tsx';
+import TransactionConfirmationModal from '../../components/TransactionModal/index.tsx';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
@@ -264,6 +264,7 @@ const QuestPage = () => {
           status="isUserEligibleForNFT"
           onCheck={() => checkEligibility()}
           onClaim={() => claimNft()}
+          isDisabled={isWalletClaimedAnyNFT}
         />
       );
     }
