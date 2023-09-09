@@ -19,7 +19,7 @@ const ActiveLink = styled(RouterLink)`
   }
 `;
 const HeaderContainer = styled(Box)`
-  margin-bottom: 50px;
+  margin-bottom: 58px;
   position: relative;
 `;
 
@@ -54,6 +54,7 @@ const NetworkCard = styled(Card)`
   font-family: Avenir LT Std, sans-serif;
   background: var(--jedi-navy-blue, #141451); 
   padding: 8px 16px;
+  margin-right: -30px;
 `;
 
 const AddressCard = styled(Card)`

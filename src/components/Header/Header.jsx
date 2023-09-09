@@ -39,6 +39,8 @@ const Header = () => {
     (state) => state.profile.closeProfilePopout,
   );
 
+  const { status, chainId } = useAccountDetails();
+
   return (
     <HeaderContainer py={1}>
       <Grid container columnSpacing={{ md: 2 }} alignItems="center">
@@ -113,6 +115,16 @@ const Header = () => {
                   {!closeProfilePopout && <ProfilePopout />}
                 </>
               )}
+              {status === 'connected'
+                && (isProductionChainId(chainId) ? (
+                  <NetworkCard title="Starknet Mainnet">
+                    Starknet Mainnet
+                  </NetworkCard>
+                ) : (
+                  <NetworkCard title="Starknet Görli">
+                    Starknet Görli
+                  </NetworkCard>
+                ))}
               <AccountElement>
                 <Web3Status />
               </AccountElement>
@@ -182,19 +194,11 @@ const Web3Status = () => {
 const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   const { t } = useTranslation();
   // const { error } = useAccountDetails();
-  const { address, connector, status, chainId } = useAccountDetails();
+  const { address, connector } = useAccountDetails();
   if (address) {
     return (
       <Web3StatusConnected onClick={onWalletModalToggle}>
-        <Stack direction="row" alignItems="center" gap={1.5}>
-          {status === 'connected'
-            && (isProductionChainId(chainId) ? (
-              <NetworkCard title="Starknet Mainnet">
-                Starknet Mainnet
-              </NetworkCard>
-            ) : (
-              <NetworkCard title="Starknet Görli">Starknet Görli</NetworkCard>
-            ))}
+        <Stack direction="row" alignItems="center" gap={1}>
           <AddressCard>
             {connector && <StatusIcon connector={connector} />}
             <Typography
