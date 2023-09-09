@@ -36,7 +36,7 @@ const HeaderLine = styled.div`
   height: 1px;
   width: 100%;
   position: absolute;
-  top: 74px;
+  top: 66px;
   background: linear-gradient(91deg, rgba(226, 0, 255, 0.30) 0%, rgba(75, 212, 255, 0.30) 100%);
 `;
 
