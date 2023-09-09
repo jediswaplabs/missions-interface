@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react'
-import ReactGA from 'react-ga4'
 import styled, { keyframes } from 'styled-components'
 
 
@@ -28,29 +27,33 @@ const StyledLink = styled.a`
  * Outbound link that handles firing google analytics events
  */
 export function ExternalLink({
-  target = '_blank',
+  target = "_blank",
   href,
-  rel = 'noopener noreferrer',
+  rel = "noopener noreferrer",
   ...rest
 }) {
   const handleClick = useCallback(
     (event) => {
       // don't prevent default, don't redirect if it's a new tab
-      if (target === '_blank' || event.ctrlKey || event.metaKey) {
-        ReactGA.outboundLink({ label: href }, () => {
-          console.debug('Fired outbound link event', href)
-        })
+      if (target === "_blank" || event.ctrlKey || event.metaKey) {
+        console.debug("Fired outbound link event", href);
       } else {
-        event.preventDefault()
-        // send a ReactGA event and then trigger a location change
-        ReactGA.outboundLink({ label: href }, () => {
-          window.location.href = href
-        })
+        event.preventDefault();
+        // trigger a location change
+        window.location.href = href;
       }
     },
     [href, target]
-  )
-  return <StyledLink target={target} rel={rel} href={href} onClick={handleClick} {...rest} />
+  );
+  return (
+    <StyledLink
+      target={target}
+      rel={rel}
+      href={href}
+      onClick={handleClick}
+      {...rest}
+    />
+  );
 }
 
 const rotate = keyframes`
