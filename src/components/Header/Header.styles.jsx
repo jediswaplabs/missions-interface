@@ -20,7 +20,7 @@ const ActiveLink = styled(RouterLink)`
 `;
 const HeaderContainer = styled(Box)`
   margin-bottom: 56px;
-  padding: 21px 0px;
+  padding: 24px 0px 16px 0px !important;
   position: relative;
 `;
 

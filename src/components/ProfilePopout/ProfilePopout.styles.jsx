@@ -9,7 +9,7 @@ const ProfilePopoutTriangle = styled.div`
 const ProfilePopoutContainer = styled.div`
   position: absolute;
   right: ${(props) => (props.status === 'connected' ? '172px' : '-8px')};
-  top: 32px;
+  top: 44px;
 `;
 
 const ProfilePopoutRect = styled.div`
