@@ -112,6 +112,7 @@ const Header = () => {
                       Profile
                     </Typography>
                   </Link>
+                  {!closeProfilePopout && <Box sx={{ display: {xs: 'block', md: 'none'} }} style={{height: '100px'}}></Box>}
                   {!closeProfilePopout && <ProfilePopout />}
                 </>
               )}

@@ -14,6 +14,9 @@ const QuestBox = styled(Box)`
   padding-bottom: 60px;
   padding-right: 30px;
   padding-top: 30px;
+  @media (max-width: 600px) {
+    padding-left: 30px;
+  }
 `;
 
 const QuestCardCalend = styled.div`
@@ -54,6 +57,9 @@ const QuestCardTitle = styled.p`
   font-style: normal;
   font-weight: 700;
   line-height: 20px; /* 62.5% */
+  @media (max-width: 600px) {
+    font-size: 22px;
+  }
 `;
 
 const QuestCardDescription = styled.p`
@@ -64,6 +70,9 @@ const QuestCardDescription = styled.p`
   font-weight: 400;
   line-height: 26px; /* 162.5% */
   max-width: 480px;
+  @media (max-width: 768px) {
+    max-width: 280px;
+  }
 `;
 
 const QuestCardNftNum = styled.div`
@@ -112,6 +121,9 @@ const QuestCardBtn = styled.button`
   line-height: 20px; /* 100% */
   border: unset;
   cursor: pointer;
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 const QuestCardAddress = styled.div`
   color: var(--jedi-white, #FFF);

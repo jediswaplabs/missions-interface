@@ -17,7 +17,7 @@ const MainPage = () => {
   const bodyContent = (
     <Container>
       <Grid container justifyContent="center" spacing={3}>
-        <Grid item xs={10}>
+        <Grid item xs={12} md={10}>
           <QuestCard
             questId={1}
             questType="FEATURED CONTEST"
@@ -29,10 +29,10 @@ const MainPage = () => {
             campaignImg={campaign}
           />
         </Grid>
-        <Grid item xs={10} md={4}>
+        <Grid item xs={12} md={4}>
           <InfoCard />
         </Grid>
-        <Grid item xs={10} md={6}>
+        <Grid item xs={12} md={6}>
           <QuestCard
             questType="UPCOMING CONTEST"
             title="Return of the LPs"

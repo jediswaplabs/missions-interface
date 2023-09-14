@@ -1,6 +1,7 @@
 import React from "react";
-import { SvgIcon } from "@mui/material";
+import { SvgIcon, Box } from "@mui/material";
 import { Link } from "react-router-dom";
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {
   QuestBox,
@@ -24,8 +25,11 @@ const QuestCard = ({
   nftAmount,
   campaignImg,
 }) => {
+  const matchesSm = useMediaQuery('(max-width:768px)');
+  const matchesLg = useMediaQuery('(min-width:1200px)');
+  const matcheslessThanLg = useMediaQuery('(max-width:1200px)');
   const styles = {};
-  if (questType === "FEATURED CONTEST") {
+  if (questType === "FEATURED CONTEST" && !matchesSm) {
     styles.maxWidth = "430px";
   }
   return (
@@ -66,19 +70,29 @@ const QuestCard = ({
             </div>
           )}
         </div>
-
+        {campaignImg && matcheslessThanLg && (
+        <Box sx={{ display1: { xs: 'block', lg: 'none' } }}>
+          <SvgIcon
+            component={campaignImg}
+            // inheritViewBox
+            viewBox='-100 0 700 350'
+            preserveAspectRatio="xMidYMid slice"
+            style={{ width: "unset", height: "unset", maxWidth: '90%' }}
+          />
+        </Box>
+      )}
         <Link to={`/mission`}>
           {duration && <QuestCardBtn>Enter</QuestCardBtn>}
         </Link>
       </div>
-      {campaignImg && (
-        <div>
+      {campaignImg && matchesLg && (
+        <Box sx={{ display1: { xs: 'none', lg: 'block' } }}>
           <SvgIcon
             component={campaignImg}
             inheritViewBox
             style={{ width: "unset", height: "unset" }}
           />
-        </div>
+        </Box>
       )}
     </QuestBox>
   );
