@@ -19,7 +19,8 @@ const ActiveLink = styled(RouterLink)`
   }
 `;
 const HeaderContainer = styled(Box)`
-  margin-bottom: 50px;
+  margin-bottom: 56px;
+  padding: 16px 0px !important;
   position: relative;
 `;
 
@@ -34,6 +35,40 @@ const HeaderWallet = styled.div`
 const HeaderLogo = styled(RouterLink)`
   display: inline-block;
   font-size: 0;
+`;
+
+const Card = styled(Box)`
+  width: 100%;
+  border-radius: 16px;
+  padding: 1.25rem;
+  padding: ${({ padding }) => padding};
+  border: ${({ border }) => border};
+  border-radius: ${({ borderRadius }) => borderRadius};
+`;
+
+const NetworkCard = styled(Card)`
+  border-radius: 8px;
+  flex: 1;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: Avenir LT Std, sans-serif;
+  background: var(--jedi-navy-blue, #141451); 
+  padding: 8px 16px;
+  margin-right: -30px;
+`;
+
+const AddressCard = styled(Card)`
+  border-radius: 8px;
+  flex: 1;
+  font-size: 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: Avenir LT Std, sans-serif;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
 `;
 
 const AccountElement = styled.div`
@@ -91,5 +126,7 @@ export {
   Web3StatusConnected,
   Web3StatusError,
   Web3StatusConnect,
-  HeaderSelectionBar
+  HeaderSelectionBar,
+  NetworkCard,
+  AddressCard,
 };

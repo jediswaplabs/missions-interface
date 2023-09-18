@@ -29,6 +29,7 @@ const MintCard = ({
   status,
   onCheck,
   onClaim,
+  isDisabled,
 }) => (
   <MintBox>
     <div>
@@ -50,7 +51,7 @@ const MintCard = ({
         <MintCardStatus>Not Eligible</MintCardStatus>
       )}
       {status === statuses.eligible && (
-        <QuestCardBtn onClick={onClaim}>Claim NFT</QuestCardBtn>
+        <QuestCardBtn disabled={isDisabled} onClick={onClaim}>Claim NFT</QuestCardBtn>
       )}
       {status === statuses.claiming && (
         <MintCardStatus>Claiming...</MintCardStatus>

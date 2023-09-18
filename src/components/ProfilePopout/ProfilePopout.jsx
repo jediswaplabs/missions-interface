@@ -10,9 +10,11 @@ import { ProfilePopoutContainer,
 import closeIcon from '../../resources/icons/close.svg';
 import triangleIcon from '../../resources/icons/triangle.svg';
 import { setCloseProfilePopout } from '../../pages/ProfilePage/profileSlice';
+import { useAccountDetails } from '../../hooks/index.ts';
 
 const ProfilePopout = () => {
   const ref = useRef(null);
+  const { status } = useAccountDetails();
 
   const dispatch = useDispatch();
 
@@ -22,7 +24,7 @@ const ProfilePopout = () => {
   };
 
   return (
-    <ProfilePopoutContainer ref={ref}>
+    <ProfilePopoutContainer ref={ref} status={status}>
       <ProfilePopoutTriangle>
         <SvgIcon
           component={triangleIcon}
