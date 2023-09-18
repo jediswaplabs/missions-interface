@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import Box from '@mui/material/Box';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useStarkName } from '@starknet-react/core';
 
 import { HeaderContainer,
   HeaderLogo,
@@ -74,7 +75,7 @@ const Header = () => {
           >
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
-            <Stack direction="row" alignItems="flex-start" gap={5}>
+            <Stack direction="row" alignItems="center" gap={5}>
               {location.pathname === '/mission' ? (
                 <ActiveLink to="/mission">
                   <Typography variant="body1" color="white">
@@ -194,6 +195,8 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
   const { t } = useTranslation();
   // const { error } = useAccountDetails();
   const { address, connector } = useAccountDetails();
+  const { data: starkName } = useStarkName({ address });
+
   if (address) {
     return (
       <Web3StatusConnected onClick={onWalletModalToggle}>
@@ -206,12 +209,11 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
               style={{
                 fontSize: '16px',
                 fontFamily: '"Avenir LT Std", sans-serif',
-                fontWeight: '600',
                 marginLeft: '4px',
                 lineHeight: '1',
               }}
             >
-              {getShortenAddress(address)}
+              {starkName || getShortenAddress(address)}
             </Typography>
           </AddressCard>
         </Stack>

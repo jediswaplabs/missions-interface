@@ -56,6 +56,7 @@ const NetworkCard = styled(Card)`
   background: var(--jedi-navy-blue, #141451); 
   padding: 8px 16px;
   margin-right: -30px;
+  line-height: 1;
 `;
 
 const AddressCard = styled(Card)`
