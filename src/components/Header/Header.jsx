@@ -12,7 +12,6 @@ import { HeaderContainer,
   HeaderLogo,
   AccountElement,
   Web3StatusConnected,
-  Web3StatusError,
   Web3StatusConnect,
   ActiveLink,
   HeaderSelectionBar,
@@ -138,7 +137,7 @@ const Header = () => {
 };
 
 const StatusIcon = ({ connector }) => {
-  if (connector.options.id === 'argentX') {
+  if (connector?.options?.id === 'argentX') {
     return (
       <SvgIcon
         component={argentXIcon}
@@ -149,7 +148,7 @@ const StatusIcon = ({ connector }) => {
       />
     );
   }
-  if (connector.options.id === 'braavos') {
+  if (connector?.options?.id === 'braavos') {
     return (
       <SvgIcon
         component={braavosIcon}
