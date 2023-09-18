@@ -1,18 +1,21 @@
-import React, { useEffect } from "react";
-import Stack from "@mui/material/Stack";
-import { SvgIcon } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "react-i18next";
+/* eslint-disable no-nested-ternary */
+import React, { useEffect } from 'react';
+import Stack from '@mui/material/Stack';
+import { SvgIcon } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 
-import MainLayout from "../../layouts/MainLayout/MainLayout";
-import { RoundedRect, ProfileHeading, ProfileText } from "./ProfilePage.styles";
-import start_claiming from "../../resources/icons/start_claiming.svg";
-import { fetchProfileData, setWalletAddressAction } from "./profileSlice";
-import {
-  useAccountDetails,
-  useWalletActionHandlers,
-} from "../../hooks/index.ts";
-import GradientButton from "../../components/GradientButton/GradientButton";
+import MainLayout from '../../layouts/MainLayout/MainLayout';
+import { RoundedRect,
+  ProfileHeading,
+  ProfileText,
+  LoadingContainer } from './ProfilePage.styles';
+import start_claiming from '../../resources/icons/start_claiming.svg';
+import { fetchProfileData, setWalletAddressAction } from './profileSlice';
+import { useAccountDetails,
+  useWalletActionHandlers } from '../../hooks/index.ts';
+import GradientButton from '../../components/GradientButton/GradientButton';
+import loading from '../../resources/gifs/Loading_gif.gif';
 
 const ProfilePage = () => {
   const { address, chainId } = useAccountDetails();
@@ -20,7 +23,11 @@ const ProfilePage = () => {
   const { t } = useTranslation();
 
   const nftsClaimedByAUser = useSelector(
-    (state) => state.profile.nftsClaimedByAUser
+    (state) => state?.profile?.nftsClaimedByAUser,
+  );
+
+  const profileDataLoading = useSelector(
+    (state) => state?.profile?.profileDataLoading,
   );
 
   const dispatch = useDispatch();
@@ -36,14 +43,14 @@ const ProfilePage = () => {
   }, [address, chainId]);
 
   const getEmptyProfilePageContent = () => (
-    <div style={{ maxWidth: "479px", margin: "auto" }}>
+    <div style={{ maxWidth: '479px', margin: 'auto' }}>
       <SvgIcon
         component={start_claiming}
         width="479"
         viewBox=" 0 0 479 334"
-        style={{ width: "unset", height: "unset", maxWidth: "90vw" }}
+        style={{ width: 'unset', height: 'unset', maxWidth: '90vw' }}
       />
-      <ProfileHeading style={{ textAlign: "center" }}>
+      <ProfileHeading style={{ textAlign: 'center' }}>
         Start Claiming!
       </ProfileHeading>
       {address ? (
@@ -60,42 +67,50 @@ const ProfilePage = () => {
     </div>
   );
 
+  const getProfileNFTs = (image, index) => (
+    <RoundedRect key={index}>
+      <img
+        src={image.image_url}
+        alt=""
+        style={{ width: '200px', borderRadius: '5px' }}
+      />
+    </RoundedRect>
+  );
+
   const bodyContent = address ? (
-    <>
-      {!nftsClaimedByAUser.length && getEmptyProfilePageContent()}
-      {nftsClaimedByAUser.length !== 0 && (
-        <div>
-          <ProfileHeading>Claimed Missions</ProfileHeading>
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            justifyContent="center"
-            alignItems="center"
-            // spacing={4}
-            flexWrap="wrap"
-            sx={{ my: 4 }}
-          >
-            {nftsClaimedByAUser.map((data, i) => (
-              <RoundedRect key={i}>
-                <img
-                  src={data.image_url}
-                  alt=""
-                  style={{ width: "200px", borderRadius: "5px" }}
-                />
-              </RoundedRect>
-            ))}
-          </Stack>
-        </div>
-      )}
-    </>
+    profileDataLoading ? (
+      <LoadingContainer>
+        <img src={loading} alt="Loading" style={{ width: '296px' }} />
+      </LoadingContainer>
+    ) : (
+      <>
+        {!nftsClaimedByAUser.length && getEmptyProfilePageContent()}
+        {nftsClaimedByAUser.length !== 0 && (
+          <>
+            <ProfileHeading>Claimed Missions</ProfileHeading>
+            <Stack
+              direction={{ xs: 'column', sm: 'row' }}
+              justifyContent="center"
+              alignItems="center"
+              // spacing={4}
+              flexWrap="wrap"
+              sx={{ my: 4 }}
+            >
+              {nftsClaimedByAUser.map((data, i) => getProfileNFTs(data, i))}
+            </Stack>
+          </>
+        )}
+      </>
+    )
   ) : (
     <div>
       {getEmptyProfilePageContent()}
-      <div style={{ textAlign: "center", marginTop: "24px" }}>
+      <div style={{ textAlign: 'center', marginTop: '24px' }}>
         <GradientButton
-          style={{ padding: "12px 48px" }}
+          style={{ padding: '12px 48px' }}
           onClick={() => setWalletModalOpen(true)}
         >
-          {t("header.connectWallet")}
+          {t('header.connectWallet')}
         </GradientButton>
       </div>
     </div>
