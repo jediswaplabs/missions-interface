@@ -1,7 +1,6 @@
-import { validateAndParseAddress, Abi, Contract, AccountInterface } from 'starknet'
+import { validateAndParseAddress, Contract } from 'starknet'
 import { zeroAddress } from '../common/constants'
 import isZero from './isZero'
-import { InjectedConnector } from '@starknet-react/core'
 
 import {Buffer} from 'buffer'
 
@@ -18,16 +17,6 @@ export function isAddress(addr){
 }
 
 
-// account is optional
-// export function getProviderOrSigner(
-//   library: Provider,
-//   connector?: AbstractConnector,
-//   account?: string
-// ): Provider | SignerInterface | undefined {
-//   return account && connector ? connector.getSigner() : library
-// }
-
-// account is optional
 export function getContract(
   address,
   ABI,
@@ -38,8 +27,6 @@ export function getContract(
   if (!parsedAddress || parsedAddress === zeroAddress) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
-
-  // const providerOrSigner = getProviderOrSigner(library, connector, account)
 
   return new Contract(ABI, address, library)
 }
@@ -68,5 +55,3 @@ export function feltArrToStr(felts){
     }
     return arr;
   }
-
-

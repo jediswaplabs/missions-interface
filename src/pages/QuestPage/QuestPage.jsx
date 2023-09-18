@@ -31,9 +31,12 @@ import { mainnetContractAddress,
   testnetContractAddress } from '../../common/constants';
 import { isProductionChainId,
   isTestnetChainId } from '../../common/connectors/index.ts';
+import TransactionConfirmationModal from '../../components/TransactionModal/index.tsx';
 
 const QuestPage = () => {
   const [isEligibiltyStatusBeforeCheck, setEligibiltyStatusBeforeCheck] = useState(true);
+  const [transactionError, setTransactionError] = useState('');
+  const [hash, setHash] = useState('');
   const [contractAddress, setContractAddress] = useState(
     testnetContractAddress,
   );
@@ -123,29 +126,31 @@ const QuestPage = () => {
       setEligibiltyStatusBeforeCheck(false);
       setWalletAddress(address);
       const addressLastChar = getLastCharacterOfAString(address);
-      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then((res) => {
-        const nftData = res?.payload?.data?.find(
-          (resData) => resData.wallet_address === address,
-        );
-        if (nftData && Object.keys(nftData).length) {
-          setStateForAccountDetailsForNFT(nftData);
-          dispatch(setUserEligibleNFTAction(true));
-          setMintData({
-            token_id: nftData?.calldata[0],
-            proof: nftData?.proof,
-            token_metadata: {
-              task_id: nftData?.calldata[1],
-              name: nftData?.calldata[2],
-              rank: nftData?.calldata[3],
-              score: nftData?.calldata[4],
-              level: nftData?.calldata[5],
-              total_eligible_users: nftData?.calldata[6],
-            },
-          });
-        } else {
-          dispatch(setUserNonEligibleNFTAction(true));
-        }
-      });
+      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then(
+        (res) => {
+          const nftData = res?.payload?.data?.find(
+            (resData) => resData.wallet_address === address,
+          );
+          if (nftData && Object.keys(nftData).length) {
+            setStateForAccountDetailsForNFT(nftData);
+            dispatch(setUserEligibleNFTAction(true));
+            setMintData({
+              token_id: nftData?.calldata[0],
+              proof: nftData?.proof,
+              token_metadata: {
+                task_id: nftData?.calldata[1],
+                name: nftData?.calldata[2],
+                rank: nftData?.calldata[3],
+                score: nftData?.calldata[4],
+                level: nftData?.calldata[5],
+                total_eligible_users: nftData?.calldata[6],
+              },
+            });
+          } else {
+            dispatch(setUserNonEligibleNFTAction(true));
+          }
+        },
+      );
     }
   };
 
@@ -180,14 +185,16 @@ const QuestPage = () => {
         setNFTClaimedByUser(true);
       }
       const addressLastChar = getLastCharacterOfAString(address);
-      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then((res) => {
-        const nftData = res?.payload?.data?.find(
-          (resData) => resData.wallet_address === address,
-        );
-        if (nftData && Object.keys(nftData).length) {
-          setStateForAccountDetailsForNFT(nftData);
-        }
-      });
+      dispatch(fetchNFTContestData({ addressLastChar, chainId })).then(
+        (res) => {
+          const nftData = res?.payload?.data?.find(
+            (resData) => resData.wallet_address === address,
+          );
+          if (nftData && Object.keys(nftData).length) {
+            setStateForAccountDetailsForNFT(nftData);
+          }
+        },
+      );
     } else {
       setNFTClaimedByUser(false);
       setEligibiltyStatusBeforeCheck(true);
@@ -199,17 +206,16 @@ const QuestPage = () => {
     if (Object.keys(mintData).length) {
       writeAsync()
         .then((tx) => {
-          setUserClaimingNFT(false);
           if (tx.transaction_hash) {
             if (response) {
               dispatch(setIsWalletClaimedAnyNFT(response));
               setNFTClaimedByUser(true);
+              setHash(tx.transaction_hash);
             }
           }
         })
         .catch((err) => {
-          setUserClaimingNFT(false);
-          console.log(err);
+          setTransactionError(err.message);
         });
     }
   };
@@ -258,6 +264,7 @@ const QuestPage = () => {
           status="isUserEligibleForNFT"
           onCheck={() => checkEligibility()}
           onClaim={() => claimNft()}
+          isDisabled={isWalletClaimedAnyNFT}
         />
       );
     }
@@ -314,7 +321,24 @@ const QuestPage = () => {
           <AllQuests>All Missions</AllQuests>
         </Link>
         {address ? (
-          getMintCardContent()
+          <>
+            {getMintCardContent()}
+            {isUserClaimingNFT && (
+              <TransactionConfirmationModal
+                attemptingTxn={isUserClaimingNFT}
+                isOpen={isUserClaimingNFT}
+                pendingText={`Claiming NFT ${accountDetailsForNFT?.name}`}
+                error={transactionError}
+                message={transactionError ? 'Transaction Rejected' : ''}
+                hash={hash}
+                onDismiss={() => {
+                  setUserClaimingNFT(false);
+                  setTransactionError('');
+                  setHash('');
+                }}
+              />
+            )}
+          </>
         ) : (
           <MintCard
             title="Rise of the first LPs"
