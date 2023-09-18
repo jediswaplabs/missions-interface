@@ -6,7 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 
 import MainLayout from '../../layouts/MainLayout/MainLayout';
-import { RoundedRect, ProfileHeading, ProfileText, LoadingContainer } from './ProfilePage.styles';
+import { RoundedRect,
+  ProfileHeading,
+  ProfileText,
+  LoadingContainer } from './ProfilePage.styles';
 import start_claiming from '../../resources/icons/start_claiming.svg';
 import { fetchProfileData, setWalletAddressAction } from './profileSlice';
 import { useAccountDetails,
@@ -20,11 +23,11 @@ const ProfilePage = () => {
   const { t } = useTranslation();
 
   const nftsClaimedByAUser = useSelector(
-    (state) => state.profile.nftsClaimedByAUser,
+    (state) => state?.profile?.nftsClaimedByAUser,
   );
 
   const profileDataLoading = useSelector(
-    (state) => state.profile.profileDataLoading,
+    (state) => state?.profile?.profileDataLoading,
   );
 
   const dispatch = useDispatch();
@@ -64,6 +67,16 @@ const ProfilePage = () => {
     </div>
   );
 
+  const getProfileNFTs = (image, index) => (
+    <RoundedRect key={index}>
+      <img
+        src={image.image_url}
+        alt=""
+        style={{ width: '200px', borderRadius: '5px' }}
+      />
+    </RoundedRect>
+  );
+
   const bodyContent = address ? (
     profileDataLoading ? (
       <LoadingContainer>
@@ -73,7 +86,7 @@ const ProfilePage = () => {
       <>
         {!nftsClaimedByAUser.length && getEmptyProfilePageContent()}
         {nftsClaimedByAUser.length !== 0 && (
-          <div>
+          <>
             <ProfileHeading>Claimed Missions</ProfileHeading>
             <Stack
               direction={{ xs: 'column', sm: 'row' }}
@@ -83,17 +96,9 @@ const ProfilePage = () => {
               flexWrap="wrap"
               sx={{ my: 4 }}
             >
-              {nftsClaimedByAUser.map((data, i) => (
-                <RoundedRect key={i}>
-                  <img
-                    src={data.image_url}
-                    alt=""
-                    style={{ width: '200px', borderRadius: '5px' }}
-                  />
-                </RoundedRect>
-              ))}
+              {nftsClaimedByAUser.map((data, i) => getProfileNFTs(data, i))}
             </Stack>
-          </div>
+          </>
         )}
       </>
     )
