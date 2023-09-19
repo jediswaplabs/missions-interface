@@ -9,11 +9,7 @@ export { zeroAddress };
 
 export const NetworkContextName = "NETWORK";
 
-export const testnetContractAddress =
-  "0x077126e027feb93fafa4a07147747ba8ce41e28f17bb25a8c281311f91b8b994";
-
-export const mainnetContractAddress =
-  "0x05b991e122ff2410d32575eb369059bd26cb69a05d15001a0c93f2678d96d81c";
+export const isFakeContract = false; //flag to test fake contract
 
 export const SUPPORTED_WALLETS = {
   ArgentX: {
@@ -22,7 +18,7 @@ export const SUPPORTED_WALLETS = {
     icon: argentXIcon,
     description: "Starknet Browser Wallet",
     href: null,
-    color: "#FF875B",
+    color: "#FF875B"
   },
   Braavos: {
     connector: braavosWallet,
@@ -31,8 +27,8 @@ export const SUPPORTED_WALLETS = {
     description: "Braavos Wallet for Starknet",
     href: null,
     color: "#E0B137",
-    size: 30,
-  },
+    size: 30
+  }
 };
 
 export const STARKSCAN_PREFIXES = {
@@ -40,7 +36,7 @@ export const STARKSCAN_PREFIXES = {
   3: "testnet.",
   4: "testnet.",
   5: "testnet.",
-  42: "testnet.",
+  42: "testnet."
 };
 
 export const guildTypesLookup = {
@@ -50,7 +46,7 @@ export const guildTypesLookup = {
   growth: "growth",
   problemSolving: "problemSolving",
   communityManagement: "communityManagement",
-  contentWriting: "contentWriting",
+  contentWriting: "contentWriting"
 };
 
 export const guildNamesLookup = {
@@ -60,9 +56,9 @@ export const guildNamesLookup = {
   [guildTypesLookup.growth]: "Growth",
   [guildTypesLookup.problemSolving]: "Problem Solving",
   [guildTypesLookup.communityManagement]: "Community Management",
-  [guildTypesLookup.contentWriting]: "Content Writing",
+  [guildTypesLookup.contentWriting]: "Content Writing"
 };
 
 export const eventsLookup = {
-  openWalletModal: "openWalletModal",
+  openWalletModal: "openWalletModal"
 };
