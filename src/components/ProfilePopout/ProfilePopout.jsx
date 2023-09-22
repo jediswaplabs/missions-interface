@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { SvgIcon } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
@@ -21,10 +21,23 @@ const ProfilePopout = () => {
   const hideProfilePopout = () => {
     ref.current.style.display = 'none';
     dispatch(setCloseProfilePopout(true));
+    localStorage?.setItem('hideProfilePopout', 'true');
   };
+  useEffect(() => {
+    if (localStorage?.getItem('hideProfilePopout')) {
+      hideProfilePopout();
+    }
+  }, []);
 
   return (
-    <ProfilePopoutContainer ref={ref} status={status}>
+    <ProfilePopoutContainer
+      ref={ref}
+      status={status}
+      onClick={(e) => {
+        e.preventDefault();
+        hideProfilePopout();
+      }}
+    >
       <ProfilePopoutTriangle>
         <SvgIcon
           component={triangleIcon}
@@ -36,11 +49,7 @@ const ProfilePopout = () => {
         <ProfilePopoutText>
           Your claimed NFTs can be found here
         </ProfilePopoutText>
-        <ProfilePopoutClose onClick={(e) => {
-          e.preventDefault();
-          hideProfilePopout();
-        }}
-        >
+        <ProfilePopoutClose>
           <SvgIcon
             component={closeIcon}
             inheritViewBox
