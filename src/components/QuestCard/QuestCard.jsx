@@ -90,7 +90,7 @@ const QuestCard = ({
           <SvgIcon
             component={campaignImg}
             inheritViewBox
-            style={{ width: "unset", height: "unset" }}
+            style={{ width: "unset", height: "unset", fill: "none" }}
           />
         </Box>
       )}
