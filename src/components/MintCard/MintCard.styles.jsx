@@ -4,11 +4,14 @@ const MintBox = styled.div`
   border-radius: 8px;
   border: 1px solid rgba(160, 160, 160, 0.40);
   background: rgba(255, 255, 255, 0.05);
-  // width: 700px;
+  width: 700px;
   display: flex;
   justify-content: space-between;
   padding: 30px;
   margin-top: 20px;
+  @media (max-width: 959px) {
+    width: unset;
+  }
 `;
 
 const MintCardStatus = styled.div`
