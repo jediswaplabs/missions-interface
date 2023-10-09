@@ -5,7 +5,7 @@ import api from './profileAPI';
 export const initialState = {
   nftsClaimedByAUser: [],
   walletAddress: null,
-  closeProfilePopout: false,
+  closeProfilePopout: window.localStorage?.getItem('hideProfilePopout') || false,
   profileDataLoading: false,
 };
 
@@ -31,6 +31,7 @@ export const profileSlice = createSlice({
     },
     setCloseProfilePopout(state, action) {
       state.closeProfilePopout = action.payload;
+      window.localStorage?.setItem('hideProfilePopout', 'true');
     },
   },
   extraReducers: (builder) => {
