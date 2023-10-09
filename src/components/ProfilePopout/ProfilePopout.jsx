@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { SvgIcon } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
@@ -13,25 +13,16 @@ import { setCloseProfilePopout } from '../../pages/ProfilePage/profileSlice';
 import { useAccountDetails } from '../../hooks/index.ts';
 
 const ProfilePopout = () => {
-  const ref = useRef(null);
   const { status } = useAccountDetails();
 
   const dispatch = useDispatch();
 
   const hideProfilePopout = () => {
-    ref.current.style.display = 'none';
     dispatch(setCloseProfilePopout(true));
-    localStorage?.setItem('hideProfilePopout', 'true');
   };
-  useEffect(() => {
-    if (localStorage?.getItem('hideProfilePopout')) {
-      hideProfilePopout();
-    }
-  }, []);
 
   return (
     <ProfilePopoutContainer
-      ref={ref}
       status={status}
       onClick={(e) => {
         e.preventDefault();
