@@ -11719,11 +11719,6 @@ react-focus-lock@^2.3.1:
     use-callback-ref "^1.3.0"
     use-sidecar "^1.1.2"
 
-react-ga4@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/react-ga4/-/react-ga4-1.4.1.tgz#6ee2a2db115ed235b2f2092bc746b4eeeca9e206"
-  integrity sha512-ioBMEIxd4ePw4YtaloTUgqhQGqz5ebDdC4slEpLgy2sLx1LuZBC9iYCwDymTXzcntw6K1dHX183ulP32nNdG7w==
-
 react-i18next@^13.0.1:
   version "13.0.1"
   resolved "https://registry.npmjs.org/react-i18next/-/react-i18next-13.0.1.tgz#4d047d2d63d9616f7f5fd4ca88b1cc449cc15290"
