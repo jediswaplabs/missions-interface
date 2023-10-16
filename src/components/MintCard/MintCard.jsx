@@ -1,15 +1,16 @@
 import React from 'react';
-import { SvgIcon } from '@mui/material';
+import { SvgIcon, Box } from '@mui/material';
 
-import { QuestCardTitle,
+import {
+  QuestCardTitle,
   QuestCardDescription,
   QuestCardAddress,
-  QuestCardBtn } from '../QuestCard/QuestCard.styles';
+  QuestCardBtn
+} from '../QuestCard/QuestCard.styles';
 import { MintCardStatus, MintCardClaimed, MintBox } from './MintCard.styles';
 import { getShortenAddress } from '../../common/addressHelper';
 import claimedMark from '../../resources/icons/claimed_mark.svg';
-import claimed from '../../resources/icons/claimed.svg';
-import noneligibleImg from '../../resources/icons/noneligible.svg';
+import MintCardImg from './MintCardImg';
 
 const statuses = {
   beforeCheck: 'isEligibiltyStatusBeforeCheck',
@@ -37,6 +38,9 @@ const MintCard = ({
       <QuestCardDescription style={{ maxWidth: '314px' }}>
         {description}
       </QuestCardDescription>
+      <Box sx={{ display: { xs: 'block', md: 'none' }, mb: '20px' }}>
+        <MintCardImg nftImg={nftImg} status={status} statuses={statuses} />
+      </Box>
       {status === statuses.beforeCheck && (
         <QuestCardBtn onClick={onCheck}>Check Eligibility</QuestCardBtn>
       )}
@@ -65,37 +69,9 @@ const MintCard = ({
         </MintCardClaimed>
       )}
     </div>
-
-    <div style={{ position: 'relative' }}>
-      {status === statuses.claimed && (
-        <SvgIcon
-          component={claimed}
-          inheritViewBox
-          style={{
-            width: 'unset',
-            height: 'unset',
-            position: 'absolute',
-            bottom: '30px',
-            left: '-40px',
-          }}
-        />
-      )}
-      {status === statuses.noneligible && (
-        <SvgIcon
-          component={noneligibleImg}
-          inheritViewBox
-          style={{ width: 'unset', height: '240px' }}
-        />
-      )}
-      {status !== statuses.noneligible
-        && status !== statuses.beforeCheck
-        && status !== statuses.checking && (
-        <img src={nftImg} style={{ width: '200px', borderRadius: '5px' }} />
-      )}
-      {(status === statuses.beforeCheck || status === statuses.checking) && (
-        <img src={nftImg} />
-      )}
-    </div>
+    <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+      <MintCardImg nftImg={nftImg} status={status} statuses={statuses} />
+    </Box>
   </MintBox>
 );
 

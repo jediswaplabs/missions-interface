@@ -10,6 +10,9 @@ const ProfilePopoutContainer = styled.div`
   position: absolute;
   right: ${(props) => (props.status === 'connected' ? '172px' : '-8px')};
   top: 44px;
+  @media (max-width: 1199px) {
+    display: none;
+  }
 `;
 
 const ProfilePopoutRect = styled.div`
@@ -29,6 +32,9 @@ const ProfilePopoutRect = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: 24.5px; /* 153.125% */
+  @media (max-width: 959px) {
+    height: 75px;
+  }
 `;
 
 const ProfilePopoutText = styled.div`

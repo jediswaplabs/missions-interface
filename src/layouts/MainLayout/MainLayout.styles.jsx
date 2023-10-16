@@ -17,6 +17,9 @@ const MainLayoutBodyContainer = styled(Box)`
 const MainLayoutFooterContainer = styled(Box)`
   color: #fff;
   height: 85px;
+  @media (max-width: 959px) {
+    height: 185px;
+  }
 `;
 
 const MainLayoutContainer = styled(Box)`
