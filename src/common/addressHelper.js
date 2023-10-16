@@ -18,6 +18,12 @@ export const getShortenAddress = (address = '', charsWithout0X = 4) => {
   return `${parsed.substring(0, charsWithout0X + 2)}...${parsed.substring(63 - charsWithout0X)}`;
 };
 
+export const getShortenAddressForMobile = (address = '') => {
+  const parsed = (address);
+  if (!parsed) { return address; }
+  return `${parsed.substring(0, 4)}..${parsed.substring(63 - 3)}`;
+};
+
 export const areEqualAddresses = (a = '', b = '') => {
   if (!(isStarknetAddress(a) && isStarknetAddress(b))) { return false; }
   return (getChecksumAddress(a) === getChecksumAddress(b));

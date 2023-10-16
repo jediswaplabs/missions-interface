@@ -10,9 +10,8 @@ const ProfilePopoutContainer = styled.div`
   position: absolute;
   right: ${(props) => (props.status === 'connected' ? '172px' : '-8px')};
   top: 44px;
-  @media (max-width: 959px) {
-    left: 80px;
-    right: unset;
+  @media (max-width: 1199px) {
+    display: none;
   }
 `;
 

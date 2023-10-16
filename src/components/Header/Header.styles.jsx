@@ -58,6 +58,16 @@ const NetworkCard = styled(Card)`
   margin-right: -30px;
 `;
 
+const NetworkCardMobile = styled.div`
+  color: #fff;
+  font-family: Avenir LT Std;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  margin-left: 3px;
+`;
+
 const AddressCard = styled(Card)`
   border-radius: 8px;
   flex: 1;
@@ -128,5 +138,6 @@ export {
   Web3StatusConnect,
   HeaderSelectionBar,
   NetworkCard,
+  NetworkCardMobile,
   AddressCard,
 };

@@ -16,14 +16,16 @@ import { HeaderContainer,
   ActiveLink,
   HeaderSelectionBar,
   NetworkCard,
+  NetworkCardMobile,
   AddressCard } from './Header.styles';
 import { useAccountDetails,
   useWalletActionHandlers } from '../../hooks/index.ts';
 import { eventsLookup } from '../../common/constants';
 import { isProductionChainId } from '../../common/connectors/index.ts';
-import { getShortenAddress } from '../../common/addressHelper';
+import { getShortenAddress, getShortenAddressForMobile } from '../../common/addressHelper';
 import { EventEmitter } from '../../common/eventEmitter';
 import logo from '../../resources/icons/logo.svg';
+import starknet from '../../resources/icons/starknet.svg';
 import argentXIcon from '../../resources/icons/argentx.svg';
 import braavosIcon from '../../resources/icons/braavos.svg';
 import GradientButton from '../GradientButton/GradientButton';
@@ -42,15 +44,43 @@ const Header = () => {
 
   return (
     <HeaderContainer py={1}>
-      <Grid container columnSpacing={{ md: 2 }} alignItems="center">
-        <Grid item xs={6} sx={{ display: 'flex', alignItems: 'center' }}>
+      <Grid container columnSpacing={{ xs: 2 }} alignItems="center">
+        <Grid item xs={4} md={6} sx={{ display: 'flex', alignItems: 'center' }}>
           <HeaderLogo to="/">
             <SvgIcon
               component={logo}
               viewBox="0 0 173 34"
-              style={{ width: 'unset', height: 'unset' }}
+              style={{ width: '115px', height: '23px' }}
             />
           </HeaderLogo>
+        </Grid>
+        <Grid item xs={8} display={{ md: 'none' }}>
+          <Stack direction="row" alignItems="center" gap={2} justifyContent="end" display={{ xs: 'flex', md: 'none' }}>
+            {status === 'connected'
+              && (
+                <div style={{ display: 'flex' }}>
+                  <SvgIcon
+                    component={starknet}
+                    viewBox="0 0 16 16"
+                    style={{ width: 'unset', height: 'unset' }}
+                  />
+                  {isProductionChainId(chainId)
+                    ? (
+                      <NetworkCardMobile title="Starknet Mainnet">
+                        Mainnet
+                      </NetworkCardMobile>
+                    )
+                    : (
+                      <NetworkCardMobile title="Starknet Görli">
+                        Görli
+                      </NetworkCardMobile>
+                    )}
+                </div>
+              )}
+            <AccountElement>
+              <Web3Status />
+            </AccountElement>
+          </Stack>
         </Grid>
         <Grid
           item
@@ -68,13 +98,13 @@ const Header = () => {
             display="flex"
             width="100%"
             backgroundColor={{ xs: '#212429', md: 'transparent' }}
-            justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
+            justifyContent={{ xs: 'center', md: 'flex-end' }}
             px={{ xs: 2, md: 0 }}
             py={{ xs: 2, md: 0 }}
           >
             {/* <LanguageSwitcher /> */}
             {/* <HeaderWallet> */}
-            <Stack direction="row" alignItems="flex-start" gap={5}>
+            <Stack direction="row" alignItems="center" gap={5}>
               {location.pathname === '/mission' ? (
                 <ActiveLink to="/mission">
                   <Typography variant="body1" color="white">
@@ -111,23 +141,34 @@ const Header = () => {
                       Profile
                     </Typography>
                   </Link>
-                  {!closeProfilePopout && <Box sx={{ display: {xs: 'block', md: 'none'} }} style={{height: '100px'}}></Box>}
+                  {/* {!closeProfilePopout && <Box sx={{ display: {xs: 'block', md: 'none'} }} style={{height: '100px'}}></Box>}
+                   */}
                   {!closeProfilePopout && <ProfilePopout />}
                 </>
               )}
               {status === 'connected'
-                && (isProductionChainId(chainId) ? (
-                  <NetworkCard title="Starknet Mainnet">
-                    Starknet Mainnet
-                  </NetworkCard>
-                ) : (
-                  <NetworkCard title="Starknet Görli">
-                    Starknet Görli
-                  </NetworkCard>
-                ))}
-              <AccountElement>
-                <Web3Status />
-              </AccountElement>
+                && (
+                  <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                    {
+                      isProductionChainId(chainId)
+                        ? (
+                          <NetworkCard title="Starknet Mainnet">
+                            Starknet Mainnet
+                          </NetworkCard>
+                        )
+                        : (
+                          <NetworkCard title="Starknet Görli">
+                            Starknet Görli
+                          </NetworkCard>
+                        )
+                    }
+                  </Box>
+                )}
+              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                <AccountElement>
+                  <Web3Status />
+                </AccountElement>
+              </Box>
             </Stack>
             {/* </HeaderWallet> */}
           </Box>
@@ -202,6 +243,7 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
           <AddressCard>
             {connector && <StatusIcon connector={connector} />}
             <Typography
+              display={{ xs: 'none', md: 'block' }}
               variant="body1"
               color="text.primary"
               style={{
@@ -213,6 +255,20 @@ const Web3StatusInner = ({ onWalletModalToggle = noop }) => {
               }}
             >
               {getShortenAddress(address)}
+            </Typography>
+            <Typography
+              display={{ xs: 'block', md: 'none' }}
+              variant="body1"
+              color="text.primary"
+              style={{
+                fontSize: '16px',
+                fontFamily: '"Avenir LT Std", sans-serif',
+                fontWeight: '600',
+                marginLeft: '4px',
+                lineHeight: '1',
+              }}
+            >
+              {getShortenAddressForMobile(address)}
             </Typography>
           </AddressCard>
         </Stack>
